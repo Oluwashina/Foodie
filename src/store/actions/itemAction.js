@@ -39,7 +39,7 @@ export const Menus = () =>{
         // }).catch((err) => {
         //     console.log(err)
         // });
-        axios.post(`/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
+        axios.post(`/api/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
         transformResponse: data => JSONbig.parse(data),
         }).then((res)=>{
             console.log(res.data)
