@@ -24,21 +24,6 @@ export const Menus = () =>{
             return hash;
             }
         // make call to server using fetch
-        // fetch((`/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`), {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        // })
-        // .then(async (res) => {
-        //       return res.text()
-        // })
-        // .then((data) => {
-        //     let json = JSONbig.parse(data);
-        //     console.log(json)
-        //     var result = json.result
-        //     dispatch({type: 'MENUS', result})
-        // }).catch((err) => {
-        //     console.log(err)
-        // });
         axios.post(`/api/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
         transformResponse: data => JSONbig.parse(data),
         }).then((res)=>{

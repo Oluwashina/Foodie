@@ -132,3 +132,20 @@ textarea.materialize-textarea:focus:not([readonly]){
 .tabs .indicator {
   background-color: #006491;
 } 
+
+.cart-count{
+    display: inline-block;
+    float: none;
+    margin-left: -29px;
+    line-height: 22px;
+    position: absolute;
+    top: 5px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    text-align: center;
+    background: white;
+    border-radius: 50%;
+    color: #006491;
+}
+
