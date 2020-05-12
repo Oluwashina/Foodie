@@ -80,3 +80,9 @@ export const Decrement = () =>{
         dispatch({type: 'DIVIDEPRICE'})
     }
 }
+
+export const addToCart = (id) =>{
+    return (dispatch, getState) =>{
+        dispatch({type: 'ADD_TO_CART',id})
+    }
+}

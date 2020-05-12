@@ -4,6 +4,7 @@ import M from 'materialize-css';
 import {connect} from 'react-redux';
 import Menus from './Menus';
 import {DishList} from '../../store/actions/itemAction'
+import {addToCart} from '../../store/actions/itemAction'
 
 
 class SubCategory extends Component {
@@ -18,10 +19,12 @@ class SubCategory extends Component {
 
      addCartClick = (id, name) =>{
          M.toast({html: `${name} added to cart`, classes: 'green'})
+         this.props.addToCart(id); 
      }
      
 
     render() { 
+        console.log(this.props)
         const {dishes} = this.props
         let dishlist;
 
@@ -87,6 +90,7 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         DishList : (id) => dispatch(DishList(id)),
+        addToCart: (id) => dispatch(addToCart(id))
     }
 }
  

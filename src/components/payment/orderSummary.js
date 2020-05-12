@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar';
 import StripeCheckout from 'react-stripe-checkout'
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 // import axios from 'axios';
-import {ToastsContainer, ToastsStore} from 'react-toasts';
+
 
 class Summary extends Component {
     state = { 
@@ -31,11 +33,41 @@ handleToken = (token) =>{
 }
 
     render() { 
+        const {addedItems, total} = this.props
+        const summary = addedItems.length ? (
+          addedItems.map(items=>{
+              return (
+                      <>  
+                    <div className="row">
+                        <div className="col s2 l2">
+                            <p className="green-text">{`${items.quantity}x`}</p>
+                        </div>
+                        <div className="col s6 l6">
+                            <p style={{fontWeight: 600}}>{items.name}</p>
+                            <p>Toast Only</p>
+                            <button style={{padding: 0}} className="btn z-depth-0 white green-text">Edit</button>
+                        </div>
+                        <div className="col s4 l4 right-align">
+                            <p style={{fontWeight: 600}}>{`$${items.marketPrice}`}</p>
+                        </div>
+                    </div>
+                </>
+                      
+              )
+          })
+      ) : (
+            
+                <div className="center">
+                    <i className="medium material-icons blue-text text-darken-3 ">shopping_cart</i>
+                    <span className="card-title">Your cart is empty</span>
+                    <p>Looks like you have no items in your cart</p>
+                </div>
+                          
+      )
         return ( 
             <React.Fragment>
                 <Navbar />
-                <div className="container">
-                <ToastsContainer store={ToastsStore}/>
+                <div className="container"  style={{marginTop: 20}}>
                     <div className="row">
                         <div className="col s12 l10 m10">
                             <div className="card z-depth-1">
@@ -45,23 +77,12 @@ handleToken = (token) =>{
                                         <span className="card-title">Order Summary</span>
                                     </div>
                                     <div className="col s6 l6 right-align">
-                                    <button className="btn z-depth-0 white green-text" style={{padding: 0}}>Add items</button>
+                                    <Link to="/dashboard" className="btn z-depth-0 white green-text" style={{padding: 0}}>Add items</Link>
                                     </div>
                                     </div>
+
                                     {/* item details list */}
-                                    <div className="row">
-                                        <div className="col s2 l2">
-                                            <p className="green-text">1x</p>
-                                        </div>
-                                        <div className="col s6 l6">
-                                           <p style={{fontWeight: 600}}>Set B - French Toast</p>
-                                           <p>Toast Only</p>
-                                           <button style={{padding: 0}} className="btn z-depth-0 white green-text">Edit</button>
-                                        </div>
-                                        <div className="col s4 l4 right-align">
-                                           <p style={{fontWeight: 600}}>$2.80</p>
-                                        </div>
-                                    </div>
+                                        {summary}
                                 </div>
                                 <div className="card-action">
                                     <div className="row">
@@ -69,13 +90,13 @@ handleToken = (token) =>{
                                             <span className="card-title">Subtotal</span>
                                         </div>
                                         <div className="col s6 l6 right-align">
-                                            <p style={{fontWeight: 600}}>$2.80</p>
+                                            <p style={{fontWeight: 600}}>{`$${total.toFixed(2)}`}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
 
                     {/* second row */}
                     <div className="row">
@@ -130,5 +151,12 @@ handleToken = (token) =>{
          );
     }
 }
+
+const mapStateToProps = (state) =>{
+    return{
+        addedItems: state.item.addedItems,
+        total: state.item.total
+    }
+}
  
-export default Summary;
+export default connect(mapStateToProps)(Summary);
