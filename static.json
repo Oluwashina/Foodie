@@ -1,13 +1,8 @@
 {
+    "root": "build/",
     "proxies": {
       "/api/": {
         "origin": "https://sg-openapi.keruyun.com/open/v1/cater"
       }
     }
-},
-{
-    "routes": {
-      "/assets/*": "/assets/",
-      "/**": "index.html"
-    }
-  }
+}
