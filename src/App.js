@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import SignIn from './components/auth/SignIn'
+import Otp from './components/auth/Otp'
+import Dashboard from './components/layouts/Dashboard'
+import ItemDetails from './components/Items/Itemdetails'
+import Summary from './components/payment/orderSummary'
+import Order from './components/history/orderStatus'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <BrowserRouter>
+    <div>
+      <Switch>
+        <Route exact path="/" component={SignIn} />
+        <Route path="/validate/otp" component={Otp} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/item/:id" component={ItemDetails} />
+        <Route path="/summary" component={Summary} />
+        <Route path="/orders" component={Order} />
+      </Switch>
     </div>
+  </BrowserRouter>
   );
 }
 
