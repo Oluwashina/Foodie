@@ -1,12 +1,12 @@
 import axios from 'axios'
 import crypto from 'crypto'
+import JSONbig from 'json-bigint'
 axios.defaults.transformResponse =  [function (data) {
 	// Do whatever you want to transform the data
 	return JSONbig.parse(data);
 }]
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-const JSONbig = require('json-bigint')
 
 
 export const Menus = () =>{
@@ -71,7 +71,7 @@ export const DishList = (id) =>{
          let body  = {
                "dishTypeId": id
             };
-        axios.post(`/dish/dishNew?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        axios.post(`/api/dish/dishNew?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
             console.log(res.data)
             var dishes = res.data.result.dishList

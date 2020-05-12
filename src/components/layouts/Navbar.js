@@ -23,9 +23,8 @@ class Navbar extends Component {
                 <ul className="right">
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/dashboard">Home</NavLink></li>
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/orders">Orders</NavLink></li>
-                    {/* <li><NavLink to="/" className="btn btn-floating grey darken-1">OP</NavLink></li> */}
-                    <li><NavLink to="/"><i className="material-icons">shopping_cart</i></NavLink></li>
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/" onClick={this.props.signOut}>Logout</NavLink></li>
+                    <li><NavLink to="/summary" className="btn btn-floating transparent z-depth-0"><i className="material-icons right">shopping_cart</i></NavLink></li>
                  </ul>
 
                 {/* mobile menu */}
