@@ -4,6 +4,8 @@ import M from 'materialize-css';
 import {connect} from 'react-redux';
 import {Increment} from '../../store/actions/itemAction'
 import {Decrement} from '../../store/actions/itemAction'
+import {Price} from '../../store/actions/itemAction'
+import {addToCart} from '../../store/actions/itemAction'
 
 
 class ItemDetails extends Component {
@@ -11,13 +13,14 @@ class ItemDetails extends Component {
         disabled: false
      }
 
-     addBasket = () =>{
-       this.props.history.push("/summary")
+     addBasket = (id) =>{
+         alert(id)
+    //    this.props.history.push("/summary")
      }
-
      componentDidMount(){
         let Materialbox = document.querySelector('.materialboxed');
         M.Materialbox.init(Materialbox, {});
+        this.props.marketPrice(this.props.match.params.id)
      }
      incrementClick = () =>{
          this.props.Increment()
@@ -25,8 +28,13 @@ class ItemDetails extends Component {
      decrementClick = () =>{
          this.props.Decrement()
      }
+     addCartClick = (id, name) =>{
+        M.toast({html: `${name} added to cart`, classes: 'green'})
+        this.props.addToCart(id); 
+        this.props.history.push("/summary")
+    }
     render() { 
-        const {count, price} = this.props
+        const {count, item, price} = this.props
         return ( 
             <React.Fragment>
              <Navbar />
@@ -35,15 +43,15 @@ class ItemDetails extends Component {
                          <div className="col s12 l6 m6">
                             <div className="card medium">
                             <div className="card-image">
-                                <img src="../img/food1.jpg" className="responsive-img materialboxed" alt="third" />
+                                <img src={item.largeImgList} className="responsive-img materialboxed" alt="third" />
                             </div>
                             <div className="card-content">
                                 <div className="row">
                                     <div className="col l6 s6">
-                                        <span className="card-title" style={{fontWeight: 500}}>Noodles</span>
+                                        <span className="card-title" style={{fontWeight: 500}}>{item.name}</span>
                                     </div>
                                     <div className="col l6 s6 right-align">
-                                    <span className="card-title" style={{fontWeight: 500}}>$2.80</span>
+                                    <span className="card-title" style={{fontWeight: 500}}>{`$${item.marketPrice}`}</span>
                                     <p>Base Price</p>
                                     </div>
                                 </div>              
@@ -111,7 +119,7 @@ class ItemDetails extends Component {
                          </div>
                          {/* add to basket */}
                          <div className="center">
-                         <button onClick={this.addBasket} className="waves-effect btn btn-style blue darken-3 z-depth-0"><i className="material-icons left">shopping_cart</i>Add to Basket - {`$${price.toFixed(2)}`}</button>
+                         <button onClick={()=>{this.addCartClick(item.id, item.name)}} className="waves-effect btn btn-style blue darken-3 z-depth-0"><i className="material-icons left">shopping_cart</i>Add to Basket - {`$${price.toFixed(2)}`}</button>
                          </div>
                     </div>
                  </div>       
@@ -121,10 +129,12 @@ class ItemDetails extends Component {
     }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state, ownProps) =>{
+    let id = ownProps.match.params.id;
     return{
         count: state.item.count,
         price: state.item.pricesum,
+        item: state.item.dishlist.find(dish => dish.id.toString() === id)
     }
 }
 
@@ -132,6 +142,8 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
+        marketPrice : (id) => dispatch(Price(id)),
+        addToCart: (id) => dispatch(addToCart(id))
     }
 }
  

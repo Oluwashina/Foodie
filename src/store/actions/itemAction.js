@@ -27,7 +27,6 @@ export const Menus = () =>{
         axios.post(`/api/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
         transformResponse: data => JSONbig.parse(data),
         }).then((res)=>{
-            console.log(res.data)
             var result = res.data.result
             dispatch({type: 'MENUS', result})
             
@@ -58,7 +57,6 @@ export const DishList = (id) =>{
             };
         axios.post(`/api/dish/dishNew?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
-            console.log(res.data)
             var dishes = res.data.result.dishList
             dispatch({type: 'DISH_LIST', dishes})
         }).catch((err)=>{
@@ -74,6 +72,12 @@ export const Increment = () =>{
     }
 }
 
+export const Price = (id) =>{
+    return(dispatch) =>{
+        dispatch({type: 'PRICE', id})
+    }
+}
+
 export const Decrement = () =>{
     return(dispatch, getState) =>{
         dispatch({type: 'DECREMENT'})
@@ -84,5 +88,11 @@ export const Decrement = () =>{
 export const addToCart = (id) =>{
     return (dispatch, getState) =>{
         dispatch({type: 'ADD_TO_CART',id})
+    }
+}
+
+export const removeCart = (id) =>{
+    return (dispatch, getState) =>{
+        dispatch({type: 'REMOVE_FROM_CART', id})
     }
 }

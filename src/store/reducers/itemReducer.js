@@ -2,8 +2,8 @@ const initState = {
     category: [],
     dishlist: [],
     count: 1,
-    price : 2.80,
-    pricesum: 2.80,
+    price : 0,
+    pricesum: 0,
     addedItems: [],
     total: 0
 }
@@ -19,6 +19,14 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 dishlist: action.dishes
+            }
+        case 'PRICE' :
+            let itemDetails = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())
+            return{
+                ...state,
+                count: 1,
+                price : itemDetails.marketPrice,
+                pricesum: itemDetails.marketPrice,
             }
         case 'INCREMENT' :
             return{
@@ -41,30 +49,26 @@ const itemReducer = (state = initState, action) =>{
                 pricesum: state.price * state.count
             }
         case 'ADD_TO_CART' :
-            let addedItem = state.dishlist.find(dish=> dish.id === action.id)
+            let addedItem = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())
              //check if the action id exists in the addedItems
-             console.log(action.id)
-         let existed_item= state.addedItems.find(item=> item.id === action.id)
-         console.log(existed_item)
-         if(existed_item)
-         {
-            addedItem.quantity += 1 
-             return{
-                ...state,
-                 total: state.total + addedItem.marketPrice
-                  }
-        }
-         else{
-            addedItem.quantity = 1;
+            addedItem.quantity = state.count;
             //calculating the total
-            let newTotal = state.total + addedItem.marketPrice
-            
+            let newTotal = state.total + state.pricesum          
             return{
                 ...state,
                 addedItems: [...state.addedItems, addedItem],
                 total : newTotal
             }
-        } 
+        case 'REMOVE_FROM_CART' :
+            let removedItem = state.addedItems.filter(item=> item.id.toString() !== action.id.toString())
+            let addedValue = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())
+            let totalcalc = addedValue.marketPrice * addedValue.quantity
+            let removedTotal = state.total - totalcalc 
+            return{
+                ...state,
+                addedItems : removedItem,
+                total: removedTotal
+            } 
         default:
             return state
     }

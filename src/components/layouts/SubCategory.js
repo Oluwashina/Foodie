@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-import M from 'materialize-css';
 import {connect} from 'react-redux';
 import Menus from './Menus';
 import {DishList} from '../../store/actions/itemAction'
-import {addToCart} from '../../store/actions/itemAction'
+
 
 
 class SubCategory extends Component {
@@ -15,16 +14,9 @@ class SubCategory extends Component {
         var id = "350368638463726592"
         this.props.DishList(id)
      }
-
-
-     addCartClick = (id, name) =>{
-         M.toast({html: `${name} added to cart`, classes: 'green'})
-         this.props.addToCart(id); 
-     }
      
 
     render() { 
-        console.log(this.props)
         const {dishes} = this.props
         let dishlist;
 
@@ -36,8 +28,8 @@ class SubCategory extends Component {
                     <div key={dish.id} className="col s12 m6 l4">
             <div className="card hoverable">
                  <div className="card-image">
-                     <img src={dish.smallImgUrls} className="responsive-img" alt="first" />
-                     <button className="btn-floating halfway-fab btn-large blue darken-3 z-depth-0" onClick={()=>{this.addCartClick(dish.id, dish.name)}}><i className="material-icons">add_shopping_cart</i></button>
+                     <img src={dish.largeImgList} className="responsive-img" alt="first" />
+                     <Link to={`item/${dish.id}`} className="btn-floating halfway-fab btn-large blue darken-3 z-depth-0"><i className="material-icons">add_shopping_cart</i></Link>
                  </div>
                      <div className="card-content">
                         <p style={{fontWeight: 500, fontSize: 18}} className="">{dish.name}</p>
@@ -90,7 +82,6 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         DishList : (id) => dispatch(DishList(id)),
-        addToCart: (id) => dispatch(addToCart(id))
     }
 }
  

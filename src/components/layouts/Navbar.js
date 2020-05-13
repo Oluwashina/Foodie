@@ -13,6 +13,7 @@ class Navbar extends Component {
         M.Sidenav.init(sidenav, {});
      }
     render() { 
+        const {count} = this.props
         return ( 
             <nav className="nav-wrapper nav-color">
                 <div className="container">
@@ -25,7 +26,7 @@ class Navbar extends Component {
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/orders">Orders</NavLink></li>
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/" onClick={this.props.signOut}>Logout</NavLink></li>
                     {/* <li><NavLink to="/summary" className="btn btn-floating transparent z-depth-0"><i className="material-icons">shopping_cart</i><span>55</span></NavLink></li> */}
-                    <li><NavLink to="/summary" style={{marginTop: 5}} href=""><span><i className="material-icons left">shopping_cart</i></span><span className="cart-count">0</span></NavLink></li>
+                    <li><NavLink to="/summary" style={{marginTop: 5}} href=""><span><i className="material-icons left">shopping_cart</i></span><span className="cart-count">{count}</span></NavLink></li>
                     {/* <li><a href="">Cart<span className="badge white blue-text text-darken-3">50</span></a></li> */}
                  </ul>
 
@@ -42,10 +43,16 @@ class Navbar extends Component {
     }
 }
 
+const mapStateToProps = (state) =>{
+    return{
+        count: state.item.addedItems.length
+    }
+}
+
 const mapDispatchToProps = (dispatch) =>{
     return{
         signOut: () => dispatch(signOut())
     }
 } 
  
-export default connect(null, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

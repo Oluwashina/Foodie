@@ -3,6 +3,7 @@ import Navbar from '../layouts/Navbar';
 import StripeCheckout from 'react-stripe-checkout'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {removeCart} from '../../store/actions/itemAction'
 // import axios from 'axios';
 
 
@@ -32,20 +33,24 @@ handleToken = (token) =>{
     // });
 }
 
+removeCart = (id) =>{
+    this.props.removeCart(id); 
+}
+
     render() { 
         const {addedItems, total} = this.props
         const summary = addedItems.length ? (
           addedItems.map(items=>{
               return (
                       <>  
-                    <div className="row">
+                    <div className="row" key={items.id}>
                         <div className="col s2 l2">
                             <p className="green-text">{`${items.quantity}x`}</p>
                         </div>
                         <div className="col s6 l6">
                             <p style={{fontWeight: 600}}>{items.name}</p>
                             <p>Toast Only</p>
-                            <button style={{padding: 0}} className="btn z-depth-0 white green-text">Edit</button>
+                            <button onClick={()=>{this.removeCart(items.id)}} style={{padding: 0}} className="btn z-depth-0 white green-text">Remove</button>
                         </div>
                         <div className="col s4 l4 right-align">
                             <p style={{fontWeight: 600}}>{`$${items.marketPrice}`}</p>
@@ -128,7 +133,7 @@ handleToken = (token) =>{
                                             <span className="card-title">Total</span>
                                         </div>
                                         <div className="col s6 l6 right-align">
-                                            <p style={{fontWeight: 600}}>$2.80</p>
+                                            <p style={{fontWeight: 600}}>{`$${total.toFixed(2)}`}</p>
                                         </div>
                                     </div>
                                      <div className="center">
@@ -158,5 +163,11 @@ const mapStateToProps = (state) =>{
         total: state.item.total
     }
 }
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        removeCart: (id) => dispatch(removeCart(id))
+    }
+}
  
-export default connect(mapStateToProps)(Summary);
+export default connect(mapStateToProps, mapDispatchToProps)(Summary);
