@@ -85,9 +85,9 @@ export const Decrement = () =>{
     }
 }
 
-export const addToCart = (id) =>{
+export const addToCart = (id,selectedOption) =>{
     return (dispatch, getState) =>{
-        dispatch({type: 'ADD_TO_CART',id})
+        dispatch({type: 'ADD_TO_CART',id,selectedOption})
     }
 }
 

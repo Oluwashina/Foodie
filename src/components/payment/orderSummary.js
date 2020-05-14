@@ -49,7 +49,7 @@ removeCart = (id) =>{
                         </div>
                         <div className="col s6 l6">
                             <p style={{fontWeight: 600}}>{items.name}</p>
-                            <p>Toast Only</p>
+                            <p>{items.selectedToppings}</p>
                             <button onClick={()=>{this.removeCart(items.id)}} style={{padding: 0}} className="btn z-depth-0 white green-text">Remove</button>
                         </div>
                         <div className="col s4 l4 right-align">
@@ -82,7 +82,7 @@ removeCart = (id) =>{
                                         <span className="card-title">Order Summary</span>
                                     </div>
                                     <div className="col s6 l6 right-align">
-                                    <Link to="/dashboard" className="btn z-depth-0 white green-text" style={{padding: 0}}>Add items</Link>
+                                    <Link to="/home" className="btn z-depth-0 white green-text" style={{padding: 0}}>Add items</Link>
                                     </div>
                                     </div>
 

@@ -10,13 +10,22 @@ import {addToCart} from '../../store/actions/itemAction'
 
 class ItemDetails extends Component {
     state = { 
-        disabled: false
+        selectedOption: 'Toast Only',
+        specs: ''
      }
 
-     addBasket = (id) =>{
-         alert(id)
-    //    this.props.history.push("/summary")
+     onToppingsChange = (e) =>{
+        this.setState({
+            selectedOption: e.target.value
+          });
      }
+
+     handleChange = (e) =>{
+         this.setState({
+             specs: e.target.value
+         })
+     }
+
      componentDidMount(){
         let Materialbox = document.querySelector('.materialboxed');
         M.Materialbox.init(Materialbox, {});
@@ -30,7 +39,7 @@ class ItemDetails extends Component {
      }
      addCartClick = (id, name) =>{
         M.toast({html: `${name} added to cart`, classes: 'green'})
-        this.props.addToCart(id); 
+        this.props.addToCart(id, this.state.selectedOption); 
         this.props.history.push("/summary")
     }
     render() { 
@@ -66,7 +75,11 @@ class ItemDetails extends Component {
                                     <div className="col l6 s6">
                                             <p>
                                         <label>
-                                            <input className="with-gap" name="group1" type="radio" checked />
+                                            <input className="with-gap" name="toppings" type="radio"
+                                             value="Toast Only"
+                                            checked={this.state.selectedOption === "Toast Only"}
+                                            onChange={this.onToppingsChange}
+                                             />
                                             <span>Toast Only</span>
                                         </label>
                                         </p>
@@ -80,7 +93,12 @@ class ItemDetails extends Component {
                                     <div className="col s6 l6">
                                             <p>
                                         <label>
-                                            <input className="with-gap" name="group1" type="radio" checked />
+                                            <input className="with-gap" name="toppings"
+                                             type="radio"
+                                             value="2 Eggs & Coffee"
+                                            checked={this.state.selectedOption === "2 Eggs & Coffee"}
+                                             onChange={this.onToppingsChange}
+                                              />
                                             <span>2 Eggs & Coffee</span>
                                         </label>
                                         </p>
@@ -94,7 +112,12 @@ class ItemDetails extends Component {
                                     <div className="col s6 l6">
                                             <p>
                                         <label>
-                                            <input className="with-gap" name="group1" type="radio" checked />
+                                            <input className="with-gap" name="toppings"
+                                             type="radio"
+                                             value="2 Eggs & Tea"
+                                             checked={this.state.selectedOption === "2 Eggs & Tea"}
+                                             onChange={this.onToppingsChange}
+                                              />
                                             <span>2 Eggs & Tea</span>
                                         </label>
                                         </p>
@@ -108,7 +131,10 @@ class ItemDetails extends Component {
                               <p>For self pick-ups, you won't be able to add special instructions after placing your order</p>
                               
                             <div className="input-field">
-                              <input placeholder="E.g No onions please" id="specs" type="text" />
+                              <input placeholder="E.g No onions please" id="specs" 
+                              type="text"
+                              onChange={this.handleChange}
+                               />
                              </div>        
                             </div> 
                             <div className="card-action center">
@@ -143,7 +169,7 @@ const mapDispatchToProps = (dispatch) =>{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
         marketPrice : (id) => dispatch(Price(id)),
-        addToCart: (id) => dispatch(addToCart(id))
+        addToCart: (id, selectedOption) => dispatch(addToCart(id,selectedOption))
     }
 }
  

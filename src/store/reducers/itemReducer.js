@@ -52,6 +52,7 @@ const itemReducer = (state = initState, action) =>{
             let addedItem = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())
              //check if the action id exists in the addedItems
             addedItem.quantity = state.count;
+            addedItem.selectedToppings = action.selectedOption
             //calculating the total
             let newTotal = state.total + state.pricesum          
             return{

@@ -57,7 +57,7 @@ class SignIn extends Component {
         return <Redirect to="/validate/otp" />
       }
       if(user.uid){
-        return <Redirect to="/dashboard" />
+        return <Redirect to="/home" />
       }
     return (
         <div className="container">
@@ -72,7 +72,6 @@ class SignIn extends Component {
                                     <input
                                     type="text"
                                     className="validate"
-                                    name="phone"
                                     id="phone"
                                     placeholder="+65 8123 4567"
                                     onChange={this.handleChange}

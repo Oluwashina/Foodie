@@ -24,7 +24,7 @@ class Otp extends Component {
     render() { 
         const {auth, loading} = this.props
         if(auth.uid){
-            return <Redirect to="/dashboard" />
+            return <Redirect to="/home" />
         }
 
         return ( 

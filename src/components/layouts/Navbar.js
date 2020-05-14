@@ -17,12 +17,12 @@ class Navbar extends Component {
         return ( 
             <nav className="nav-wrapper nav-color">
                 <div className="container">
-                <Link to="/dashboard" className="brand-logo white-text">Foodie</Link>
+                <Link to="/home" className="brand-logo white-text">Foodie</Link>
                 <a href="/#" data-target="slide-out" className="sidenav-trigger">
                         <i className="material-icons">menu</i>
                  </a>
                 <ul className="right">
-                    <li className="hide-on-med-and-down"><NavLink className="white-text" to="/dashboard">Home</NavLink></li>
+                    <li className="hide-on-med-and-down"><NavLink className="white-text" to="/home">Home</NavLink></li>
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/orders">Orders</NavLink></li>
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/" onClick={this.props.signOut}>Logout</NavLink></li>
                     {/* <li><NavLink to="/summary" className="btn btn-floating transparent z-depth-0"><i className="material-icons">shopping_cart</i><span>55</span></NavLink></li> */}
@@ -32,7 +32,7 @@ class Navbar extends Component {
 
                 {/* mobile menu */}
                  <ul id="slide-out" className="sidenav sidenav-close">
-                    <li><NavLink to="/dashboard">Home</NavLink></li>
+                    <li><NavLink to="/home">Home</NavLink></li>
                     <li><NavLink to="/orders">Orders</NavLink></li>
                     <li><NavLink to="/" onClick={this.props.signOut}>Logout</NavLink></li>
                 </ul>
