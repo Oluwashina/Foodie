@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import Menus from './Menus';
 import {DishList} from '../../store/actions/itemAction'
+import Loader from 'react-loader-spinner'
 
 
 
@@ -17,7 +18,7 @@ class SubCategory extends Component {
      
 
     render() { 
-        const {dishes} = this.props
+        const {dishes, loading} = this.props
         let dishlist;
 
         if(!dishes || dishes.length === 0){
@@ -49,9 +50,15 @@ class SubCategory extends Component {
             <div className="container">
 
                 <Menus />
-
+                                  
                 <div style={{marginTop: 20}} className="row">
-                    {dishlist}
+                    { loading ? <Loader
+                    type="Oval"
+                    color="#1565C0"
+                    height={30}
+                    width={30}
+                    className="center"
+                    /> : dishlist}
                 </div>
                     
                 {/* <ul style={{marginTop: 10}} className="tabs tabs-fixed-width tab-demo z-depth-1">
@@ -76,6 +83,7 @@ class SubCategory extends Component {
 const mapStateToProps = (state) =>{
     return{
         dishes: state.item.dishlist,
+        loading: state.item.loading
     }
 }
 

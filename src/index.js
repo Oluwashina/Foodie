@@ -12,6 +12,31 @@ import {ReactReduxFirebaseProvider, getFirebase, isLoaded} from 'react-redux-fir
 import fbConfig from './config/fbConfig'
 
 
+
+// save redux store to local storage
+function saveToLocalStorage(state) {
+  try{
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem('state', serializedState)
+  } catch(e){
+    console.log(e)
+  }
+}
+
+// function to load storage to redux state
+function loadFromLocalStorage() {
+  try {
+    const serializedState = localStorage.getItem('state')
+    if(serializedState === null) return undefined
+    return JSON.parse(serializedState)
+  }catch(e){
+    console.log(e)
+    return undefined
+  }
+}
+
+
+
 const composeEnhancers =
   typeof window === 'object' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
@@ -24,7 +49,13 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
-const store = createStore(rootReducer, enhancer);
+const persistedState = loadFromLocalStorage()
+
+
+const store = createStore(
+  rootReducer,
+  persistedState,
+   enhancer);
 
 const rrfConfig = { 
   userProfile: 'users',
@@ -57,6 +88,8 @@ function AuthIsLoaded({ children }) {
   );
   return children
 }
+
+store.subscribe(() => saveToLocalStorage(store.getState()))
 
 
 ReactDOM.render(

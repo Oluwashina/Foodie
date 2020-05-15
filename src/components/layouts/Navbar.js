@@ -22,8 +22,9 @@ class Navbar extends Component {
                         <i className="material-icons">menu</i>
                  </a>
                 <ul className="right">
-                    <li className="hide-on-med-and-down"><NavLink className="white-text" to="/home">Home</NavLink></li>
+                    <li className="hide-on-med-and-down"><NavLink className="white-text" to="/home">Menu</NavLink></li>
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/orders">Orders</NavLink></li>
+                    {/* <li className="hide-on-med-and-down"><NavLink className="white-text" to="/orders">About</NavLink></li> */}
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/" onClick={this.props.signOut}>Logout</NavLink></li>
                     {/* <li><NavLink to="/summary" className="btn btn-floating transparent z-depth-0"><i className="material-icons">shopping_cart</i><span>55</span></NavLink></li> */}
                     <li><NavLink to="/summary" style={{marginTop: 5}} href=""><span><i className="material-icons left">shopping_cart</i></span><span className="cart-count">{count}</span></NavLink></li>
@@ -32,8 +33,9 @@ class Navbar extends Component {
 
                 {/* mobile menu */}
                  <ul id="slide-out" className="sidenav sidenav-close">
-                    <li><NavLink to="/home">Home</NavLink></li>
+                    <li><NavLink to="/home">Menu</NavLink></li>
                     <li><NavLink to="/orders">Orders</NavLink></li>
+                    {/* <li><NavLink to="/orders">About</NavLink></li> */}
                     <li><NavLink to="/" onClick={this.props.signOut}>Logout</NavLink></li>
                 </ul>
 

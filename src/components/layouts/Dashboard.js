@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar'
 import Slider from './Slider'
+import Select from './DeliveryOptions'
 import SubCategory from './SubCategory'
 import Footer from './Footer';
 import {connect} from 'react-redux';
@@ -25,6 +26,7 @@ class Dashboard extends Component {
             <div>
                 <Navbar/>
                 <Slider/>
+                <Select />
                 <SubCategory />
                 <Footer />
             </div>

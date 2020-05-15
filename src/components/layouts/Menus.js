@@ -37,7 +37,7 @@ class Menu extends Component {
         return (
             <React.Fragment>
                     <div>
-                        <ul style={{marginTop: 30}} className="tabs tabs-fixed-width tab-demo z-depth-1">
+                        <ul style={{marginTop: 20}} className="tabs tabs-fixed-width tab-demo z-depth-1">
                             {menutab}
                         </ul>
                     </div>

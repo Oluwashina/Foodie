@@ -1,4 +1,5 @@
 const initState = {
+    loading: false,
     category: [],
     dishlist: [],
     count: 1,
@@ -10,6 +11,11 @@ const initState = {
 
 const itemReducer = (state = initState, action) =>{
     switch(action.type){
+        case 'Loading' :
+            return{
+                ...state,
+                loading: true
+            }
         case 'MENUS' :
             return {
                 ...state,
@@ -18,7 +24,8 @@ const itemReducer = (state = initState, action) =>{
         case 'DISH_LIST' :
             return{
                 ...state,
-                dishlist: action.dishes
+                dishlist: action.dishes,
+                loading: false
             }
         case 'PRICE' :
             let itemDetails = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())

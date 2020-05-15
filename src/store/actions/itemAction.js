@@ -40,6 +40,8 @@ export const Menus = () =>{
 export const DishList = (id) =>{
     return(dispatch, getState) =>{
 
+        dispatch({type: 'Loading'})
+
         const appKey = "b23302d4a08f53d1bd5bcf333664997d";
         const storeId = "810137674";
         const token = "8a702142d013e6c93d64c604a3fb332e";
@@ -57,6 +59,7 @@ export const DishList = (id) =>{
             };
         axios.post(`/api/dish/dishNew?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
+            console.log(res.data)
             var dishes = res.data.result.dishList
             dispatch({type: 'DISH_LIST', dishes})
         }).catch((err)=>{
