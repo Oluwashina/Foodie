@@ -105,11 +105,6 @@ export const Increment = () =>{
     }
 }
 
-export const Price = (id) =>{
-    return(dispatch) =>{
-        dispatch({type: 'PRICE', id})
-    }
-}
 
 export const Decrement = () =>{
     return(dispatch, getState) =>{

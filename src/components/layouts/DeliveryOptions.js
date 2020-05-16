@@ -26,7 +26,7 @@ class DeliveryOptions extends Component {
                         </div>
                     </div>
                     <div className="col s12 l6">
-                        <div class="input-field">
+                        <div className="input-field">
                             <select>
                             <option value="1" defaultValue>ASAP</option>
                             </select>

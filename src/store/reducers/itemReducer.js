@@ -3,6 +3,7 @@ const initState = {
     category: [],
     dishlist: [],
     dishMenuById: [],
+    dishAttr: [],
     count: 1,
     price : 0,
     pricesum: 0,
@@ -31,15 +32,11 @@ const itemReducer = (state = initState, action) =>{
         case 'dishMenuById' :
             return{
                 ...state,
-                dishMenuById: action.result
-            }
-        case 'PRICE' :
-            let itemDetails = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())
-            return{
-                ...state,
+                dishMenuById: action.result,
                 count: 1,
-                price : itemDetails.marketPrice,
-                pricesum: itemDetails.marketPrice,
+                price: action.result[0].price/100,
+                pricesum: action.result[0].price/100,
+                dishAttr: action.result[0].attrs
             }
         case 'INCREMENT' :
             return{

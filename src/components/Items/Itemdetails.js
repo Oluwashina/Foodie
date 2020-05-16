@@ -4,7 +4,6 @@ import M from 'materialize-css';
 import {connect} from 'react-redux';
 import {Increment} from '../../store/actions/itemAction'
 import {Decrement} from '../../store/actions/itemAction'
-import {Price} from '../../store/actions/itemAction'
 import {addToCart} from '../../store/actions/itemAction'
 import {dishMenuById} from '../../store/actions/itemAction'
 
@@ -12,11 +11,14 @@ import {dishMenuById} from '../../store/actions/itemAction'
 class ItemDetails extends Component {
     state = { 
         selectedOption: 'Toast Only',
-        specs: ''
+        specs: '',
+        checked: 0
      }
 
-     onToppingsChange = (e) =>{
+     onToppingsChange = (i,e) =>{
+         console.log(i)
         this.setState({
+            checked: i,
             selectedOption: e.target.value
           });
      }
@@ -31,7 +33,6 @@ class ItemDetails extends Component {
          const {item} = this.props
         let Materialbox = document.querySelector('.materialboxed');
         M.Materialbox.init(Materialbox, {});
-        this.props.marketPrice(this.props.match.params.id)
         this.props.dishMenuById(item.dishTypeId,this.props.match.params.id)
      }
      incrementClick = () =>{
@@ -48,16 +49,16 @@ class ItemDetails extends Component {
     render() { 
         const {count, item, price, dishattr} = this.props
         const toppings = dishattr.length ? (
-            dishattr.map(dish =>{
+            dishattr.map((dish,i) =>{
                 return (
-                    <div className="row">
+                    <div className="row" key={dish.id}>
                     <div className="col l6 s6">
                             <p>
                         <label>
                             <input className="with-gap" name="toppings" type="radio"
                              value={dish.name}
-                             checked={this.state.selectedOption === dish.name}
-                             onChange={this.onToppingsChange}
+                             checked={this.state.checked === i ? true : false}
+                             onChange={this.onToppingsChange.bind(this,i)}
                              />
                             <span>{dish.name}</span>
                         </label>
@@ -99,7 +100,7 @@ class ItemDetails extends Component {
                      <div className="col s12 l6 m6">
                          <div className="card z-depth-1">
                             <div className="card-content">
-                                {dishattr.length ? <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span> : ''}
+                             {dishattr.length ? <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span> : ''}
                                 
                                 {toppings}
 
@@ -137,7 +138,7 @@ const mapStateToProps = (state, ownProps) =>{
         count: state.item.count,
         price: state.item.pricesum,
         item: state.item.dishlist.find(dish => dish.id.toString() === id),
-        dishattr: state.item.dishMenuById[0].attrs
+        dishattr: state.item.dishAttr
     }
 }
 
@@ -145,7 +146,6 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
-        marketPrice : (id) => dispatch(Price(id)),
         addToCart: (id, selectedOption) => dispatch(addToCart(id,selectedOption)),
         dishMenuById: (dishId, id) => dispatch(dishMenuById(dishId, id))
     }
