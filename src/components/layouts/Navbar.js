@@ -17,7 +17,7 @@ class Navbar extends Component {
         return ( 
             <nav className="nav-wrapper nav-color">
                 <div className="container">
-                <Link to="/home" className="brand-logo white-text">Foodie</Link>
+                <Link to="/home" className="brand-logo white-text">Victor's Kitchen</Link>
                 <a href="/#" data-target="slide-out" className="sidenav-trigger">
                         <i className="material-icons">menu</i>
                  </a>

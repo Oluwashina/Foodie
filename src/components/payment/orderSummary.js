@@ -92,7 +92,7 @@ removeCart = (id) =>{
                                 <div className="card-action">
                                     <div className="row">
                                         <div className="col s6 l6">
-                                            <span className="card-title">Subtotal</span>
+                                            <span className="card-title">Total</span>
                                         </div>
                                         <div className="col s6 l6 right-align">
                                             <p style={{fontWeight: 600}}>{`$${total.toFixed(2)}`}</p>
@@ -108,36 +108,13 @@ removeCart = (id) =>{
                         <div className="col s12 l10 m10">
                             <div className="card z-depth-1">
                                 <div className="card-content">
-                                    <div className="row">
-                                        <div className="col s8 l6">
-                                            <span className="card-title">Plastic Cutlery</span>
-                                            <p>No cutlery provided.</p>
-                                            <p>Thank you for reducing single-use plastic!</p>
-                                        </div>
-                                        <div className="col s4 l6 right-align">
-                                            <div className="switch">
-                                                <label>
-                                                    <input type="checkbox" />
-                                                    <span className="lever"></span>
-                                                </label>
-                                                </div>
-                                        </div>
-                                    </div>
                                     {/* payment method */}
                                     <span className="card-title">Payment Method</span>
-                                    <img src="img/stripe.png" width="80" height="50" alt="stripe" className="responsive-img" />
+                                    <img src="img/stripe.png" height="50" width="50" className="responsive-img" alt="stripe" />
+                                   
                                 </div>
                                 <div className="card-action">
-                                    <div className="row">
-                                        <div className="col s6 l6">
-                                            <span className="card-title">Total</span>
-                                        </div>
-                                        <div className="col s6 l6 right-align">
-                                            <p style={{fontWeight: 600}}>{`$${total.toFixed(2)}`}</p>
-                                        </div>
-                                    </div>
                                      <div className="center">
-                                         {/* <button style={{textTransform: 'initial'}} className="waves-effect btn green darken-1 z-depth-0">Place Order - Self Pick-up</button> */}
                                          <StripeCheckout
                                             stripeKey="pk_test_lD4fwMmmeJw5ZbIN1salJO1400rzkliycN"
                                             token={this.handleToken}

@@ -27,6 +27,7 @@ export const Menus = () =>{
         axios.post(`/api/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
         transformResponse: data => JSONbig.parse(data),
         }).then((res)=>{
+            console.log(res)
             var result = res.data.result
             dispatch({type: 'MENUS', result})
             
@@ -67,6 +68,35 @@ export const DishList = (id) =>{
         })
     }
 } 
+
+export const dishMenuById = (dishId, id) =>{
+    return(dispatch) =>{
+        const appKey = "b23302d4a08f53d1bd5bcf333664997d";
+        const storeId = "810137674";
+        const token = "8a702142d013e6c93d64c604a3fb332e";
+        const version = "1.0";
+        const timestamp = Math.floor(Date.now() / 1000);
+
+         function getSign(){
+            const signtxt = "appKey" + appKey + "shopIdenty" + storeId + "timestamp" + timestamp + "version" + version + token
+            let hash = crypto.createHash('sha256' , 'utf-8').update(signtxt).digest("hex");
+            return hash;
+            }
+        // make call to server using fetch
+         let body  = {
+            "shopIdenty": 810137674,
+            "ids":[dishId, id]
+            };
+        axios.post(`/api/dish/dishMenuByIds?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        .then((res)=>{
+            console.log(res.data)
+            var result = res.data.result
+            dispatch({type: 'dishMenuById', result})
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+}
 
 export const Increment = () =>{
     return(dispatch, getState) =>{

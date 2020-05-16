@@ -2,6 +2,7 @@ const initState = {
     loading: false,
     category: [],
     dishlist: [],
+    dishMenuById: [],
     count: 1,
     price : 0,
     pricesum: 0,
@@ -26,6 +27,11 @@ const itemReducer = (state = initState, action) =>{
                 ...state,
                 dishlist: action.dishes,
                 loading: false
+            }
+        case 'dishMenuById' :
+            return{
+                ...state,
+                dishMenuById: action.result
             }
         case 'PRICE' :
             let itemDetails = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())

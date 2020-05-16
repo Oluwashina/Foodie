@@ -9,7 +9,7 @@ class Footer extends Component {
         return ( 
                <footer className="footer">
                     <div className="container" style={{paddingTop: 20}}>
-                        <p className="footer-color">&copy; 2020 Foodie. All rights reserved.</p>
+                        <p className="footer-color">&copy; 2020 Victor's Kitchen. All rights reserved.</p>
                     </div>
                </footer>
          );

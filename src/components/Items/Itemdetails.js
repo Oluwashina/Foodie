@@ -6,6 +6,7 @@ import {Increment} from '../../store/actions/itemAction'
 import {Decrement} from '../../store/actions/itemAction'
 import {Price} from '../../store/actions/itemAction'
 import {addToCart} from '../../store/actions/itemAction'
+import {dishMenuById} from '../../store/actions/itemAction'
 
 
 class ItemDetails extends Component {
@@ -27,9 +28,11 @@ class ItemDetails extends Component {
      }
 
      componentDidMount(){
+         const {item} = this.props
         let Materialbox = document.querySelector('.materialboxed');
         M.Materialbox.init(Materialbox, {});
         this.props.marketPrice(this.props.match.params.id)
+        this.props.dishMenuById(item.dishTypeId,this.props.match.params.id)
      }
      incrementClick = () =>{
          this.props.Increment()
@@ -43,7 +46,33 @@ class ItemDetails extends Component {
         this.props.history.push("/summary")
     }
     render() { 
-        const {count, item, price} = this.props
+        const {count, item, price, dishattr} = this.props
+        const toppings = dishattr.length ? (
+            dishattr.map(dish =>{
+                return (
+                    <div className="row">
+                    <div className="col l6 s6">
+                            <p>
+                        <label>
+                            <input className="with-gap" name="toppings" type="radio"
+                             value={dish.name}
+                             checked={this.state.selectedOption === dish.name}
+                             onChange={this.onToppingsChange}
+                             />
+                            <span>{dish.name}</span>
+                        </label>
+                        </p>
+                    </div>
+                    <div className="col l6 s6 right-align">
+                        {`+${dish.reprice.toFixed(2)}`}
+                    </div>
+                </div>
+                )
+            })
+        ) : (
+            <p></p>
+        )
+
         return ( 
             <React.Fragment>
              <Navbar />
@@ -70,63 +99,10 @@ class ItemDetails extends Component {
                      <div className="col s12 l6 m6">
                          <div className="card z-depth-1">
                             <div className="card-content">
-                                <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span>
-                                <div className="row">
-                                    <div className="col l6 s6">
-                                            <p>
-                                        <label>
-                                            <input className="with-gap" name="toppings" type="radio"
-                                             value="Toast Only"
-                                            checked={this.state.selectedOption === "Toast Only"}
-                                            onChange={this.onToppingsChange}
-                                             />
-                                            <span>Toast Only</span>
-                                        </label>
-                                        </p>
-                                    </div>
-                                    <div className="col l6 s6 right-align">
-                                        0.00
-                                    </div>
-                                </div>
-                                {/* second row */}
-                                <div className="row">
-                                    <div className="col s6 l6">
-                                            <p>
-                                        <label>
-                                            <input className="with-gap" name="toppings"
-                                             type="radio"
-                                             value="2 Eggs & Coffee"
-                                            checked={this.state.selectedOption === "2 Eggs & Coffee"}
-                                             onChange={this.onToppingsChange}
-                                              />
-                                            <span>2 Eggs & Coffee</span>
-                                        </label>
-                                        </p>
-                                    </div>
-                                    <div className="col s6 l6 right-align">
-                                        +2.00
-                                    </div>
-                                </div>
-                                {/* third row */}
-                                <div className="row">
-                                    <div className="col s6 l6">
-                                            <p>
-                                        <label>
-                                            <input className="with-gap" name="toppings"
-                                             type="radio"
-                                             value="2 Eggs & Tea"
-                                             checked={this.state.selectedOption === "2 Eggs & Tea"}
-                                             onChange={this.onToppingsChange}
-                                              />
-                                            <span>2 Eggs & Tea</span>
-                                        </label>
-                                        </p>
-                                    </div>
-                                    <div className="col s6 l6 right-align">
-                                        +2.00
-                                    </div>
-                                </div>
-                              
+                                {dishattr.length ? <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span> : ''}
+                                
+                                {toppings}
+
                               <span className="card-title" style={{fontWeight: 500}}>Special Instructions <span style={{fontSize: 18}}>(Optional)</span></span>
                               <p>For self pick-ups, you won't be able to add special instructions after placing your order</p>
                               
@@ -160,7 +136,8 @@ const mapStateToProps = (state, ownProps) =>{
     return{
         count: state.item.count,
         price: state.item.pricesum,
-        item: state.item.dishlist.find(dish => dish.id.toString() === id)
+        item: state.item.dishlist.find(dish => dish.id.toString() === id),
+        dishattr: state.item.dishMenuById[0].attrs
     }
 }
 
@@ -169,7 +146,8 @@ const mapDispatchToProps = (dispatch) =>{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
         marketPrice : (id) => dispatch(Price(id)),
-        addToCart: (id, selectedOption) => dispatch(addToCart(id,selectedOption))
+        addToCart: (id, selectedOption) => dispatch(addToCart(id,selectedOption)),
+        dishMenuById: (dishId, id) => dispatch(dishMenuById(dishId, id))
     }
 }
  
