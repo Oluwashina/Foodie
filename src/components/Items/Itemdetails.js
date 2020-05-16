@@ -47,7 +47,8 @@ class ItemDetails extends Component {
         this.props.history.push("/summary")
     }
     render() { 
-        const {count, item, price, dishattr} = this.props
+        console.log(this.props)
+        const {count, item, price, dishattr, dishmenu} = this.props
         const toppings = dishattr.length ? (
             dishattr.map((dish,i) =>{
                 return (
@@ -82,15 +83,15 @@ class ItemDetails extends Component {
                          <div className="col s12 l6 m6">
                             <div className="card medium">
                             <div className="card-image">
-                                <img src={item.largeImgList} className="responsive-img materialboxed" alt="third" />
+                                <img src={dishmenu[0].imgUrl} className="responsive-img materialboxed" alt="third" />
                             </div>
                             <div className="card-content">
                                 <div className="row">
                                     <div className="col l6 s6">
-                                        <span className="card-title" style={{fontWeight: 500}}>{item.name}</span>
+                                        <span className="card-title" style={{fontWeight: 500}}>{dishmenu[0].name}</span>
                                     </div>
                                     <div className="col l6 s6 right-align">
-                                    <span className="card-title" style={{fontWeight: 500}}>{`$${item.marketPrice}`}</span>
+                                    <span className="card-title" style={{fontWeight: 500}}>{`$${dishmenu[0].price/100}`}</span>
                                     <p>Base Price</p>
                                     </div>
                                 </div>              
@@ -137,6 +138,7 @@ const mapStateToProps = (state, ownProps) =>{
     return{
         count: state.item.count,
         price: state.item.pricesum,
+        dishmenu: state.item.dishMenuById,
         item: state.item.dishlist.find(dish => dish.id.toString() === id),
         dishattr: state.item.dishAttr
     }
