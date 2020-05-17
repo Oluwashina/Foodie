@@ -87,23 +87,23 @@ class ItemDetails extends Component {
                             />
 
         
-    const dishAttr =  dishattr.length ? (dishattr.map((dish,i) =>{
+    const dishAttr =  dishattr.length ? (dishattr.map((attr,i) =>{
         return (
-            <div className="row" key={dish.id}>
+            <div className="row" key={attr.id}>
             <div className="col l6 s6">
                     <p>
                 <label>
                     <input className="with-gap" name="toppings" type="radio"
-                    value={dish.name}
+                    value={attr.name}
                     checked={this.state.checked === i ? true : false}
                     onChange={this.onToppingsChange.bind(this,i)}
                     />
-                    <span>{dish.name}</span>
+                    <span>{attr.name}</span>
                 </label>
                 </p>
             </div>
             <div className="col l6 s6 right-align">
-                {`+${dish.reprice.toFixed(2)}`}
+                {`+${attr.reprice.toFixed(2)}`}
             </div>
         </div>
         )
@@ -160,9 +160,9 @@ const mapStateToProps = (state, ownProps) =>{
         count: state.item.count,
         price: state.item.pricesum,
         dishmenu: state.item.dishMenuById,
+        dishattr: state.item.dishattr,
+        loading: state.item.loading,
         item: state.item.dishlist.find(dish => dish.id.toString() === id),
-        dishattr: state.item.dishAttr,
-        loading: state.item.loading
     }
 }
 

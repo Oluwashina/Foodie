@@ -1,9 +1,9 @@
 const initState = {
+    dishattr: [],
     loading: false,
     category: [],
     dishlist: [],
     dishMenuById: [],
-    dishAttr: [],
     count: 1,
     price : 0,
     pricesum: 0,
@@ -32,12 +32,12 @@ const itemReducer = (state = initState, action) =>{
         case 'dishMenuById' :
             return{
                 ...state,
-                loading: false,
                 dishMenuById: action.result,
                 count: 1,
                 price: action.result[0].price/100,
                 pricesum: action.result[0].price/100,
-                dishAttr: action.result[0].attrs
+                dishattr: action.result[0].attrs,
+                loading: false
             }
         case 'INCREMENT' :
             return{
