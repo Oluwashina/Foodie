@@ -33,13 +33,22 @@ class SubCategory extends Component {
                      {/* <Link to={`item/${dish.id}`} className="btn-floating halfway-fab btn-large blue darken-3 z-depth-0"><i className="material-icons">add_shopping_cart</i></Link> */}
                  </div>
                      <div className="card-content">
-                        <p style={{fontWeight: 500, fontSize: 18}} className="">{dish.name}</p>
-                            <p style={{fontWeight: 600}}>{`$${dish.marketPrice}`}</p>
+                         <div className="row">
+                             <div className="col s6 l6">
+                                <p style={{fontWeight: 500, fontSize: 18}} className="">{dish.name}</p>
+                                <p style={{fontWeight: 600}}>{`$${dish.marketPrice}`}</p>
+                             </div>
+                             <div className="col s6 l6 right-align" style={{marginTop: 10}}>
+                                 <Link to={`/item/${dish.id}`} className=" black-text btn-details" style={{marginRight: 10,}}>Details</Link>
+                                 <Link to={`/item/${dish.id}`} className="blue darken-3 white-text btn-add">Add</Link>
+                             </div>
+                         </div>
+                       
                         </div>
-                    <div className="card-action">
+                    {/* <div className="card-action">
                   <Link to={`/item/${dish.id}`} className="btn grey z-depth-0" style={{marginRight: 10}}>Details</Link>
                   <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0">Add</Link>
-                    </div>
+                    </div> */}
                 </div>
          </div>
                 )

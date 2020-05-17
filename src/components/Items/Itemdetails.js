@@ -49,33 +49,19 @@ class ItemDetails extends Component {
     }
     render() { 
         console.log(this.props)
-        const {count, item, price, dishmenu, loading} = this.props
+        const {count, item, price, dishmenu, attribute, loading} = this.props
 
-        // const dishAttr =  dishmenu[0].attrs.length ? (dishmenu[0].attrs.map((attr,i) =>{
-        //     return (
-        //         <div className="row" key={attr.id}>
-        //         <div className="col l6 s6">
-        //                 <p>
-        //             <label>
-        //                 <input className="with-gap" name="toppings" type="radio"
-        //                 value={attr.name}
-        //                 checked={this.state.checked === i ? true : false}
-        //                 onChange={this.onToppingsChange.bind(this,i)}
-        //                 />
-        //                 <span>{attr.name}</span>
-        //             </label>
-        //             </p>
-        //         </div>
-        //         <div className="col l6 s6 right-align">
-        //             {`+${attr.reprice.toFixed(2)}`}
-        //         </div>
-        //     </div>
-        //     )
-        //     })) :
-        //     (
-        //     <p></p>
-        //     )
+            if(loading) return <Loader
+            type="Oval"
+            color="#1565C0"
+            height={50}
+            width={50}
+            className="center load"
+            />
 
+            // if(!loading) return dishMenu
+
+            
         const dishMenu = dishmenu.length ? (
             dishmenu.map(dish=>{
                 return (
@@ -102,17 +88,33 @@ class ItemDetails extends Component {
         ) : (
             <p></p>
         )
+
+        const dishAttr =  attribute.length ? (attribute.map((attr,i) =>{
+            return (
+                <div className="row" key={attr.id}>
+                <div className="col l6 s6">
+                        <p>
+                    <label>
+                        <input className="with-gap" name="toppings" type="radio"
+                        value={attr.name}
+                        checked={this.state.checked === i ? true : false}
+                        onChange={this.onToppingsChange.bind(this,i)}
+                        />
+                        <span>{attr.name}</span>
+                    </label>
+                    </p>
+                </div>
+                <div className="col l6 s6 right-align">
+                    {`+${attr.reprice.toFixed(2)}`}
+                </div>
+            </div>
+            )
+            })) :
+            (
+            <p></p>
+            )
         
-        if(loading) return <Loader
-                            type="Oval"
-                            color="#1565C0"
-                            height={50}
-                            width={50}
-                            className="center load"
-                            />
-
-        // if(!loading) return dishMenu
-
+       
         return ( 
             <React.Fragment>
              <Navbar />
@@ -124,7 +126,7 @@ class ItemDetails extends Component {
                             <div className="card-content">
                              <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span>
                                 
-                                {/* {dishAttr} */}
+                                {dishAttr}
                               <span className="card-title" style={{fontWeight: 500}}>Special Instructions <span style={{fontSize: 18}}>(Optional)</span></span>
                               <p>For self pick-ups, you won't be able to add special instructions after placing your order</p>
                               
@@ -159,6 +161,7 @@ const mapStateToProps = (state, ownProps) =>{
         count: state.item.count,
         price: state.item.pricesum,
         dishmenu: state.item.dishMenuById,
+        attribute: state.item.dishattr,
         loading: state.item.loading,
         item: state.item.dishlist.find(dish => dish.id.toString() === id),
     }
