@@ -97,7 +97,7 @@ class ItemDetails extends Component {
                      <div className="col s12 l6 m6">
                          <div className="card z-depth-1">
                             <div className="card-content">
-                             {dishattr.length ? <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span> : ''}
+                             <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span>
                                 
                                 {dishattr.length ? (dishattr.map((dish,i) =>{
                                       return (
