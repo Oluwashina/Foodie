@@ -3,6 +3,7 @@ import {Link, NavLink} from 'react-router-dom'
 import M from 'materialize-css';
 import {connect} from 'react-redux';
 import {signOut} from '../../store/actions/authAction'
+import {shopDetails} from '../../store/actions/shopAction'
 
 class Navbar extends Component {
     state = { 
@@ -11,15 +12,16 @@ class Navbar extends Component {
       componentDidMount(){
         let sidenav = document.querySelector('#slide-out');
         M.Sidenav.init(sidenav, {});
+        this.props.shop()
      }
     render() { 
-        const {count} = this.props
+        const {count, name} = this.props
         return ( 
             <React.Fragment>
             <div className="navbar-fixed">
                     <nav className="nav-wrapper nav-color">
                 <div className="container">
-                <Link to="/home" className="brand-logo white-text">Victor's Kitchen</Link>
+                <Link to="/home" className="brand-logo white-text" style={{fontSize: 15}}>{name.brandName}</Link>
                 <a href="/#" data-target="slide-out" className="sidenav-trigger">
                         <i className="material-icons">menu</i>
                  </a>
@@ -50,13 +52,15 @@ class Navbar extends Component {
 
 const mapStateToProps = (state) =>{
     return{
-        count: state.item.addedItems.length
+        count: state.item.addedItems.length,
+        name: state.shop.shopDetails
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        signOut: () => dispatch(signOut())
+        signOut: () => dispatch(signOut()),
+        shop: () => dispatch(shopDetails())
     }
 } 
  

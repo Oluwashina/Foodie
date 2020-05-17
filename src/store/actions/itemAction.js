@@ -24,7 +24,7 @@ export const Menus = () =>{
             return hash;
             }
         // make call to server using fetch
-        axios.post(`/api/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
+        axios.post(`/api/cater/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
         transformResponse: data => JSONbig.parse(data),
         }).then((res)=>{
             console.log(res)
@@ -58,7 +58,7 @@ export const DishList = (id) =>{
          let body  = {
                "dishTypeId": id
             };
-        axios.post(`/api/dish/dishNew?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        axios.post(`/api/cater/dish/dishNew?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
             console.log(res.data)
             var dishes = res.data.result.dishList
@@ -90,7 +90,7 @@ export const dishMenuById = (dishId, id) =>{
             "shopIdenty": 810137674,
             "ids":[dishId, id]
             };
-        axios.post(`/api/dish/dishMenuByIds?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        axios.post(`/api/cater/dish/dishMenuByIds?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
             console.log(res.data)
             var result = res.data.result

@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar';
+import {connect} from 'react-redux'
 
 
 class About extends Component {
     state = { 
 
      }
+     
     render() { 
+        const {shop} = this.props
         return ( 
             <React.Fragment>
                  <Navbar />
@@ -16,9 +19,11 @@ class About extends Component {
                         <div className="col s12 l12">
                             <div className="card">
                                 <div className="card-content">
-                                    <span className="card-title">Victor's Kitchen @Sunshine Plaza</span>
-                                    <p>91 Bencoolen Street, 01-49, Singapore, 189652</p>
-                                </div>
+                                    <span className="card-title" style={{fontWeight: 700}}>{shop.brandName}</span>
+                                    <p>{shop.commercialAddress}</p>
+                                    <span className="card-title" style={{fontWeight: 700, marginTop: 20}}>Additional Information</span>
+                                    <p>Phone: {shop.commercialPhone}</p>
+                                </div>    
                             </div>
                         </div>
                     </div>
@@ -27,5 +32,11 @@ class About extends Component {
          );
     }
 }
+
+const mapStateToProps = (state) =>{
+    return{
+        shop: state.shop.shopDetails
+    }
+}
  
-export default About;
+export default connect(mapStateToProps)(About);

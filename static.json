@@ -5,7 +5,7 @@
       },
     "proxies": {
       "/api/": {
-        "origin": "https://sg-openapi.keruyun.com/open/v1/cater"
+        "origin": "https://sg-openapi.keruyun.com/open/v1"
       }
     }
 }
