@@ -49,7 +49,7 @@ class ItemDetails extends Component {
     }
     render() { 
         console.log(this.props)
-        const {count, item, price, dishattr, dishmenu, loading} = this.props
+        const {count, item, price, dishmenu, loading} = this.props
 
         const dishMenu = dishmenu.length ? (
             dishmenu.map(dish=>{
@@ -87,7 +87,7 @@ class ItemDetails extends Component {
                             />
 
         
-    const dishAttr =  dishattr.length ? (dishattr.map((attr,i) =>{
+    const dishAttr =  dishmenu[0].attrs.length ? (dishmenu[0].attrs.map((attr,i) =>{
         return (
             <div className="row" key={attr.id}>
             <div className="col l6 s6">
@@ -160,7 +160,6 @@ const mapStateToProps = (state, ownProps) =>{
         count: state.item.count,
         price: state.item.pricesum,
         dishmenu: state.item.dishMenuById,
-        dishattr: state.item.dishattr,
         loading: state.item.loading,
         item: state.item.dishlist.find(dish => dish.id.toString() === id),
     }

@@ -9,7 +9,6 @@ const initState = {
     pricesum: 0,
     addedItems: [],
     total: 0,
-    test: []
 }
 
 const itemReducer = (state = initState, action) =>{
