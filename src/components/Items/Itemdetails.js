@@ -6,6 +6,7 @@ import {Increment} from '../../store/actions/itemAction'
 import {Decrement} from '../../store/actions/itemAction'
 import {addToCart} from '../../store/actions/itemAction'
 import {dishMenuById} from '../../store/actions/itemAction'
+import Loader from 'react-loader-spinner'
 
 
 class ItemDetails extends Component {
@@ -48,62 +49,81 @@ class ItemDetails extends Component {
     }
     render() { 
         console.log(this.props)
-        const {count, item, price, dishattr, dishmenu} = this.props
-        const toppings = dishattr.length ? (
-            dishattr.map((dish,i) =>{
+        const {count, item, price, dishattr, dishmenu, loading} = this.props
+
+        const dishMenu = dishmenu.length ? (
+            dishmenu.map(dish=>{
                 return (
-                    <div className="row" key={dish.id}>
-                    <div className="col l6 s6">
-                            <p>
-                        <label>
-                            <input className="with-gap" name="toppings" type="radio"
-                             value={dish.name}
-                             checked={this.state.checked === i ? true : false}
-                             onChange={this.onToppingsChange.bind(this,i)}
-                             />
-                            <span>{dish.name}</span>
-                        </label>
-                        </p>
+                    <div className="col s12 l6 m6" key={dish.id}>
+                    <div className="card medium">
+                    <div className="card-image">
+                        <img src={dish.imgUrl} className="responsive-img materialboxed" alt="third" />
                     </div>
-                    <div className="col l6 s6 right-align">
-                        {`+${dish.reprice.toFixed(2)}`}
+                    <div className="card-content">
+                        <div className="row">
+                            <div className="col l6 s6">
+                                <span className="card-title" style={{fontWeight: 500}}>{dish.name}</span>
+                            </div>
+                            <div className="col l6 s6 right-align">
+                            <span className="card-title" style={{fontWeight: 500}}>{`$${dish.price/100}`}</span>
+                            <p>Base Price</p>
+                            </div>
+                        </div>              
                     </div>
                 </div>
+             </div>
                 )
             })
         ) : (
             <p></p>
         )
+        
+        if(loading) return <Loader
+                            type="Oval"
+                            color="#1565C0"
+                            height={50}
+                            width={50}
+                            className="center load"
+                            />
+
+        // if(!loading) return dishMenu
 
         return ( 
             <React.Fragment>
              <Navbar />
                 <div className="container section">
                     <div className="row">
-                         <div className="col s12 l6 m6">
-                            <div className="card medium">
-                            <div className="card-image">
-                                <img src={dishmenu[0].imgUrl} className="responsive-img materialboxed" alt="third" />
-                            </div>
-                            <div className="card-content">
-                                <div className="row">
-                                    <div className="col l6 s6">
-                                        <span className="card-title" style={{fontWeight: 500}}>{dishmenu[0].name}</span>
-                                    </div>
-                                    <div className="col l6 s6 right-align">
-                                    <span className="card-title" style={{fontWeight: 500}}>{`$${dishmenu[0].price/100}`}</span>
-                                    <p>Base Price</p>
-                                    </div>
-                                </div>              
-                            </div>
-                        </div>
-                     </div>
+                    {dishMenu}
                      <div className="col s12 l6 m6">
                          <div className="card z-depth-1">
                             <div className="card-content">
                              {dishattr.length ? <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span> : ''}
                                 
-                                {toppings}
+                                {dishattr.length ? (dishattr.map((dish,i) =>{
+                                      return (
+                                <div className="row" key={dish.id}>
+                                <div className="col l6 s6">
+                                        <p>
+                                    <label>
+                                        <input className="with-gap" name="toppings" type="radio"
+                                        value={dish.name}
+                                        checked={this.state.checked === i ? true : false}
+                                        onChange={this.onToppingsChange.bind(this,i)}
+                                        />
+                                        <span>{dish.name}</span>
+                                    </label>
+                                    </p>
+                                </div>
+                                <div className="col l6 s6 right-align">
+                                    {`+${dish.reprice.toFixed(2)}`}
+                                </div>
+                            </div>
+                            )
+                        })) :
+                        (
+                            <p></p>
+                        )
+                        }
 
                               <span className="card-title" style={{fontWeight: 500}}>Special Instructions <span style={{fontSize: 18}}>(Optional)</span></span>
                               <p>For self pick-ups, you won't be able to add special instructions after placing your order</p>
@@ -140,7 +160,8 @@ const mapStateToProps = (state, ownProps) =>{
         price: state.item.pricesum,
         dishmenu: state.item.dishMenuById,
         item: state.item.dishlist.find(dish => dish.id.toString() === id),
-        dishattr: state.item.dishAttr
+        dishattr: state.item.dishAttr,
+        loading: state.item.loading
     }
 }
 

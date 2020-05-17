@@ -32,6 +32,7 @@ const itemReducer = (state = initState, action) =>{
         case 'dishMenuById' :
             return{
                 ...state,
+                loading: false,
                 dishMenuById: action.result,
                 count: 1,
                 price: action.result[0].price/100,

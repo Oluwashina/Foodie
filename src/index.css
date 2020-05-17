@@ -173,3 +173,10 @@ textarea.materialize-textarea:focus:not([readonly]){
   line-height: 22px;
   padding: 14px 16px;
 }
+
+.load {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

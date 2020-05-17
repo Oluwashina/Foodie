@@ -56,8 +56,8 @@ class SubCategory extends Component {
                     { loading ? <Loader
                     type="Oval"
                     color="#1565C0"
-                    height={30}
-                    width={30}
+                    height={50}
+                    width={50}
                     className="center"
                     /> : dishlist}
                 </div>

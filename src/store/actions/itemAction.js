@@ -71,6 +71,9 @@ export const DishList = (id) =>{
 
 export const dishMenuById = (dishId, id) =>{
     return(dispatch) =>{
+
+        dispatch({type: 'Loading'})
+
         const appKey = "b23302d4a08f53d1bd5bcf333664997d";
         const storeId = "810137674";
         const token = "8a702142d013e6c93d64c604a3fb332e";
