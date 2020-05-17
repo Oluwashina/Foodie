@@ -5,6 +5,7 @@ import {Menus} from '../../store/actions/itemAction'
 import {DishList} from '../../store/actions/itemAction'
 
 
+
 class Menu extends Component {
     state = { 
 
@@ -20,6 +21,7 @@ class Menu extends Component {
      menuClick = (id) =>{
         this.props.DishList(id)
      }
+     
 
     render() { 
         const {categories} = this.props
@@ -36,7 +38,7 @@ class Menu extends Component {
         )
         return (
             <React.Fragment>
-                    <div>
+                    <div className="fixedElement">
                         <ul style={{marginTop: 20}} className="tabs tabs-fixed-width tab-demo z-depth-1">
                             {menutab}
                         </ul>

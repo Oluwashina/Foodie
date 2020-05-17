@@ -182,9 +182,29 @@ textarea.materialize-textarea:focus:not([readonly]){
 }
 
 .btn-details{
-  border: 1px solid black;
   padding: 10px 10px;
+  background-color: grey;
+  border: none;
+  border-radius: 2px;
+  line-height: 36px;
+  color: white;
+  font-size: 14px;
+  text-transform: uppercase;
 }
 .btn-add{
   padding: 10px 10px;
+  background-color: #1565C0;
+  border: none;
+  border-radius: 2px;
+  line-height: 36px;
+  color: white;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+.fixedElement{
+  display: block;
+    position: sticky;
+    top: 55px;
+    width: 100%;
+    z-index: 1;
 }

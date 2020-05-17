@@ -15,7 +15,9 @@ class Navbar extends Component {
     render() { 
         const {count} = this.props
         return ( 
-            <nav className="nav-wrapper nav-color">
+            <React.Fragment>
+            <div className="navbar-fixed">
+                    <nav className="nav-wrapper nav-color">
                 <div className="container">
                 <Link to="/home" className="brand-logo white-text">Victor's Kitchen</Link>
                 <a href="/#" data-target="slide-out" className="sidenav-trigger">
@@ -30,17 +32,16 @@ class Navbar extends Component {
                     <li><NavLink to="/summary" style={{marginTop: 5}} href=""><span><i className="material-icons left">shopping_cart</i></span><span className="cart-count">{count}</span></NavLink></li>
                     {/* <li><a href="">Cart<span className="badge white blue-text text-darken-3">50</span></a></li> */}
                  </ul>
-
-                {/* mobile menu */}
-                 <ul id="slide-out" className="sidenav sidenav-close">
-                    <li><NavLink to="/home">Menu</NavLink></li>
-                    <li><NavLink to="/orders">Orders</NavLink></li>
-                    {/* <li><NavLink to="/orders">About</NavLink></li> */}
-                    <li><NavLink to="/" onClick={this.props.signOut}>Logout</NavLink></li>
-                </ul>
-
                 </div>
-            </nav>
+              </nav>
+            </div>
+             <ul id="slide-out" className="sidenav sidenav-close">
+             <li><NavLink to="/home">Menu</NavLink></li>
+             <li><NavLink to="/orders">Orders</NavLink></li>
+             {/* <li><NavLink to="/orders">About</NavLink></li> */}
+             <li><NavLink to="/" onClick={this.props.signOut}>Logout</NavLink></li>
+            </ul>
+            </React.Fragment>
          );
     }
 }

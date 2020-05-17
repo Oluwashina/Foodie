@@ -31,10 +31,12 @@ class ItemDetails extends Component {
      }
 
      componentDidMount(){
-         const {item} = this.props
+        const {item} = this.props  
+        this.props.dishMenuById(item.dishTypeId,this.props.match.params.id)
+     }
+     componentDidUpdate(){
         let Materialbox = document.querySelector('.materialboxed');
         M.Materialbox.init(Materialbox, {});
-        this.props.dishMenuById(item.dishTypeId,this.props.match.params.id)
      }
      incrementClick = () =>{
          this.props.Increment()
@@ -89,6 +91,12 @@ class ItemDetails extends Component {
             <p></p>
         )
 
+        const attrTitle = attribute.length ? (
+            <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span>
+        ) : (
+            <p></p>
+        )
+
         const dishAttr =  attribute.length ? (attribute.map((attr,i) =>{
             return (
                 <div className="row" key={attr.id}>
@@ -124,7 +132,7 @@ class ItemDetails extends Component {
                      <div className="col s12 l6 m6">
                          <div className="card z-depth-1">
                             <div className="card-content">
-                             <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span>
+                                {attrTitle}
                                 
                                 {dishAttr}
                               <span className="card-title" style={{fontWeight: 500}}>Special Instructions <span style={{fontSize: 18}}>(Optional)</span></span>
