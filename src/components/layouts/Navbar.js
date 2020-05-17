@@ -38,7 +38,7 @@ class Navbar extends Component {
             </div>
              <ul id="slide-out" className="sidenav sidenav-close nav-color">
             <li><div className="user-view">
-                <h5 className="white-text center">Victor's Kitchen</h5>
+                <h5 className="white-text center">{name.brandName}</h5>
                 </div></li>
              <li><NavLink to="/home" className="white-text">Menu</NavLink></li>
              <li><NavLink to="/about" className="white-text">About</NavLink></li>
