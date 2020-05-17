@@ -86,6 +86,32 @@ class ItemDetails extends Component {
                             className="center load"
                             />
 
+        
+    const dishAttr =  dishattr.length ? (dishattr.map((dish,i) =>{
+        return (
+            <div className="row" key={dish.id}>
+            <div className="col l6 s6">
+                    <p>
+                <label>
+                    <input className="with-gap" name="toppings" type="radio"
+                    value={dish.name}
+                    checked={this.state.checked === i ? true : false}
+                    onChange={this.onToppingsChange.bind(this,i)}
+                    />
+                    <span>{dish.name}</span>
+                </label>
+                </p>
+            </div>
+            <div className="col l6 s6 right-align">
+                {`+${dish.reprice.toFixed(2)}`}
+            </div>
+        </div>
+        )
+        })) :
+        (
+        <p></p>
+        )
+
         // if(!loading) return dishMenu
 
         return ( 
@@ -99,32 +125,7 @@ class ItemDetails extends Component {
                             <div className="card-content">
                              <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span>
                                 
-                                {dishattr.length ? (dishattr.map((dish,i) =>{
-                                      return (
-                                <div className="row" key={dish.id}>
-                                <div className="col l6 s6">
-                                        <p>
-                                    <label>
-                                        <input className="with-gap" name="toppings" type="radio"
-                                        value={dish.name}
-                                        checked={this.state.checked === i ? true : false}
-                                        onChange={this.onToppingsChange.bind(this,i)}
-                                        />
-                                        <span>{dish.name}</span>
-                                    </label>
-                                    </p>
-                                </div>
-                                <div className="col l6 s6 right-align">
-                                    {`+${dish.reprice.toFixed(2)}`}
-                                </div>
-                            </div>
-                            )
-                        })) :
-                        (
-                            <p></p>
-                        )
-                        }
-
+                                {dishAttr}
                               <span className="card-title" style={{fontWeight: 500}}>Special Instructions <span style={{fontSize: 18}}>(Optional)</span></span>
                               <p>For self pick-ups, you won't be able to add special instructions after placing your order</p>
                               
