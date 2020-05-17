@@ -14,26 +14,26 @@ import fbConfig from './config/fbConfig'
 
 
 // save redux store to local storage
-function saveToLocalStorage(state) {
-  try{
-    const serializedState = JSON.stringify(state)
-    localStorage.setItem('state', serializedState)
-  } catch(e){
-    console.log(e)
-  }
-}
+// function saveToLocalStorage(state) {
+//   try{
+//     const serializedState = JSON.stringify(state)
+//     localStorage.setItem('state', serializedState)
+//   } catch(e){
+//     console.log(e)
+//   }
+// }
 
 // function to load storage to redux state
-function loadFromLocalStorage() {
-  try {
-    const serializedState = localStorage.getItem('state')
-    if(serializedState === null) return undefined
-    return JSON.parse(serializedState)
-  }catch(e){
-    console.log(e)
-    return undefined
-  }
-}
+// function loadFromLocalStorage() {
+//   try {
+//     const serializedState = localStorage.getItem('state')
+//     if(serializedState === null) return undefined
+//     return JSON.parse(serializedState)
+//   }catch(e){
+//     console.log(e)
+//     return undefined
+//   }
+// }
 
 
 
@@ -49,12 +49,12 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
-const persistedState = loadFromLocalStorage()
+// const persistedState = loadFromLocalStorage()
 
 
 const store = createStore(
   rootReducer,
-  persistedState,
+  // persistedState,
    enhancer);
 
 const rrfConfig = { 
@@ -89,7 +89,7 @@ function AuthIsLoaded({ children }) {
   return children
 }
 
-store.subscribe(() => saveToLocalStorage(store.getState()))
+// store.subscribe(() => saveToLocalStorage(store.getState()))
 
 
 ReactDOM.render(

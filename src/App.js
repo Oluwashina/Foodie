@@ -7,6 +7,7 @@ import Dashboard from './components/layouts/Dashboard'
 import ItemDetails from './components/Items/Itemdetails'
 import Summary from './components/payment/orderSummary'
 import Order from './components/history/orderStatus'
+import About from './components/layouts/About'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/item/:id" component={ItemDetails} />
         <Route path="/summary" component={Summary} />
         <Route path="/orders" component={Order} />
+        <Route path="/about" component={About} />
       </Switch>
     </div>
   </BrowserRouter>
