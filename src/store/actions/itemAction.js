@@ -116,6 +116,18 @@ export const Decrement = () =>{
     }
 }
 
+export const Menu = () =>{
+    return(dispatch) =>{
+        dispatch({type: 'MENU'})
+    }
+}
+
+export const backToMenu = (id) =>{
+    return(dispatch) =>{
+        dispatch({type: 'BACK_TO_MENU', id})
+    }
+}
+
 export const addToCart = (id,selectedOption) =>{
     return (dispatch, getState) =>{
         dispatch({type: 'ADD_TO_CART',id,selectedOption})

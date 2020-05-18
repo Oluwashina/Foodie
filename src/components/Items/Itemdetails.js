@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar';
 import M from 'materialize-css';
+// import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {Increment} from '../../store/actions/itemAction'
 import {Decrement} from '../../store/actions/itemAction'
 import {addToCart} from '../../store/actions/itemAction'
 import {dishMenuById} from '../../store/actions/itemAction'
+import {backToMenu} from '../../store/actions/itemAction'
 import Loader from 'react-loader-spinner'
 
 
 class ItemDetails extends Component {
     state = { 
-        selectedOption: 'Toast Only',
+        selectedOption: '',
         specs: '',
         checked: 0
      }
@@ -48,6 +50,11 @@ class ItemDetails extends Component {
         M.toast({html: `${name} added to cart`, classes: 'green'})
         this.props.addToCart(id, this.state.selectedOption); 
         this.props.history.push("/summary")
+    }
+    handleRoute = () =>{
+        const {item} = this.props
+        this.props.backToMenu(item.dishTypeId)
+        this.props.history.push(`/home#${item.dishTypeId}`)
     }
     render() { 
         console.log(this.props)
@@ -105,7 +112,8 @@ class ItemDetails extends Component {
                     <label>
                         <input className="with-gap" name="toppings" type="radio"
                         value={attr.name}
-                        checked={this.state.checked === i ? true : false}
+                        // checked={this.state.checked === i ? true : false}
+                        checked = {this.state.selectedOption === attr.name}
                         onChange={this.onToppingsChange.bind(this,i)}
                         />
                         <span>{attr.name}</span>
@@ -127,7 +135,10 @@ class ItemDetails extends Component {
             <React.Fragment>
              <Navbar />
                 <div className="container section">
-                    <div className="row">
+
+                <button onClick={this.handleRoute} className="btn-floating" style={{backgroundColor: '#006491', marginTop: 10}}><i className="material-icons">arrow_back</i></button>
+
+                    <div className="row" style={{marginTop: 10}}>
                     {dishMenu}
                      <div className="col s12 l6 m6">
                          <div className="card z-depth-1">
@@ -180,7 +191,8 @@ const mapDispatchToProps = (dispatch) =>{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
         addToCart: (id, selectedOption) => dispatch(addToCart(id,selectedOption)),
-        dishMenuById: (dishId, id) => dispatch(dishMenuById(dishId, id))
+        dishMenuById: (dishId, id) => dispatch(dishMenuById(dishId, id)),
+        backToMenu: (id) => dispatch(backToMenu(id))
     }
 }
  

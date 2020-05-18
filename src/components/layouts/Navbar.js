@@ -3,6 +3,7 @@ import {Link, NavLink} from 'react-router-dom'
 import M from 'materialize-css';
 import {connect} from 'react-redux';
 import {signOut} from '../../store/actions/authAction'
+import {Menu} from '../../store/actions/itemAction'
 import {shopDetails} from '../../store/actions/shopAction'
 
 class Navbar extends Component {
@@ -21,12 +22,13 @@ class Navbar extends Component {
             <div className="navbar-fixed">
                     <nav className="nav-wrapper nav-color">
                 <div className="container">
-                <Link to="/home" className="brand-logo white-text" style={{fontSize: 15}}>{name.brandName}</Link>
+                <Link to="/home" className="brand-logo white-text" style={{fontSize: 18}}>{name.brandName}</Link>
                 <a href="/#" data-target="slide-out" className="sidenav-trigger">
                         <i className="material-icons">menu</i>
                  </a>
                 <ul className="right">
-                    <li className="hide-on-med-and-down"><NavLink className="white-text" to="/home">Menu</NavLink></li>
+                
+                    <li className="hide-on-med-and-down"><NavLink className="white-text" to="/home" onClick={this.props.Menu}>Menu</NavLink></li>
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/about">About</NavLink></li>
                      <li className="hide-on-med-and-down"><NavLink className="white-text" to="/orders">Orders</NavLink></li>
                     <li className="hide-on-med-and-down"><NavLink className="white-text" to="/" onClick={this.props.signOut}>Logout</NavLink></li>
@@ -38,9 +40,9 @@ class Navbar extends Component {
             </div>
              <ul id="slide-out" className="sidenav sidenav-close nav-color">
             <li><div className="user-view">
-                <h5 className="white-text center">{name.brandName}</h5>
+                <h6 className="white-text center">{name.brandName}</h6>
                 </div></li>
-             <li><NavLink to="/home" className="white-text">Menu</NavLink></li>
+             <li><NavLink to="/home" className="white-text"  onClick={this.props.Menu}>Menu</NavLink></li>
              <li><NavLink to="/about" className="white-text">About</NavLink></li>
              <li><NavLink to="/orders" className="white-text">Orders</NavLink></li>
              <li><NavLink to="/" onClick={this.props.signOut} className="white-text">Logout</NavLink></li>
@@ -60,6 +62,7 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         signOut: () => dispatch(signOut()),
+        Menu: () => dispatch(Menu()),
         shop: () => dispatch(shopDetails())
     }
 } 

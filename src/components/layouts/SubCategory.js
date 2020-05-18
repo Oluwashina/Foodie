@@ -12,12 +12,20 @@ class SubCategory extends Component {
 
      }
      componentDidMount(){
-        var id = "350368638463726592"
+         const{categoryId} = this.props
+         let id;
+         if(categoryId === ""){
+            id = "350368638463726592"
+         }
+         else{
+             id = categoryId
+         }
         this.props.DishList(id)
      }
      
 
     render() { 
+        console.log(this.props)
         const {dishes, loading} = this.props
         let dishlist;
 
@@ -33,20 +41,16 @@ class SubCategory extends Component {
                      {/* <Link to={`item/${dish.id}`} className="btn-floating halfway-fab btn-large blue darken-3 z-depth-0"><i className="material-icons">add_shopping_cart</i></Link> */}
                  </div>
                      <div className="card-content">
-                         <div className="row">
-                             <div className="col s6 l6">
                                 <p style={{fontWeight: 500, fontSize: 18}} className="">{dish.name}</p>
                                 <p style={{fontWeight: 600}}>{`$${dish.marketPrice}`}</p>
-                             </div>
-                             <div className="col s6 l6" style={{marginTop: 5}}>
-                                 <Link to={`/item/${dish.id}`} className="btn-details" style={{marginRight: 8}}>Details</Link>
-                                 <Link to={`/item/${dish.id}`} className="btn-add">Add</Link>
-                             </div>
-                         </div>
                        
                         </div>
+                        <div className="card-action">
+                             <Link to={`/item/${dish.id}`} className="btn grey darken-1 z-depth-0" style={{marginRight: 10}}>Details</Link>
+                            <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0">Add</Link>
+                        </div>
                 </div>
-         </div>
+             </div>
                 )
              })
         }
@@ -89,7 +93,8 @@ class SubCategory extends Component {
 const mapStateToProps = (state) =>{
     return{
         dishes: state.item.dishlist,
-        loading: state.item.loading
+        loading: state.item.loading,
+        categoryId : state.item.categoryId
     }
 }
 

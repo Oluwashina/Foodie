@@ -27,9 +27,13 @@ class Menu extends Component {
         const {categories} = this.props
           const menutab = categories.length ? (
             categories.map(category=>{
+                let active;
+                if(category.name === "Noodles"){
+                    active="active"
+                }
                 return (
                     <li className="tab" key={category.id} onClick={() => this.menuClick(category.id)}>
-                    <a href={`#${category.id}`}>{category.name}</a>
+                    <a href={`#${category.id}`} className={active}>{category.name}</a>
                 </li> 
                 )
             })

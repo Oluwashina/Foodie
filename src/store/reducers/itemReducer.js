@@ -9,6 +9,7 @@ const initState = {
     pricesum: 0,
     addedItems: [],
     total: 0,
+    categoryId: ''
 }
 
 const itemReducer = (state = initState, action) =>{
@@ -38,6 +39,16 @@ const itemReducer = (state = initState, action) =>{
                 pricesum: action.result[0].price/100,
                 dishattr: action.result[0].attrs,
                 loading: false
+            }
+        case 'MENU' :
+            return{
+                ...state,
+                categoryId: ""
+            }
+        case 'BACK_TO_MENU' :
+            return{
+                ...state,
+                categoryId : action.id
             }
         case 'INCREMENT' :
             return{
