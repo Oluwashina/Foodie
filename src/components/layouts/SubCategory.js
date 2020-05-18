@@ -25,7 +25,6 @@ class SubCategory extends Component {
      
 
     render() { 
-        console.log(this.props)
         const {dishes, loading} = this.props
         let dishlist;
 

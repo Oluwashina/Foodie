@@ -10,6 +10,7 @@ import rootReducer from './store/reducers/rootReducer';
 import {createFirestoreInstance} from 'redux-firestore'
 import {ReactReduxFirebaseProvider, getFirebase, isLoaded} from 'react-redux-firebase'
 import fbConfig from './config/fbConfig'
+// import throttle from 'lodash/throttle'
 
 
 
@@ -89,7 +90,7 @@ function AuthIsLoaded({ children }) {
   return children
 }
 
-// store.subscribe(() => saveToLocalStorage(store.getState()))
+// store.subscribe(throttle(() => saveToLocalStorage(store.getState()),1000))
 
 
 ReactDOM.render(

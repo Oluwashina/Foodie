@@ -16,6 +16,7 @@
     "firebase": "^7.14.2",
     "http-proxy-middleware": "^1.0.3",
     "json-bigint": "^0.3.0",
+    "lodash": "^4.17.15",
     "materialize-css": "^1.0.0",
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",

@@ -4,6 +4,7 @@ import StripeCheckout from 'react-stripe-checkout'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {removeCart} from '../../store/actions/itemAction'
+import {Menu} from '../../store/actions/itemAction'
 // import axios from 'axios';
 
 
@@ -82,7 +83,7 @@ removeCart = (id) =>{
                                         <span className="card-title">Order Summary</span>
                                     </div>
                                     <div className="col s6 l6 right-align">
-                                    <Link to="/home" className="btn z-depth-0 white green-text" style={{padding: 0}}>Add items</Link>
+                                    <Link to="/home" onClick={this.props.Menu} className="btn z-depth-0 white green-text" style={{padding: 0}}>Add items</Link>
                                     </div>
                                     </div>
 
@@ -143,7 +144,8 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        removeCart: (id) => dispatch(removeCart(id))
+        removeCart: (id) => dispatch(removeCart(id)),
+        Menu: () => dispatch(Menu()),
     }
 }
  

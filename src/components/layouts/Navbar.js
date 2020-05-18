@@ -16,13 +16,13 @@ class Navbar extends Component {
         this.props.shop()
      }
     render() { 
-        const {count, name} = this.props
+        const {count} = this.props
         return ( 
             <React.Fragment>
             <div className="navbar-fixed">
                     <nav className="nav-wrapper nav-color">
                 <div className="container">
-                <Link to="/home" className="brand-logo white-text" style={{fontSize: 18}}>{name.brandName}</Link>
+                <Link to="/home" onClick={this.props.Menu} className="brand-logo white-text" style={{fontSize: 18}}>SRDD-包含消费税测试</Link>
                 <a href="/#" data-target="slide-out" className="sidenav-trigger">
                         <i className="material-icons">menu</i>
                  </a>
@@ -40,7 +40,7 @@ class Navbar extends Component {
             </div>
              <ul id="slide-out" className="sidenav sidenav-close nav-color">
             <li><div className="user-view">
-                <h6 className="white-text center">{name.brandName}</h6>
+                <h6 className="white-text center">SRDD-包含消费税测试</h6>
                 </div></li>
              <li><NavLink to="/home" className="white-text"  onClick={this.props.Menu}>Menu</NavLink></li>
              <li><NavLink to="/about" className="white-text">About</NavLink></li>

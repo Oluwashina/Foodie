@@ -7,6 +7,9 @@ class About extends Component {
     state = { 
 
      }
+     componentDidMount(){
+         
+     }
      
     render() { 
         const {shop} = this.props

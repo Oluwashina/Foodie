@@ -7,11 +7,10 @@ class Footer extends Component {
 
       }
     render() { 
-        const {name} = this.props
         return ( 
                <footer className="footer">
                     <div className="container" style={{paddingTop: 20}}>
-                        <p className="footer-color">&copy; 2020 {name.brandName}. All rights reserved.</p>
+                        <p className="footer-color">&copy; 2020 SRDD-包含消费税测试. All rights reserved.</p>
                     </div>
                </footer>
          );

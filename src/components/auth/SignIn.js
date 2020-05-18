@@ -2,6 +2,7 @@ import React, { Component, createRef } from "react";
 import {connect} from 'react-redux';
 import { signIn } from '../../store/actions/authAction';
 import { errorRemove } from '../../store/actions/authAction';
+import {shopDetails} from '../../store/actions/shopAction'
 import firebase from 'firebase';
 import {Redirect} from 'react-router-dom';
 
@@ -48,7 +49,7 @@ class SignIn extends Component {
        window.recaptchaWidgetId = widgetId;
      });
     }
-    
+    this.props.shop()
   }
   render() {
     // console.log(this.recaptchaRef.current)
@@ -114,7 +115,8 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
   return{
     signIn: (creds, appVerifier) => dispatch(signIn(creds,appVerifier)),
-    errorRemove : () => dispatch(errorRemove())
+    errorRemove : () => dispatch(errorRemove()),
+    shop: () => dispatch(shopDetails())
   }
 }
 

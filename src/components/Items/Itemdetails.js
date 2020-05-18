@@ -57,7 +57,6 @@ class ItemDetails extends Component {
         this.props.history.push(`/home#${item.dishTypeId}`)
     }
     render() { 
-        console.log(this.props)
         const {count, item, price, dishmenu, attribute, loading} = this.props
 
             if(loading) return <Loader
