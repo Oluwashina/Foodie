@@ -95,6 +95,13 @@ textarea.materialize-textarea:focus:not([readonly]){
   left: 108px;
 }
 
+
+
+@media (max-width: 360px){
+  .btn{
+  letter-spacing: 0px !important;
+  }
+}
 @media (max-width: 600px){
   .slider{
     position: relative;

@@ -51,8 +51,7 @@ class SubCategory extends Component {
                         </div>
                         <div className="card-action">
                             <div className="right-align">
-                             <Link to={`/item/${dish.id}`} className="btn grey darken-1 z-depth-0" style={{marginRight: 10}}>Details</Link>
-                            <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0">Add</Link>
+                             <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0" >Details</Link>
                             </div>
                         </div>
                 </div>

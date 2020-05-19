@@ -144,7 +144,6 @@ class ItemDetails extends Component {
                                 
                                 {dishAttr}
                               <span className="card-title" style={{fontWeight: 500}}>Special Instructions <span style={{fontSize: 18}}>(Optional)</span></span>
-                              <p>For self pick-ups, you won't be able to add special instructions after placing your order</p>
                               
                             <div className="input-field">
                               <input placeholder="E.g No onions please" id="specs" 
@@ -164,7 +163,7 @@ class ItemDetails extends Component {
                   {/* add to basket */}
                   <div className="center" style={{marginBottom: 10}}>
                     <button onClick={this.handleRoute} className="waves-effect btn btn-style blue darken-3 z-depth-0"><i className="material-icons left">arrow_back</i>Back</button>
-                    <button onClick={()=>{this.addCartClick(item.id, item.name)}} className="waves-effect btn blue darken-3 z-depth-0"><i className="material-icons left">add_shopping_cart</i>Add to Basket - {`$${price.toFixed(2)}`}</button>
+                    <button onClick={()=>{this.addCartClick(item.id, item.name)}} className="waves-effect btn blue darken-3 z-depth-0"><i className="material-icons left">add_shopping_cart</i>Add to cart - {`$${price.toFixed(2)}`}</button>
                   </div>  
             </div>
             </React.Fragment>
