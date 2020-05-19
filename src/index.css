@@ -99,10 +99,10 @@ textarea.materialize-textarea:focus:not([readonly]){
   .slider{
     position: relative;
     width: 100%;
-    height: 250px !important;
+    height: 200px !important;
   }
   .slider .slides{
-    height: 250px !important;
+    height: 200px !important;
   }
   .progresy-ul li{
     display: inline-block;

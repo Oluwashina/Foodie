@@ -7,12 +7,11 @@ class About extends Component {
     state = { 
 
      }
-     componentDidMount(){
-         
-     }
+    
      
     render() { 
         const {shop} = this.props
+    
         return ( 
             <React.Fragment>
                  <Navbar />
@@ -41,5 +40,6 @@ const mapStateToProps = (state) =>{
         shop: state.shop.shopDetails
     }
 }
+
  
 export default connect(mapStateToProps)(About);

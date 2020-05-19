@@ -6,6 +6,7 @@ import SubCategory from './SubCategory'
 import Footer from './Footer';
 import {connect} from 'react-redux';
 // import {Redirect} from 'react-router-dom';
+import {shopDetails} from '../../store/actions/shopAction'
 
 
 
@@ -15,7 +16,7 @@ class Dashboard extends Component {
 
      }
      componentDidMount(){
-    
+        this.props.shop()
      }
     
     render() { 
@@ -40,5 +41,11 @@ const mapStateToprops = (state) =>{
     }
 }
 
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        shop: () => dispatch(shopDetails())
+    }
+}
+
  
-export default connect(mapStateToprops)(Dashboard);
+export default connect(mapStateToprops, mapDispatchToProps)(Dashboard);

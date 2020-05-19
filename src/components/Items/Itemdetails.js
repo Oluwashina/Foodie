@@ -135,8 +135,6 @@ class ItemDetails extends Component {
              <Navbar />
                 <div className="container section">
 
-                <button onClick={this.handleRoute} className="btn-floating" style={{backgroundColor: '#006491', marginTop: 10}}><i className="material-icons">arrow_back</i></button>
-
                     <div className="row" style={{marginTop: 10}}>
                     {dishMenu}
                      <div className="col s12 l6 m6">
@@ -161,12 +159,13 @@ class ItemDetails extends Component {
                                 <button onClick={this.incrementClick} className="btn z-depth-1 white green-text" style={{marginLeft: 15}}><i className="material-icons">add</i></button>
                             </div>
                          </div>
-                         {/* add to basket */}
-                         <div className="center">
-                         <button onClick={()=>{this.addCartClick(item.id, item.name)}} className="waves-effect btn btn-style blue darken-3 z-depth-0"><i className="material-icons left">shopping_cart</i>Add to Basket - {`$${price.toFixed(2)}`}</button>
-                         </div>
                     </div>
-                 </div>       
+                 </div>     
+                  {/* add to basket */}
+                  <div className="center" style={{marginBottom: 10}}>
+                    <button onClick={this.handleRoute} className="waves-effect btn btn-style blue darken-3 z-depth-0"><i className="material-icons left">arrow_back</i>Back</button>
+                    <button onClick={()=>{this.addCartClick(item.id, item.name)}} className="waves-effect btn blue darken-3 z-depth-0"><i className="material-icons left">add_shopping_cart</i>Add to Basket - {`$${price.toFixed(2)}`}</button>
+                  </div>  
             </div>
             </React.Fragment>
          );

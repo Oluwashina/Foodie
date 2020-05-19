@@ -1,5 +1,6 @@
 const initState = {
-    shopDetails: [],
+    shopDetails: {},
+    waiting: false
 }
 
 const shopReducer = (state = initState, action) =>{
