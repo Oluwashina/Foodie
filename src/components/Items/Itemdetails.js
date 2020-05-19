@@ -8,6 +8,7 @@ import {Decrement} from '../../store/actions/itemAction'
 import {addToCart} from '../../store/actions/itemAction'
 import {dishMenuById} from '../../store/actions/itemAction'
 import {backToMenu} from '../../store/actions/itemAction'
+import {Menu} from '../../store/actions/itemAction'
 import Loader from 'react-loader-spinner'
 
 
@@ -48,8 +49,9 @@ class ItemDetails extends Component {
      }
      addCartClick = (id, name) =>{
         M.toast({html: `${name} added to cart`, classes: 'green'})
-        this.props.addToCart(id, this.state.selectedOption); 
-        this.props.history.push("/summary")
+        this.props.addToCart(id, this.state.selectedOption);
+        this.props.Menu() 
+        this.props.history.push("/home")
     }
     handleRoute = () =>{
         const {item} = this.props
@@ -189,7 +191,8 @@ const mapDispatchToProps = (dispatch) =>{
         Decrement : () => dispatch(Decrement()),
         addToCart: (id, selectedOption) => dispatch(addToCart(id,selectedOption)),
         dishMenuById: (dishId, id) => dispatch(dishMenuById(dishId, id)),
-        backToMenu: (id) => dispatch(backToMenu(id))
+        backToMenu: (id) => dispatch(backToMenu(id)),
+        Menu: () => dispatch(Menu())
     }
 }
  
