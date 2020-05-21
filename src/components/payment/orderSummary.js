@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar';
-import StripeCheckout from 'react-stripe-checkout'
+// import StripeCheckout from 'react-stripe-checkout'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {removeCart} from '../../store/actions/itemAction'
@@ -110,11 +110,48 @@ removeCart = (id) =>{
                             <div className="card z-depth-1">
                                 <div className="card-content">
                                     {/* payment method */}
-                                    <span className="card-title">Payment Method</span>
-                                    <img src="img/stripe.png" height="50" width="50" className="responsive-img" alt="stripe" />
+                                    <span className="card-title">Payment Methods</span>
+
+                                    <div className="row" style={{marginTop: 20}}>
+                                        <div className="col s4 l4 center-align">
+                                            <a href="#/">
+                                            <img src="img/stripe.png" alt="stripe" className="pay-style" width="80" height="40"  />
+                                             </a>
+                                             <p className="center">Stripe</p>
+                                        </div>
+                                        <div className="col s4 l4 center-align">
+                                            <a href="#/">
+                                            <img src="img/grabpay.png" alt="grabpay" className="pay-style" width="80" height="40" />
+                                             </a>
+                                             <p className="center">GrabPay</p>
+                                        </div>
+                                        <div className="col s4 l4 center-align">
+                                            <a href="#/">
+                                            <img src="img/dbpaylah.png" alt="DBSpaylah" className="pay-style" width="80" height="40" />
+                                             </a>
+                                             <p className="center">DBSPaylah</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col s4 l4 center-align">
+                                            <a href="#/">
+                                            <img src="img/paynow.png" alt="stripe" className="pay-style" width="80" height="40"  />
+                                             </a>
+                                             <p className="center">PAYNOW</p>
+                                        </div>
+                                        <div className="col s4 l4 center-align">
+                                            <a href="#/">
+                                            <img src="img/NETSPay_icon.png" alt="grabpay" className="pay-style" width="80" height="40" />
+                                             </a>
+                                             <p className="center">NETSPay</p>
+                                        </div>
+                                    </div>
+                                    
                                    
+                                                                
                                 </div>
-                                <div className="card-action">
+                                {/* <div className="card-action">
                                      <div className="center">
                                          <StripeCheckout
                                             stripeKey="pk_test_lD4fwMmmeJw5ZbIN1salJO1400rzkliycN"
@@ -125,7 +162,7 @@ removeCart = (id) =>{
                                             name="Set B - Toast"
                                           />
                                     </div> 
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
