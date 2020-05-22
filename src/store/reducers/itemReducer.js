@@ -7,6 +7,7 @@ const initState = {
     ingredients: [],
     count: 1,
     price : 0,
+    ingredientPrice: 0,
     pricesum: 0,
     addedItems: [],
     total: 0,
@@ -36,6 +37,7 @@ const itemReducer = (state = initState, action) =>{
                 ...state,
                 dishMenuById: action.result,
                 count: 1,
+                ingredientPrice: 0,
                 price: action.result[0].price/100,
                 pricesum: action.result[0].price/100,
                 dishattr: action.result[0].attrs,
@@ -60,7 +62,7 @@ const itemReducer = (state = initState, action) =>{
         case 'MULTIPLYPRICE' :
             return{
                 ...state,
-                pricesum: state.price * state.count
+                pricesum: state.price * state.count + state.ingredientPrice
             }
         case 'DECREMENT' :
             return{
@@ -71,6 +73,23 @@ const itemReducer = (state = initState, action) =>{
           return{
                 ...state,
                 pricesum: state.price * state.count
+            }
+        case 'INGREDIENT_SUM':
+            let ingredient = state.ingredients.find(ing => ing.id.toString() === action.id.toString())
+            let ingredientPrice = ingredient.marketPrice / 100
+            return{
+                ...state,
+                ingredientPrice: state.ingredientPrice + ingredientPrice,
+                pricesum: state.pricesum + ingredientPrice
+            }
+        case 'INGREDIENT_DEDUCT':
+            let ingredientDeduct = state.ingredients.find(ing => ing.id.toString() === action.id.toString())
+            console.log(ingredientDeduct)
+            let ingredientDeductPrice = ingredientDeduct.marketPrice / 100
+            return{
+                ...state,
+                ingredientPrice: state.ingredientPrice - ingredientDeductPrice,
+                pricesum: state.pricesum - ingredientDeductPrice
             }
         case 'ADD_TO_CART' :
             let addedItem = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())

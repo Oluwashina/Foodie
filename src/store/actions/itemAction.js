@@ -116,6 +116,18 @@ export const Decrement = () =>{
     }
 }
 
+export const ingredientSum = (id) =>{
+    return(dispatch) =>{
+        dispatch({type: 'INGREDIENT_SUM', id})
+    }
+}
+
+export const ingredientDeduct = (id) =>{
+    return(dispatch) =>{
+        dispatch({type: 'INGREDIENT_DEDUCT', id})
+    }
+}
+
 export const Menu = () =>{
     return(dispatch) =>{
         dispatch({type: 'MENU'})

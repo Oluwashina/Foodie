@@ -9,6 +9,8 @@ import {addToCart} from '../../store/actions/itemAction'
 import {dishMenuById} from '../../store/actions/itemAction'
 import {backToMenu} from '../../store/actions/itemAction'
 import {Menu} from '../../store/actions/itemAction'
+import {ingredientSum} from '../../store/actions/itemAction'
+import {ingredientDeduct} from '../../store/actions/itemAction'
 import Loader from 'react-loader-spinner'
 
 
@@ -26,15 +28,17 @@ class ItemDetails extends Component {
           });
      }
 
-     handleChange = (i,event) =>{
+     handleChange = (event, i, id) =>{
          const target = event.target;
         if(target.checked){
+            this.props.ingredientSum(id)
             const newTodo = [...this.state.selectedChecked, {id: i, value: event.target.name}]
             this.setState({
                 selectedChecked: newTodo
             })
         }
         else{
+            this.props.ingredientDeduct(id)
             const newSelect = this.state.selectedChecked.filter(item => item.id !== i)
             this.setState({
                 selectedChecked: newSelect
@@ -168,7 +172,7 @@ class ItemDetails extends Component {
                             <label>
                                 <input type="checkbox"
                                  name={ingredient.name}
-                                 onChange={this.handleChange.bind(this, i)}
+                                 onChange={(e) => {this.handleChange(e,i, ingredient.id)}} 
                                   />
                                 <span>{ingredient.name}</span>
                             </label>
@@ -250,7 +254,9 @@ const mapDispatchToProps = (dispatch) =>{
         addToCart: (id, selectedOption) => dispatch(addToCart(id,selectedOption)),
         dishMenuById: (dishId, id) => dispatch(dishMenuById(dishId, id)),
         backToMenu: (id) => dispatch(backToMenu(id)),
-        Menu: () => dispatch(Menu())
+        Menu: () => dispatch(Menu()),
+        ingredientSum: (id) => dispatch(ingredientSum(id)),
+        ingredientDeduct: (id) => dispatch(ingredientDeduct(id))
     }
 }
  
