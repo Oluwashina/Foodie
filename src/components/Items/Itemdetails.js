@@ -15,23 +15,34 @@ import Loader from 'react-loader-spinner'
 class ItemDetails extends Component {
     state = { 
         selectedOption: '',
-        specs: '',
-        checked: 0
+        checked: 0,
+        selectedChecked : []
      }
 
      onToppingsChange = (i,e) =>{
-         console.log(i)
         this.setState({
             checked: i,
             selectedOption: e.target.value
           });
      }
 
-     handleChange = (e) =>{
-         this.setState({
-             specs: e.target.value
-         })
+     handleChange = (i,event) =>{
+         const target = event.target;
+        if(target.checked){
+            const newTodo = [...this.state.selectedChecked, {id: i, value: event.target.name}]
+            this.setState({
+                selectedChecked: newTodo
+            })
+        }
+        else{
+            const newSelect = this.state.selectedChecked.filter(item => item.id !== i)
+            this.setState({
+                selectedChecked: newSelect
+            })
+        }
+        
      }
+
 
      componentDidMount(){
         const {item} = this.props  
@@ -59,7 +70,7 @@ class ItemDetails extends Component {
         this.props.history.push(`/home#${item.dishTypeId}`)
     }
     render() { 
-        const {count, item, price, dishmenu, attribute, loading} = this.props
+        const {count, item, price, dishmenu, attribute, ingredients, loading} = this.props
 
             if(loading) return <Loader
             type="Oval"
@@ -90,6 +101,11 @@ class ItemDetails extends Component {
                             <p>Base Price</p>
                             </div>
                         </div>              
+                    </div>
+                     <div className="card-action center">
+                        <button onClick={this.decrementClick} disabled={count === 1} className="btn z-depth-1 white green-text"  style={{marginRight: 15}}><i className="material-icons">remove</i></button>
+                        <span style={{fontWeight: 600}}>{count}</span>
+                        <button onClick={this.incrementClick} className="btn z-depth-1 white green-text" style={{marginLeft: 15}}><i className="material-icons">add</i></button>
                     </div>
                 </div>
              </div>
@@ -130,7 +146,69 @@ class ItemDetails extends Component {
             (
             <p></p>
             )
+
+            let ingredientTitle;
+            if(!ingredients || ingredients.length === 0){
+                ingredientTitle = <p></p>
+            }
+            else{
+                ingredientTitle = <span className="card-title" style={{fontWeight: 500}}>Add Ingredients</span>
+            }
+
+            let Ingredients;
+            if(!ingredients || ingredients.length === 0){
+                Ingredients = <p></p>
+            }else{
+              Ingredients = ingredients.length ? (ingredients.map((ingredient, i) =>{
+                  let cost = ingredient.marketPrice / 100
+                    return (
+                        <div className="row" key={ingredient.id}>
+                         <div className="col s6 l6">
+                            <p>
+                            <label>
+                                <input type="checkbox"
+                                 name={ingredient.name}
+                                 onChange={this.handleChange.bind(this, i)}
+                                  />
+                                <span>{ingredient.name}</span>
+                            </label>
+                            </p>
+                            </div>
+                            <div className="col s6 l6 right-align">
+                                {`+${cost.toFixed(2)}`}
+                            </div>
+                    </div>
+                    )
+                    })) :
+                    (
+                    <p></p>
+                    )
+             }
         
+
+
+        const myToppings = attribute.length ? (
+                    <div className="col s12 l6 m6">
+                         <div className="card z-depth-1">
+                            <div className="card-content">
+                                {attrTitle}
+                                
+                                {dishAttr}
+                             
+                                 {ingredientTitle}
+
+                                {Ingredients}
+                                   
+                            </div> 
+                         </div>
+                    </div> 
+                )
+                :
+                (
+                    <p></p>
+                )
+
+      
        
         return ( 
             <React.Fragment>
@@ -139,28 +217,7 @@ class ItemDetails extends Component {
 
                     <div className="row" style={{marginTop: 10}}>
                     {dishMenu}
-                     <div className="col s12 l6 m6">
-                         <div className="card z-depth-1">
-                            <div className="card-content">
-                                {attrTitle}
-                                
-                                {dishAttr}
-                              <span className="card-title" style={{fontWeight: 500}}>Special Instructions <span style={{fontSize: 18}}>(Optional)</span></span>
-                              
-                            <div className="input-field">
-                              <input placeholder="E.g No onions please" id="specs" 
-                              type="text"
-                              onChange={this.handleChange}
-                               />
-                             </div>        
-                            </div> 
-                            <div className="card-action center">
-                                <button onClick={this.decrementClick} disabled={count === 1} className="btn z-depth-1 white green-text"  style={{marginRight: 15}}><i className="material-icons">remove</i></button>
-                                <span style={{fontWeight: 600}}>{count}</span>
-                                <button onClick={this.incrementClick} className="btn z-depth-1 white green-text" style={{marginLeft: 15}}><i className="material-icons">add</i></button>
-                            </div>
-                         </div>
-                    </div>
+                     {myToppings}
                  </div>     
                   {/* add to basket */}
                   <div className="center" style={{marginBottom: 10}}>
@@ -180,6 +237,7 @@ const mapStateToProps = (state, ownProps) =>{
         price: state.item.pricesum,
         dishmenu: state.item.dishMenuById,
         attribute: state.item.dishattr,
+        ingredients: state.item.ingredients,
         loading: state.item.loading,
         item: state.item.dishlist.find(dish => dish.id.toString() === id),
     }

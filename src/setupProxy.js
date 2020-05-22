@@ -2,9 +2,9 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
-    '/open/v1/cater',
+    '/api',
     createProxyMiddleware({
-      target: 'https://sg-openapi.keruyun.com',
+      target: 'https://sg-openapi.keruyun.com/open/v1',
       changeOrigin: true,
     })
   );

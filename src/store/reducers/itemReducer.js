@@ -4,6 +4,7 @@ const initState = {
     category: [],
     dishlist: [],
     dishMenuById: [],
+    ingredients: [],
     count: 1,
     price : 0,
     pricesum: 0,
@@ -38,6 +39,7 @@ const itemReducer = (state = initState, action) =>{
                 price: action.result[0].price/100,
                 pricesum: action.result[0].price/100,
                 dishattr: action.result[0].attrs,
+                ingredients: action.result[0].supplyCondiments,
                 loading: false
             }
         case 'MENU' :
