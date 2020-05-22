@@ -72,7 +72,7 @@ const itemReducer = (state = initState, action) =>{
         case 'DIVIDEPRICE' :
           return{
                 ...state,
-                pricesum: state.price * state.count
+                pricesum: state.price * state.count + state.ingredientPrice
             }
         case 'INGREDIENT_SUM':
             let ingredient = state.ingredients.find(ing => ing.id.toString() === action.id.toString())
