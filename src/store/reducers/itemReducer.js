@@ -95,7 +95,9 @@ const itemReducer = (state = initState, action) =>{
             let addedItem = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())
              //check if the action id exists in the addedItems
             addedItem.quantity = state.count;
+            addedItem.ingredientPrice = state.ingredientPrice
             addedItem.selectedToppings = action.selectedOption
+            addedItem.selectedChecked = action.selectedChecked
             //calculating the total
             let newTotal = state.total + state.pricesum          
             return{
@@ -106,7 +108,7 @@ const itemReducer = (state = initState, action) =>{
         case 'REMOVE_FROM_CART' :
             let removedItem = state.addedItems.filter(item=> item.id.toString() !== action.id.toString())
             let addedValue = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())
-            let totalcalc = addedValue.marketPrice * addedValue.quantity
+            let totalcalc = addedValue.marketPrice * addedValue.quantity + addedValue.ingredientPrice
             let removedTotal = state.total - totalcalc 
             return{
                 ...state,

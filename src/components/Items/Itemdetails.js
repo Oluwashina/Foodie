@@ -18,7 +18,8 @@ class ItemDetails extends Component {
     state = { 
         selectedOption: '',
         checked: 0,
-        selectedChecked : []
+        selectedChecked : [],
+        specs: ''
      }
 
      onToppingsChange = (i,e) =>{
@@ -26,6 +27,12 @@ class ItemDetails extends Component {
             checked: i,
             selectedOption: e.target.value
           });
+     }
+
+     handleText = (e) =>{
+         this.setState({
+             specs: e.target.value
+         })
      }
 
      handleChange = (event, i, id) =>{
@@ -64,7 +71,7 @@ class ItemDetails extends Component {
      }
      addCartClick = (id, name) =>{
         M.toast({html: `${name} added to cart`, classes: 'green'})
-        this.props.addToCart(id, this.state.selectedOption);
+        this.props.addToCart(id, this.state.selectedOption, this.state.selectedChecked);
         this.props.Menu() 
         this.props.history.push("/home")
     }
@@ -106,11 +113,6 @@ class ItemDetails extends Component {
                             </div>
                         </div>              
                     </div>
-                     <div className="card-action center">
-                        <button onClick={this.decrementClick} disabled={count === 1} className="btn z-depth-1 white green-text"  style={{marginRight: 15}}><i className="material-icons">remove</i></button>
-                        <span style={{fontWeight: 600}}>{count}</span>
-                        <button onClick={this.incrementClick} className="btn z-depth-1 white green-text" style={{marginLeft: 15}}><i className="material-icons">add</i></button>
-                    </div>
                 </div>
              </div>
                 )
@@ -119,8 +121,20 @@ class ItemDetails extends Component {
             <p></p>
         )
 
+        // box packaging fee
+        const cent = dishmenu.length ? (
+            dishmenu.map(box=>{
+                const doll = box.boxQty * 10 * 0.01
+                return(
+                <p id={box.id}>{`+${doll}`}</p>
+                )
+            })
+        ) : (
+            <p></p>
+        )
+
         const attrTitle = attribute.length ? (
-            <span className="card-title" style={{fontWeight: 500}}>Top up into Set <span style={{fontSize: 18}}>(Pick 1)</span></span>
+            <span className="card-title" style={{fontWeight: 500}}>Extra options</span>
         ) : (
             <p></p>
         )
@@ -156,7 +170,7 @@ class ItemDetails extends Component {
                 ingredientTitle = <p></p>
             }
             else{
-                ingredientTitle = <span className="card-title" style={{fontWeight: 500}}>Add Ingredients</span>
+                ingredientTitle = <span className="card-title" style={{fontWeight: 500}}>Add ons</span>
             }
 
             let Ingredients;
@@ -190,28 +204,6 @@ class ItemDetails extends Component {
              }
         
 
-
-        const myToppings = attribute.length ? (
-                    <div className="col s12 l6 m6">
-                         <div className="card z-depth-1">
-                            <div className="card-content">
-                                {attrTitle}
-                                
-                                {dishAttr}
-                             
-                                 {ingredientTitle}
-
-                                {Ingredients}
-                                   
-                            </div> 
-                         </div>
-                    </div> 
-                )
-                :
-                (
-                    <p></p>
-                )
-
       
        
         return ( 
@@ -221,7 +213,42 @@ class ItemDetails extends Component {
 
                     <div className="row" style={{marginTop: 10}}>
                     {dishMenu}
-                     {myToppings}
+                    <div className="col s12 l6 m6">
+                         <div className="card z-depth-1">
+                            <div className="card-content">
+
+                                 {ingredientTitle}
+
+                                {Ingredients}
+
+                                {attrTitle}
+                                
+                                {dishAttr}
+
+                                <div className="row">
+                                    <div className="col s6 l6">
+                                        <span className="card-title" style={{fontWeight: 500}}>Packaging</span>
+                                    </div>
+                                    <div className="col s6 l6 right-align">
+                                        {cent}
+                                    </div>
+                                </div>
+
+                                <span className="card-title" style={{fontWeight: 500}}>Special Instructions</span>
+                                <p style={{fontWeight: 500}}>(Optional)</p>
+                                <input
+                                    type="text"
+                                    placeholder="E.g No onions please"
+                                    onChange={this.handleText}
+                                />
+                            </div> 
+                                <div className="card-action center">
+                                <button onClick={this.decrementClick} disabled={count === 1} className="btn z-depth-1 white green-text"  style={{marginRight: 15}}><i className="material-icons">remove</i></button>
+                                <span style={{fontWeight: 600}}>{count}</span>
+                                <button onClick={this.incrementClick} className="btn z-depth-1 white green-text" style={{marginLeft: 15}}><i className="material-icons">add</i></button>
+                                </div>
+                         </div>
+                    </div> 
                  </div>     
                   {/* add to basket */}
                   <div className="center" style={{marginBottom: 10}}>
@@ -251,7 +278,7 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
-        addToCart: (id, selectedOption) => dispatch(addToCart(id,selectedOption)),
+        addToCart: (id, selectedOption,selectedChecked) => dispatch(addToCart(id,selectedOption,selectedChecked)),
         dishMenuById: (dishId, id) => dispatch(dishMenuById(dishId, id)),
         backToMenu: (id) => dispatch(backToMenu(id)),
         Menu: () => dispatch(Menu()),

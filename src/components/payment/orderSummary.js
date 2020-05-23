@@ -40,6 +40,7 @@ removeCart = (id) =>{
 
     render() { 
         const {addedItems, total} = this.props
+
         const summary = addedItems.length ? (
           addedItems.map(items=>{
               return (
@@ -51,6 +52,13 @@ removeCart = (id) =>{
                         <div className="col s6 l6">
                             <p style={{fontWeight: 600}}>{items.name}</p>
                             <p>{items.selectedToppings}</p>
+                            {items.selectedChecked.map(add=>{
+                                return(
+                                    <p key={add.id}>
+                                        {add.value}
+                                    </p>
+                                )
+                            })}
                             <button onClick={()=>{this.removeCart(items.id)}} style={{padding: 0}} className="btn z-depth-0 white green-text">Remove</button>
                         </div>
                         <div className="col s4 l4 right-align">
@@ -70,6 +78,8 @@ removeCart = (id) =>{
                 </div>
                           
       )
+
+
         return ( 
             <React.Fragment>
                 <Navbar />

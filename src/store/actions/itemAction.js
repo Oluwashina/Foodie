@@ -140,9 +140,9 @@ export const backToMenu = (id) =>{
     }
 }
 
-export const addToCart = (id,selectedOption) =>{
+export const addToCart = (id,selectedOption,selectedChecked) =>{
     return (dispatch, getState) =>{
-        dispatch({type: 'ADD_TO_CART',id,selectedOption})
+        dispatch({type: 'ADD_TO_CART',id,selectedOption,selectedChecked})
     }
 }
 
