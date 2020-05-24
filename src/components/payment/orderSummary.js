@@ -39,7 +39,7 @@ removeCart = (id) =>{
 }
 
     render() { 
-        const {addedItems, total} = this.props
+        const {addedItems, total, packFee} = this.props
 
         const summary = addedItems.length ? (
           addedItems.map(items=>{
@@ -62,7 +62,7 @@ removeCart = (id) =>{
                             <button onClick={()=>{this.removeCart(items.id)}} style={{padding: 0}} className="btn z-depth-0 white green-text">Remove</button>
                         </div>
                         <div className="col s4 l4 right-align">
-                            <p style={{fontWeight: 600}}>{`$${items.marketPrice}`}</p>
+                            <p style={{fontWeight: 600}}>{`$${items.marketPrice.toFixed(2)}`}</p>
                         </div>
                     </div>
                 </>
@@ -77,6 +77,19 @@ removeCart = (id) =>{
                     <p>Looks like you have no items in your cart</p>
                 </div>
                           
+      )
+
+      const packDesign = addedItems.length ? (
+            <div className="row">
+                <div className="col s6 l6">
+                    <p style={{fontWeight: 500}}>Packaging Fees</p>
+                </div>
+                <div className="col s6 l6 right-align">
+                <p style={{fontWeight: 600}}>{`$${packFee.toFixed(2)}`}</p>
+                </div>
+            </div>
+      ) : (
+          <p></p>
       )
 
 
@@ -99,6 +112,8 @@ removeCart = (id) =>{
 
                                     {/* item details list */}
                                         {summary}
+                                      
+                                        {packDesign}
                                 </div>
                                 <div className="card-action">
                                     <div className="row">
@@ -185,7 +200,8 @@ removeCart = (id) =>{
 const mapStateToProps = (state) =>{
     return{
         addedItems: state.item.addedItems,
-        total: state.item.total
+        total: state.item.total,
+        packFee: state.item.packFee
     }
 }
 

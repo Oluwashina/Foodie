@@ -5,6 +5,7 @@ const initState = {
     dishlist: [],
     dishMenuById: [],
     ingredients: [],
+    packFee: 0,
     count: 1,
     price : 0,
     ingredientPrice: 0,
@@ -98,22 +99,28 @@ const itemReducer = (state = initState, action) =>{
             addedItem.ingredientPrice = state.ingredientPrice
             addedItem.selectedToppings = action.selectedOption
             addedItem.selectedChecked = action.selectedChecked
+            // get packaging fees
+            const fees = addedItem.boxQty * 10 * 0.01
             //calculating the total
-            let newTotal = state.total + state.pricesum          
+            let newTotal = state.total + state.pricesum + fees   
+            // need to write a logic for the same item being added again so for easy filtering when removing from cart    
             return{
                 ...state,
                 addedItems: [...state.addedItems, addedItem],
-                total : newTotal
+                total : parseFloat(newTotal.toFixed(2)),
+                packFee : state.packFee + fees
             }
         case 'REMOVE_FROM_CART' :
             let removedItem = state.addedItems.filter(item=> item.id.toString() !== action.id.toString())
             let addedValue = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())
-            let totalcalc = addedValue.marketPrice * addedValue.quantity + addedValue.ingredientPrice
+            let removedFees = addedValue.boxQty * 10 * 0.01
+            let totalcalc = addedValue.marketPrice * addedValue.quantity + addedValue.ingredientPrice + removedFees
             let removedTotal = state.total - totalcalc 
             return{
                 ...state,
                 addedItems : removedItem,
-                total: removedTotal
+                total: parseFloat(removedTotal.toFixed(2)),
+                packFee: state.packFee - removedFees
             } 
         default:
             return state

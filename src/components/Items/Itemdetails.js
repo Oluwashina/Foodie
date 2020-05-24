@@ -121,17 +121,6 @@ class ItemDetails extends Component {
             <p></p>
         )
 
-        // box packaging fee
-        const cent = dishmenu.length ? (
-            dishmenu.map(box=>{
-                const doll = box.boxQty * 10 * 0.01
-                return(
-                <p id={box.id}>{`+${doll}`}</p>
-                )
-            })
-        ) : (
-            <p></p>
-        )
 
         const attrTitle = attribute.length ? (
             <span className="card-title" style={{fontWeight: 500}}>Extra options</span>
@@ -224,15 +213,6 @@ class ItemDetails extends Component {
                                 {attrTitle}
                                 
                                 {dishAttr}
-
-                                <div className="row">
-                                    <div className="col s6 l6">
-                                        <span className="card-title" style={{fontWeight: 500}}>Packaging</span>
-                                    </div>
-                                    <div className="col s6 l6 right-align">
-                                        {cent}
-                                    </div>
-                                </div>
 
                                 <span className="card-title" style={{fontWeight: 500}}>Special Instructions</span>
                                 <p style={{fontWeight: 500}}>(Optional)</p>
