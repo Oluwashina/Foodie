@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const initState = {
     dishattr: [],
     loading: false,
@@ -63,7 +65,7 @@ const itemReducer = (state = initState, action) =>{
         case 'MULTIPLYPRICE' :
             return{
                 ...state,
-                pricesum: state.price * state.count + state.ingredientPrice
+                pricesum: (state.price * state.count) + (state.count * state.ingredientPrice)
             }
         case 'DECREMENT' :
             return{
@@ -73,7 +75,7 @@ const itemReducer = (state = initState, action) =>{
         case 'DIVIDEPRICE' :
           return{
                 ...state,
-                pricesum: state.price * state.count + state.ingredientPrice
+                pricesum: (state.price * state.count) + (state.count * state.ingredientPrice)
             }
         case 'INGREDIENT_SUM':
             let ingredient = state.ingredients.find(ing => ing.id.toString() === action.id.toString())
@@ -81,7 +83,7 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 ingredientPrice: state.ingredientPrice + ingredientPrice,
-                pricesum: state.pricesum + ingredientPrice
+                pricesum: state.pricesum + (state.count * ingredientPrice)
             }
         case 'INGREDIENT_DEDUCT':
             let ingredientDeduct = state.ingredients.find(ing => ing.id.toString() === action.id.toString())
@@ -90,57 +92,59 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 ingredientPrice: state.ingredientPrice - ingredientDeductPrice,
-                pricesum: state.pricesum - ingredientDeductPrice
+                pricesum: state.pricesum - (state.count * ingredientDeductPrice)
             }
         case 'ADD_TO_CART' :
             let addedItem = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())
-            let existed_item = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())
-            console.log(existed_item)
-            if(existed_item){
-                existed_item.quantity += state.count 
-                existed_item.ingredientPrice += state.ingredientPrice
-                const addBoxQty = addedItem.boxQty * state.count
-                existed_item.boxQty += addBoxQty
-                const fees = addBoxQty * 10 * 0.01
-                console.log(fees)
-                //calculating the total
-                let newTotal = state.total + state.pricesum + fees   
-                return{
-                    ...state,
-                    total : parseFloat(newTotal.toFixed(2)),
-                    packFee : state.packFee + fees
-                }
-            }
-            else{
+            // let existed_item = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())
+            // console.log(existed_item)
+            // if(existed_item){
+            //     existed_item.quantity += state.count 
+            //     existed_item.ingredientPrice += state.ingredientPrice
+            //     const addBoxQty = addedItem.boxQty * state.count
+            //     existed_item.boxQty += addBoxQty
+            //     const fees = addBoxQty * 10 * 0.01
+            //     console.log(fees)
+            //     //calculating the total
+            //     let newTotal = state.total + state.pricesum + fees   
+            //     return{
+            //         ...state,
+            //         total : parseFloat(newTotal.toFixed(2)),
+            //         packFee : state.packFee + fees
+            //     }
+            // }
+            // else{
                   //check if the action id exists in the addedItems
             addedItem.quantity = state.count;
             addedItem.ingredientPrice = state.ingredientPrice
             addedItem.selectedToppings = action.selectedOption
             addedItem.selectedChecked = action.selectedChecked
             addedItem.boxQty *= state.count
+            addedItem.uniqueId = uuidv4()
             // get packaging fees
             const fees = addedItem.boxQty * 10 * 0.01
+            console.log(fees)
             //calculating the total
-            let newTotal = state.total + state.pricesum + fees   
-            // need to write a logic for the same item being added again so for easy filtering when removing from cart    
+            let newTotal = state.total + state.pricesum + fees  
+            let newPackFee = state.packFee + fees    
                 return{
                     ...state,
                     addedItems: [...state.addedItems, addedItem],
                     total : parseFloat(newTotal.toFixed(2)),
-                    packFee : state.packFee + fees
+                    packFee : parseFloat(newPackFee.toFixed(2))
                 }
-            } 
         case 'REMOVE_FROM_CART' :
-            let removedItem = state.addedItems.filter(item=> item.id.toString() !== action.id.toString())
-            let addedValue = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())
+            let removedItem = state.addedItems.filter(item=> item.uniqueId !== action.id)
+            let addedValue = state.addedItems.find(dish=> dish.uniqueId === action.id)
             let removedFees = addedValue.boxQty * 10 * 0.01
-            let totalcalc = addedValue.marketPrice * addedValue.quantity + addedValue.ingredientPrice + removedFees
-            let removedTotal = state.total - totalcalc 
+            let totalcalc = (addedValue.marketPrice * addedValue.quantity) + (addedValue.quantity * addedValue.ingredientPrice) + removedFees
+            let removedTotal = state.total - totalcalc
+            let PackFee =  state.packFee - parseFloat(removedFees.toFixed(2))
             return{
                 ...state,
                 addedItems : removedItem,
                 total: parseFloat(removedTotal.toFixed(2)),
-                packFee: state.packFee - removedFees
+                packFee: parseFloat(PackFee.toFixed(2))
             } 
         default:
             return state

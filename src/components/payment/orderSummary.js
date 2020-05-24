@@ -59,7 +59,7 @@ removeCart = (id) =>{
                                     </p>
                                 )
                             })}
-                            <button onClick={()=>{this.removeCart(items.id)}} style={{padding: 0}} className="btn z-depth-0 white green-text">Remove</button>
+                            <button onClick={()=>{this.removeCart(items.uniqueId)}} style={{padding: 0}} className="btn z-depth-0 white green-text">Remove</button>
                         </div>
                         <div className="col s4 l4 right-align">
                             <p style={{fontWeight: 600}}>{`$${items.marketPrice.toFixed(2)}`}</p>
