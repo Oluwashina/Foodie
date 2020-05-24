@@ -98,7 +98,7 @@ class ItemDetails extends Component {
             dishmenu.map(dish=>{
                 return (
                     <div className="col s12 l6 m6" key={dish.id}>
-                    <div className="card medium">
+                    <div className="card small">
                     <div className="card-image">
                         <img src={dish.imgUrl} className="responsive-img materialboxed" alt="third" />
                     </div>

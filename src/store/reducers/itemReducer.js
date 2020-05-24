@@ -94,7 +94,24 @@ const itemReducer = (state = initState, action) =>{
             }
         case 'ADD_TO_CART' :
             let addedItem = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())
-             //check if the action id exists in the addedItems
+            let existed_item = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())
+            console.log(existed_item)
+            if(existed_item){
+                existed_item.quantity += state.count 
+                existed_item.ingredientPrice += state.ingredientPrice
+                existed_item.boxQty += addedItem.boxQty
+                const fees = addedItem.boxQty * 10 * 0.01
+                console.log(fees)
+                //calculating the total
+                let newTotal = state.total + state.pricesum + fees   
+                return{
+                    ...state,
+                    total : parseFloat(newTotal.toFixed(2)),
+                    packFee : state.packFee + fees
+                }
+            }
+            else{
+                  //check if the action id exists in the addedItems
             addedItem.quantity = state.count;
             addedItem.ingredientPrice = state.ingredientPrice
             addedItem.selectedToppings = action.selectedOption
@@ -104,12 +121,13 @@ const itemReducer = (state = initState, action) =>{
             //calculating the total
             let newTotal = state.total + state.pricesum + fees   
             // need to write a logic for the same item being added again so for easy filtering when removing from cart    
-            return{
-                ...state,
-                addedItems: [...state.addedItems, addedItem],
-                total : parseFloat(newTotal.toFixed(2)),
-                packFee : state.packFee + fees
-            }
+                return{
+                    ...state,
+                    addedItems: [...state.addedItems, addedItem],
+                    total : parseFloat(newTotal.toFixed(2)),
+                    packFee : state.packFee + fees
+                }
+            } 
         case 'REMOVE_FROM_CART' :
             let removedItem = state.addedItems.filter(item=> item.id.toString() !== action.id.toString())
             let addedValue = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())

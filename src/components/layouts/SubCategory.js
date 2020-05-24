@@ -46,7 +46,7 @@ class SubCategory extends Component {
                              </div>
                              <div className="col s5 l6 right-align">
                                  <p style={{fontWeight: 600}}>{`$${dish.marketPrice}`}</p>
-                                 <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0" style={{marginTop: 20}} >Details</Link>  
+                                 <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0" style={{marginTop: 20}} >Add</Link>  
                              </div>
                          </div>
 
