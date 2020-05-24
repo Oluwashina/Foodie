@@ -99,8 +99,9 @@ const itemReducer = (state = initState, action) =>{
             if(existed_item){
                 existed_item.quantity += state.count 
                 existed_item.ingredientPrice += state.ingredientPrice
-                existed_item.boxQty += addedItem.boxQty
-                const fees = addedItem.boxQty * 10 * 0.01
+                const addBoxQty = addedItem.boxQty * state.count
+                existed_item.boxQty += addBoxQty
+                const fees = addBoxQty * 10 * 0.01
                 console.log(fees)
                 //calculating the total
                 let newTotal = state.total + state.pricesum + fees   
@@ -116,6 +117,7 @@ const itemReducer = (state = initState, action) =>{
             addedItem.ingredientPrice = state.ingredientPrice
             addedItem.selectedToppings = action.selectedOption
             addedItem.selectedChecked = action.selectedChecked
+            addedItem.boxQty *= state.count
             // get packaging fees
             const fees = addedItem.boxQty * 10 * 0.01
             //calculating the total
