@@ -35,11 +35,11 @@ class ItemDetails extends Component {
          })
      }
 
-     handleChange = (event, i, id) =>{
+     handleChange = (event, i, id, cost) =>{
          const target = event.target;
         if(target.checked){
             this.props.ingredientSum(id)
-            const newTodo = [...this.state.selectedChecked, {id: i, value: event.target.name}]
+            const newTodo = [...this.state.selectedChecked, {id: i, value: event.target.name, price: cost}]
             this.setState({
                 selectedChecked: newTodo
             })
@@ -175,7 +175,7 @@ class ItemDetails extends Component {
                             <label>
                                 <input type="checkbox"
                                  name={ingredient.name}
-                                 onChange={(e) => {this.handleChange(e,i, ingredient.id)}} 
+                                 onChange={(e) => {this.handleChange(e,i, ingredient.id, cost)}} 
                                   />
                                 <span>{ingredient.name}</span>
                             </label>

@@ -63,8 +63,19 @@ removeCart = (id) =>{
                         </div>
                         <div className="col s4 l4 right-align">
                             <p style={{fontWeight: 600}}>{`$${items.marketPrice.toFixed(2)}`}</p>
+                            {items.selectedToppings ? <p style={{fontWeight: 600}}>$0.00</p> : ''}
+                            {items.selectedChecked.map(add=>{
+                                return(
+                                    <p key={add.id} style={{fontWeight: 600}}>
+                                        {`$${add.price.toFixed(2)}`}
+                                    </p>
+                                )
+                            })}
                         </div>
                     </div>
+
+                    {/* add ons */}
+                    
                 </>
                       
               )
