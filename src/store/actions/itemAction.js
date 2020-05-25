@@ -28,7 +28,7 @@ export const Menus = () =>{
         transformResponse: data => JSONbig.parse(data),
         }).then((res)=>{
             console.log(res)
-            var result = res.data.result
+            var result = res.data.result.filter(item=> item.level !== 1)
             dispatch({type: 'MENUS', result})
             
         }).catch((err)=>{
