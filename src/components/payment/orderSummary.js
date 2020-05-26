@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar';
-// import StripeCheckout from 'react-stripe-checkout'
+import StripeCheckout from 'react-stripe-checkout'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {removeCart} from '../../store/actions/itemAction'
@@ -149,19 +149,27 @@ removeCart = (id) =>{
                                     <span className="card-title">Payment Methods</span>
 
                                     <div className="row" style={{marginTop: 20}}>
-                                        <div className="col s4 l4 center-align">
-                                            <a href="#/">
+                                        <div className="col s6 l4 center-align">
+                                        <StripeCheckout
+                                            stripeKey="pk_test_lD4fwMmmeJw5ZbIN1salJO1400rzkliycN"
+                                            token={this.handleToken}
+                                            billingAddress
+                                            shippingAddress
+                                            amount={2.80 * 100}
+                                            name="Set B - Toast"
+                                          />
+                                            {/* <a href="#/">
                                             <img src="img/stripe.png" alt="stripe" className="pay-style" width="80" height="40"  />
-                                             </a>
+                                             </a> */}
                                              <p className="center">Stripe</p>
                                         </div>
-                                        <div className="col s4 l4 center-align">
+                                        <div className="col s6 l4 center-align">
                                             <a href="#/">
                                             <img src="img/grabpay.png" alt="grabpay" className="pay-style" width="80" height="40" />
                                              </a>
                                              <p className="center">GrabPay</p>
                                         </div>
-                                        <div className="col s4 l4 center-align">
+                                        <div className="col s6 l4 center-align">
                                             <a href="#/">
                                             <img src="img/dbpaylah.png" alt="DBSpaylah" className="pay-style" width="80" height="40" />
                                              </a>
@@ -170,13 +178,13 @@ removeCart = (id) =>{
                                     </div>
 
                                     <div className="row">
-                                        <div className="col s4 l4 center-align">
+                                        <div className="col s6 l4 center-align">
                                             <a href="#/">
                                             <img src="img/paynow.png" alt="stripe" className="pay-style" width="80" height="40"  />
                                              </a>
                                              <p className="center">PAYNOW</p>
                                         </div>
-                                        <div className="col s4 l4 center-align">
+                                        <div className="col s6 l4 center-align">
                                             <a href="#/">
                                             <img src="img/NETSPay_icon.png" alt="grabpay" className="pay-style" width="80" height="40" />
                                              </a>
@@ -187,18 +195,7 @@ removeCart = (id) =>{
                                    
                                                                 
                                 </div>
-                                {/* <div className="card-action">
-                                     <div className="center">
-                                         <StripeCheckout
-                                            stripeKey="pk_test_lD4fwMmmeJw5ZbIN1salJO1400rzkliycN"
-                                            token={this.handleToken}
-                                            billingAddress
-                                            shippingAddress
-                                            amount={2.80 * 100}
-                                            name="Set B - Toast"
-                                          />
-                                    </div> 
-                                </div> */}
+            
                             </div>
                         </div>
                     </div>

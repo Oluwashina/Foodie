@@ -15,7 +15,7 @@ class SubCategory extends Component {
          const{categoryId} = this.props
          let id;
          if(categoryId === ""){
-            id = "350368638463726592"
+            id = "319488404634063872"
          }
          else{
              id = categoryId
@@ -32,6 +32,13 @@ class SubCategory extends Component {
             dishlist = <p className="center">You have no dishes for this category</p>
         }else{
             dishlist = dishes.map(dish=>{
+                let btnAdd;
+                if(dish.clearStatus === 1){
+                    btnAdd = <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0" style={{marginTop: 20}} >Add</Link>  
+                }
+                else{
+                    btnAdd = <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0 disabled" style={{marginTop: 20}} >Sold Out</Link>  
+                }
                 return(
                     <div key={dish.id} className="col s12 m6 l4">
             <div className="card small hoverable">
@@ -46,7 +53,7 @@ class SubCategory extends Component {
                              </div>
                              <div className="col s5 l6 right-align">
                                  <p style={{fontWeight: 600}}>{`$${dish.marketPrice}`}</p>
-                                 <Link to={`/item/${dish.id}`} className="btn blue darken-3 z-depth-0" style={{marginTop: 20}} >Add</Link>  
+                                 {btnAdd}
                              </div>
                          </div>
 
