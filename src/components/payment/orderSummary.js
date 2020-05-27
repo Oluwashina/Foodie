@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar';
 import StripeCheckout from 'react-stripe-checkout'
+// import M from 'materialize-css';
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {removeCart} from '../../store/actions/itemAction'
@@ -16,18 +17,18 @@ class Summary extends Component {
         }
      }
 handleToken = (token) =>{
-    console.log({token})
+    // console.log({token})
     // const {product} = this.state
-    // axios.post("http://localhost:4000/charge", 
+    // axios.post("/charge", 
     //     {token,product}
     //     ).then((response)=>{
     //      console.log("Response:", response.data);
     //      const {status} = response.data
     //      if(status === 'success'){
-    //          ToastsStore.success("Success! Check email for details");
+    //         M.toast({html: "Success! Check email for details", classes: 'green'})
     //      }
     //      else{
-    //          ToastsStore.error("Something went wrong!");
+    //          M.toast({html: "Something went wrong!", classes: 'red'})
     //      }
     //  }).catch((err)=>{
     //     console.log(err);
@@ -149,8 +150,9 @@ removeCart = (id) =>{
                                     <span className="card-title">Payment Methods</span>
 
                                     <div className="row" style={{marginTop: 20}}>
-                                        <div className="col s6 l4 center-align">
+                                        <div className="col s4 l4 center-align">
                                         <StripeCheckout
+                                            style={{marginTop: 5}}
                                             stripeKey="pk_test_lD4fwMmmeJw5ZbIN1salJO1400rzkliycN"
                                             token={this.handleToken}
                                             billingAddress
@@ -163,13 +165,14 @@ removeCart = (id) =>{
                                              </a> */}
                                              <p className="center">Stripe</p>
                                         </div>
-                                        <div className="col s6 l4 center-align">
+                                        <div className="col s4 l4 center-align">
                                             <a href="#/">
-                                            <img src="img/grabpay.png" alt="grabpay" className="pay-style" width="80" height="40" />
+                                            <img src="img/paynow.png" alt="stripe" className="pay-style" width="80" height="40"  />
                                              </a>
-                                             <p className="center">GrabPay</p>
+                                             <p className="center">PAYNOW</p>
                                         </div>
-                                        <div className="col s6 l4 center-align">
+                                      
+                                        <div className="col s4 l4 center-align">
                                             <a href="#/">
                                             <img src="img/dbpaylah.png" alt="DBSpaylah" className="pay-style" width="80" height="40" />
                                              </a>
@@ -178,13 +181,13 @@ removeCart = (id) =>{
                                     </div>
 
                                     <div className="row">
-                                        <div className="col s6 l4 center-align">
+                                    <div className="col s4 l4 center-align">
                                             <a href="#/">
-                                            <img src="img/paynow.png" alt="stripe" className="pay-style" width="80" height="40"  />
+                                            <img src="img/grabpay.png" alt="grabpay" className="pay-style" width="80" height="40" />
                                              </a>
-                                             <p className="center">PAYNOW</p>
+                                             <p className="center">GrabPay</p>
                                         </div>
-                                        <div className="col s6 l4 center-align">
+                                        <div className="col s4 l4 center-align">
                                             <a href="#/">
                                             <img src="img/NETSPay_icon.png" alt="grabpay" className="pay-style" width="80" height="40" />
                                              </a>

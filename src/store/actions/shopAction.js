@@ -11,9 +11,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 export const shopDetails = () =>{
     return(dispatch, getState) =>{
 
-        const appKey = "b23302d4a08f53d1bd5bcf333664997d";
-        const storeId = "810137674";
-        const token = "8a702142d013e6c93d64c604a3fb332e";
+        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        const storeId = "810137705";
+        const token = "80199e23e7cf5a346cf9d8ff67b61039";
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
 
@@ -23,7 +23,7 @@ export const shopDetails = () =>{
             return hash;
             }
         // make call to server using fetch
-        axios.post(`api/shop/shopdetails?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`)
+        axios.post(`/api/shop/shopdetails?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`)
         .then((res)=>{
                 console.log(res)
                 var result = res.data.result
