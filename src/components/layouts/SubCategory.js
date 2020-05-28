@@ -15,7 +15,7 @@ class SubCategory extends Component {
          const{categoryId} = this.props
          let id;
          if(categoryId === ""){
-            id = "350368638463726594"
+            id = "350306762342191106"
          }
          else{
              id = categoryId
