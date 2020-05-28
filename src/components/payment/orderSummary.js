@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar';
 import StripeCheckout from 'react-stripe-checkout'
-// import M from 'materialize-css';
+import M from 'materialize-css';
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {removeCart} from '../../store/actions/itemAction'
 import {Menu} from '../../store/actions/itemAction'
-// import axios from 'axios';
+import axios from 'axios';
 
 
 class Summary extends Component {
@@ -17,22 +17,22 @@ class Summary extends Component {
         }
      }
 handleToken = (token) =>{
-    // console.log({token})
-    // const {product} = this.state
-    // axios.post("/charge", 
-    //     {token,product}
-    //     ).then((response)=>{
-    //      console.log("Response:", response.data);
-    //      const {status} = response.data
-    //      if(status === 'success'){
-    //         M.toast({html: "Success! Check email for details", classes: 'green'})
-    //      }
-    //      else{
-    //          M.toast({html: "Something went wrong!", classes: 'red'})
-    //      }
-    //  }).catch((err)=>{
-    //     console.log(err);
-    // });
+    console.log({token})
+    const {total} = this.props
+    axios.post("https://vast-brook-06837.herokuapp.com/charge", 
+        {token,total}
+        ).then((response)=>{
+         console.log("Response:", response.data);
+         const {status} = response.data
+         if(status === 'succeeded'){
+            M.toast({html: "Payment successful! Check email for details", classes: 'green'})
+         }
+         else{
+             M.toast({html: `${response.data.raw.message}`, classes: 'red'})
+         }
+     }).catch((err)=>{
+        console.log(err);
+    });
 }
 
 removeCart = (id) =>{
@@ -157,8 +157,8 @@ removeCart = (id) =>{
                                             token={this.handleToken}
                                             billingAddress
                                             shippingAddress
-                                            amount={2.80 * 100}
-                                            name="Set B - Toast"
+                                            amount={total * 100}
+                                            name="SRDD-包含消费税测试"
                                           />
                                             {/* <a href="#/">
                                             <img src="img/stripe.png" alt="stripe" className="pay-style" width="80" height="40"  />
