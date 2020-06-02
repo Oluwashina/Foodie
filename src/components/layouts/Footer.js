@@ -10,7 +10,7 @@ class Footer extends Component {
         return ( 
                <footer className="footer">
                     <div className="container" style={{paddingTop: 20}}>
-                        <p className="footer-color">&copy; 2020 SRDD-包含消费税测试. All rights reserved.</p>
+                        <p className="footer-color">&copy; 2020 SRDD-Demo. All rights reserved.</p>
                     </div>
                </footer>
          );

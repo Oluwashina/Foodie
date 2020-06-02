@@ -71,7 +71,7 @@ class ItemDetails extends Component {
      }
      addCartClick = (id, name) =>{
         M.toast({html: `${name} added to cart`, classes: 'green'})
-        this.props.addToCart(id, this.state.selectedOption, this.state.selectedChecked);
+        this.props.addToCart(id, this.state.selectedOption, this.state.selectedChecked, this.state.specs);
         this.props.Menu() 
         this.props.history.push("/home")
     }
@@ -258,7 +258,7 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
-        addToCart: (id, selectedOption,selectedChecked) => dispatch(addToCart(id,selectedOption,selectedChecked)),
+        addToCart: (id, selectedOption,selectedChecked, specs) => dispatch(addToCart(id,selectedOption,selectedChecked, specs)),
         dishMenuById: (dishId, id) => dispatch(dishMenuById(dishId, id)),
         backToMenu: (id) => dispatch(backToMenu(id)),
         Menu: () => dispatch(Menu()),

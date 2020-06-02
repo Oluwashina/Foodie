@@ -6,16 +6,23 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {removeCart} from '../../store/actions/itemAction'
 import {Menu} from '../../store/actions/itemAction'
+import {takeOrder} from '../../store/actions/itemAction'
+import {Rapyd} from '../../store/actions/itemAction'
 import axios from 'axios';
 
 
 class Summary extends Component {
-    state = { 
-        product:{
-            name: "Set B - Toast",
-            price: 2.80
-        }
-     }
+    constructor(props){
+        super(props)
+        this.state = { 
+            product:{
+                name: "Set B - Toast",
+                price: 2.80
+            },
+            currentPage: "#/"
+         }   
+    }
+   
 handleToken = (token) =>{
     console.log({token})
     const {total} = this.props
@@ -25,7 +32,8 @@ handleToken = (token) =>{
          console.log("Response:", response.data);
          const {status} = response.data
          if(status === 'succeeded'){
-            M.toast({html: "Payment successful! Check email for details", classes: 'green'})
+            M.toast({html: "Payment successful! Your order is been placed.", classes: 'green'})
+            this.props.takeOrder()
          }
          else{
              M.toast({html: `${response.data.raw.message}`, classes: 'red'})
@@ -39,13 +47,22 @@ removeCart = (id) =>{
     this.props.removeCart(id); 
 }
 
-    render() { 
-        const {addedItems, total, packFee} = this.props
+RapydPay = (e) =>{
+    e.preventDefault()
+    this.props.Rapyd();  
+}
 
+    render() { 
+        const {addedItems, total, packFee, redirect_url, status} = this.props
+        console.log(this.props)
+ 
+        if(status === "SUCCESS"){
+          window.open(redirect_url, '_self') 
+        }
+        
         const summary = addedItems.length ? (
           addedItems.map(items=>{
               return (
-                      <>  
                     <div className="row" key={items.id}>
                         <div className="col s2 l2">
                             <p className="green-text">{`${items.quantity}x`}</p>
@@ -53,7 +70,7 @@ removeCart = (id) =>{
                         <div className="col s6 l6">
                             <p style={{fontWeight: 600}}>{items.name}</p>
                             <p>{items.selectedToppings}</p>
-                            {items.selectedChecked.map(add=>{
+                            {items.selectedAddons.map(add=>{
                                 return(
                                     <p key={add.id}>
                                         {add.value}
@@ -65,7 +82,7 @@ removeCart = (id) =>{
                         <div className="col s4 l4 right-align">
                             <p style={{fontWeight: 600}}>{`$${items.marketPrice.toFixed(2)}`}</p>
                             {items.selectedToppings ? <p style={{fontWeight: 600}}>$0.00</p> : ''}
-                            {items.selectedChecked.map(add=>{
+                            {items.selectedAddons.map(add=>{
                                 return(
                                     <p key={add.id} style={{fontWeight: 600}}>
                                         {`$${add.price.toFixed(2)}`}
@@ -73,12 +90,7 @@ removeCart = (id) =>{
                                 )
                             })}
                         </div>
-                    </div>
-
-                    {/* add ons */}
-                    
-                </>
-                      
+                    </div> 
               )
           })
       ) : (
@@ -159,17 +171,15 @@ removeCart = (id) =>{
                                             shippingAddress
                                             amount={total * 100}
                                             name="SRDD-包含消费税测试"
+                                            description= "Online Food Ordering made easy"
                                           />
-                                            {/* <a href="#/">
-                                            <img src="img/stripe.png" alt="stripe" className="pay-style" width="80" height="40"  />
-                                             </a> */}
                                              <p className="center">Stripe</p>
                                         </div>
                                         <div className="col s4 l4 center-align">
-                                            <a href="#/">
-                                            <img src="img/paynow.png" alt="stripe" className="pay-style" width="80" height="40"  />
+                                            <a href="#/" onClick={this.RapydPay}>
+                                            <img src="img/paynow.png" alt="rapyd" className="pay-style" width="80" height="40"  />
                                              </a>
-                                             <p className="center">PAYNOW</p>
+                                             <p className="center">Rapyd</p>
                                         </div>
                                       
                                         <div className="col s4 l4 center-align">
@@ -212,7 +222,9 @@ const mapStateToProps = (state) =>{
     return{
         addedItems: state.item.addedItems,
         total: state.item.total,
-        packFee: state.item.packFee
+        packFee: state.item.packFee,
+        status: state.item.status,
+        redirect_url: state.item.redirect_url,
     }
 }
 
@@ -220,6 +232,8 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         removeCart: (id) => dispatch(removeCart(id)),
         Menu: () => dispatch(Menu()),
+        takeOrder: () => dispatch(takeOrder()),
+        Rapyd: () => dispatch(Rapyd())
     }
 }
  

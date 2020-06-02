@@ -14,7 +14,11 @@ const initState = {
     pricesum: 0,
     addedItems: [],
     total: 0,
-    categoryId: ''
+    categoryId: '',
+    OrderDetails: {},
+    Rapyd: {},
+    redirect_url: '',
+    status: '',
 }
 
 const itemReducer = (state = initState, action) =>{
@@ -96,34 +100,20 @@ const itemReducer = (state = initState, action) =>{
             }
         case 'ADD_TO_CART' :
             let addedItem = state.dishlist.find(dish=> dish.id.toString() === action.id.toString())
-            // let existed_item = state.addedItems.find(dish=> dish.id.toString() === action.id.toString())
-            // console.log(existed_item)
-            // if(existed_item){
-            //     existed_item.quantity += state.count 
-            //     existed_item.ingredientPrice += state.ingredientPrice
-            //     const addBoxQty = addedItem.boxQty * state.count
-            //     existed_item.boxQty += addBoxQty
-            //     const fees = addBoxQty * 10 * 0.01
-            //     console.log(fees)
-            //     //calculating the total
-            //     let newTotal = state.total + state.pricesum + fees   
-            //     return{
-            //         ...state,
-            //         total : parseFloat(newTotal.toFixed(2)),
-            //         packFee : state.packFee + fees
-            //     }
-            // }
-            // else{
-                  //check if the action id exists in the addedItems
             addedItem.quantity = state.count;
             addedItem.ingredientPrice = state.ingredientPrice
             addedItem.selectedToppings = action.selectedOption
-            addedItem.selectedChecked = action.selectedChecked
-            addedItem.boxQty *= state.count
+            addedItem.selectedAddons = action.selectedChecked
+            addedItem.boxQtySum = addedItem.boxQty * state.count
+            addedItem.tpId = addedItem.id
+            addedItem.price = addedItem.marketPrice * 100
+            addedItem.packagePrice = addedItem.boxQty * 10
+            addedItem.packageQuantity = state.count
+            addedItem.totalFee = (addedItem.price + addedItem.packagePrice) * state.count
+            addedItem.remark = action.specs
             addedItem.uniqueId = uuidv4()
             // get packaging fees
-            const fees = addedItem.boxQty * 10 * 0.01
-            console.log(fees)
+            const fees = addedItem.boxQtySum * 10 * 0.01
             //calculating the total
             let newTotal = state.total + state.pricesum + fees  
             let newPackFee = state.packFee + fees    
@@ -131,12 +121,12 @@ const itemReducer = (state = initState, action) =>{
                     ...state,
                     addedItems: [...state.addedItems, addedItem],
                     total : parseFloat(newTotal.toFixed(2)),
-                    packFee : parseFloat(newPackFee.toFixed(2))
+                    packFee : parseFloat(newPackFee.toFixed(2)),
                 }
         case 'REMOVE_FROM_CART' :
             let removedItem = state.addedItems.filter(item=> item.uniqueId !== action.id)
             let addedValue = state.addedItems.find(dish=> dish.uniqueId === action.id)
-            let removedFees = addedValue.boxQty * 10 * 0.01
+            let removedFees = addedValue.boxQtySum * 10 * 0.01
             let totalcalc = (addedValue.marketPrice * addedValue.quantity) + (addedValue.quantity * addedValue.ingredientPrice) + removedFees
             let removedTotal = state.total - totalcalc
             let PackFee =  state.packFee - parseFloat(removedFees.toFixed(2))
@@ -145,6 +135,18 @@ const itemReducer = (state = initState, action) =>{
                 addedItems : removedItem,
                 total: parseFloat(removedTotal.toFixed(2)),
                 packFee: parseFloat(PackFee.toFixed(2))
+            }
+        case 'OrderDetails' :
+            return{
+                ...state,
+                OrderDetails: action.result
+            }
+        case 'Rapyd':
+            return{
+                ...state,
+                Rapyd: action.result,
+                status: action.result.status.status,
+                redirect_url: action.result.data.redirect_url
             } 
         default:
             return state

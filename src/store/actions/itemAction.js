@@ -9,22 +9,27 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
 
+
+
 export const Menus = () =>{
     return (dispatch, getState) =>{
 
         const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
         const storeId = "810137705";
+        // const storeId = "810137674"
         const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
-
+        
          function getSign(){
             const signtxt = "appKey" + appKey + "shopIdenty" + storeId + "timestamp" + timestamp + "version" + version + token
             let hash = crypto.createHash('sha256' , 'utf-8').update(signtxt).digest("hex");
             return hash;
             }
         // make call to server using fetch
-        axios.post(`/api/cater/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
+        axios.post(`/cater/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
         transformResponse: data => JSONbig.parse(data),
         }).then((res)=>{
             console.log(res)
@@ -41,13 +46,15 @@ export const Menus = () =>{
 export const DishList = (id) =>{
     return(dispatch, getState) =>{
 
-        dispatch({type: 'Loading'})
-
         const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
         const storeId = "810137705";
+        // const storeId = "810137674"
         const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
+        dispatch({type: 'Loading'})
 
          function getSign(){
             const signtxt = "appKey" + appKey + "shopIdenty" + storeId + "timestamp" + timestamp + "version" + version + token
@@ -58,7 +65,7 @@ export const DishList = (id) =>{
          let body  = {
                "dishTypeId": id
             };
-        axios.post(`/api/cater/dish/dishNew?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        axios.post(`/cater/dish/dishNew?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
             console.log(res.data)
             var dishes = res.data.result.dishList
@@ -71,14 +78,17 @@ export const DishList = (id) =>{
 
 export const dishMenuById = (dishId, id) =>{
     return(dispatch) =>{
-
-        dispatch({type: 'Loading'})
-
+       
         const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
         const storeId = "810137705";
+        // const storeId = "810137674"
         const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
+
+        dispatch({type: 'Loading'})
 
          function getSign(){
             const signtxt = "appKey" + appKey + "shopIdenty" + storeId + "timestamp" + timestamp + "version" + version + token
@@ -90,7 +100,7 @@ export const dishMenuById = (dishId, id) =>{
             "shopIdenty": 810137705,
             "ids":[dishId, id]
             };
-        axios.post(`/api/cater/dish/dishMenuByIds?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        axios.post(`/cater/dish/dishMenuByIds?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
             console.log(res.data)
             var result = res.data.result
@@ -98,6 +108,111 @@ export const dishMenuById = (dishId, id) =>{
         }).catch((err)=>{
             console.log(err)
         })
+    }
+}
+
+export const takeOrder = () =>{
+    return(dispatch, getState) =>{
+
+        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
+        const storeId = "810137705";
+        // const storeId = "810137674"
+        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        // const token = "8a702142d013e6c93d64c604a3fb332e"
+        const version = "1.0";
+        const timestamp = Math.floor(Date.now() / 1000);
+
+        function getSign(){
+            const signtxt = "appKey" + appKey + "shopIdenty" + storeId + "timestamp" + timestamp + "version" + version + token
+            let hash = crypto.createHash('sha256' , 'utf-8').update(signtxt).digest("hex");
+            return hash;
+        }
+
+        const products = getState().item.addedItems;
+        var newProducs = products.map(product => ({ name: product.name, id: product.id, 
+            tpId: product.tpId, quantity: product.quantity, price: product.price, packagePrice: product.packagePrice,
+            packageQuantity: product.packageQuantity, totalFee: product.totalFee, remark: product.remark
+         }));
+
+        const total = getState().item.total * 100
+        // make call to server
+        let body = {
+            "tpOrderId" : "797429342222",
+            "createTime": timestamp,
+            "peopleCount" : 1,
+            "shop": {
+                "shopIdenty": 810137705,
+                "tpShopId": 810137705,
+                "shopName": 810137705
+            },
+            "products": newProducs,
+            "delivery": {
+                "expectTime":0,
+                "deliveryParty":1,
+                "receiverName":"12345678901",
+                "receiverPhone":"12345678444",
+                "receiverGender":1,
+                "coordinateType": 1,
+                "delivererAddress":"290A BISHAN STREET 24 MULTI STOREY CAR PARK, Singapore, 571290",
+                "longitude": 88,
+                "latitude": 90
+            },
+            "payment": {
+                "deliveryFee":0,
+                "packageFee":0,
+                "discountFee":0,
+                "platformDiscountFee":0,
+                "shopFee":total,
+                "userFee":total,
+                "shopDiscountFee": 0,
+                "serviceFee":0,
+                "subsidies":0,
+                "totalFee": total,
+                "payType":2
+            }
+        }
+
+        axios.post(`/takeout/order/create?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        .then((res)=>{
+            console.log(res.data)
+            var result = res.data.result
+            dispatch({type: 'OrderDetails', result})
+        }).catch((err)=>{
+            console.log(err)
+        })
+
+    }
+}
+
+
+export const Rapyd = () =>{
+    return(dispatch, getState)=>{
+        const total = getState().item.total
+        const body = {
+            "country": "SG",
+            "currency": "SGD",
+            "amount": total,
+            "payment_method_type_categories": [
+              "cash",
+              "bank_redirect",
+              "bank_transfer",
+              "card",
+              "ewallet"
+            ],
+            "complete_payment_url": "https://whispering-island-94241.herokuapp.com/summary",
+            "error_payment_url": "https://whispering-island-94241.herokuapp.com/summary"
+          }
+
+        axios.post('https://vast-brook-06837.herokuapp.com/rapyd', body)
+        .then((res)=>{
+            console.log(res)
+            var result = res.data
+            dispatch({type: 'Rapyd', result})
+        }).catch((err)=>{
+            console.log(err)
+        })
+
     }
 }
 
@@ -140,9 +255,9 @@ export const backToMenu = (id) =>{
     }
 }
 
-export const addToCart = (id,selectedOption,selectedChecked) =>{
+export const addToCart = (id,selectedOption,selectedChecked, specs) =>{
     return (dispatch, getState) =>{
-        dispatch({type: 'ADD_TO_CART',id,selectedOption,selectedChecked})
+        dispatch({type: 'ADD_TO_CART',id,selectedOption,selectedChecked,specs})
     }
 }
 
