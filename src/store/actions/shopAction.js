@@ -26,7 +26,7 @@ export const shopDetails = () =>{
             return hash;
             }
         // make call to server using fetch
-        axios.post(`/shop/shopdetails?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`)
+        axios.post(`/api/shop/shopdetails?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`)
         .then((res)=>{
                 console.log(res)
                 var result = res.data.result
