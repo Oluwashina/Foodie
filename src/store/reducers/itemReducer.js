@@ -16,6 +16,8 @@ const initState = {
     total: 0,
     categoryId: '',
     OrderDetails: {},
+    order_msg: '',
+    order_error: '',
     Rapyd: {},
     redirect_url: '',
     status: '',
@@ -139,7 +141,15 @@ const itemReducer = (state = initState, action) =>{
         case 'OrderDetails' :
             return{
                 ...state,
-                OrderDetails: action.result
+                loading: false,
+                OrderDetails: action.result.result,
+                order_msg: action.result.message
+            }
+        case 'OrderError':
+            return{
+                ...state,
+                loading: false,
+                order_error: "No item added to cart"
             }
         case 'Rapyd':
             return{

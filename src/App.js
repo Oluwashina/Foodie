@@ -8,6 +8,9 @@ import ItemDetails from './components/Items/Itemdetails'
 import Summary from './components/payment/orderSummary'
 import Order from './components/history/orderStatus'
 import About from './components/layouts/About'
+import NotFoundPage from './components/404/NotFoundPage';
+import Success from './components/payment/Success'; 
+import Failed from './components/payment/Failed';
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
         <Route path="/summary" component={Summary} />
         <Route path="/orders" component={Order} />
         <Route path="/about" component={About} />
+        <Route path="/success" component={Success} />
+        <Route path="/error" component={Failed} />
+        <Route path="*" component={NotFoundPage} />
       </Switch>
     </div>
   </BrowserRouter>

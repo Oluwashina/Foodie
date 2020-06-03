@@ -114,6 +114,8 @@ export const dishMenuById = (dishId, id) =>{
 export const takeOrder = () =>{
     return(dispatch, getState) =>{
 
+        dispatch({type: 'Loading'})
+
         const appKey = "02e6d1efd0421de9d49447106cbc90ec";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
         const storeId = "810137705";
@@ -176,10 +178,11 @@ export const takeOrder = () =>{
         axios.post(`/api/takeout/order/create?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
             console.log(res.data)
-            var result = res.data.result
+            var result = res.data
             dispatch({type: 'OrderDetails', result})
         }).catch((err)=>{
             console.log(err)
+            dispatch({type: 'OrderError'})
         })
 
     }
@@ -200,8 +203,8 @@ export const Rapyd = () =>{
               "card",
               "ewallet"
             ],
-            "complete_payment_url": "https://whispering-island-94241.herokuapp.com/summary",
-            "error_payment_url": "https://whispering-island-94241.herokuapp.com/summary"
+            "complete_payment_url": "https://whispering-island-94241.herokuapp.com/success",
+            "error_payment_url": "https://whispering-island-94241.herokuapp.com/error"
           }
 
         axios.post('https://vast-brook-06837.herokuapp.com/rapyd', body)
