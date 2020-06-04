@@ -140,9 +140,6 @@ textarea.materialize-textarea:focus:not([readonly]){
     width: 40px;
     right: 40px;
   }
-  button.StripeCheckout span{
-    font-size: 9px !important;
-  }
 }
 .tabs{
   height: 60px !important;

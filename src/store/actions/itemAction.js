@@ -28,6 +28,7 @@ export const Menus = () =>{
             let hash = crypto.createHash('sha256' , 'utf-8').update(signtxt).digest("hex");
             return hash;
             }
+
         // make call to server using fetch
         axios.post(`/api/cater/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
         transformResponse: data => JSONbig.parse(data),

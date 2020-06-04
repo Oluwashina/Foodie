@@ -36,7 +36,7 @@ handleToken = (token) =>{
             this.props.takeOrder()
          }
          else{
-             M.toast({html: `${response.data.raw.message}`, classes: 'red'})
+             M.toast({html: `${response.data.raw.message}`})
          }
      }).catch((err)=>{
         console.log(err);
@@ -49,7 +49,14 @@ removeCart = (id) =>{
 
 RapydPay = (e) =>{
     e.preventDefault()
-    this.props.Rapyd();  
+    const {total} = this.props
+    if(total === 0){
+       M.toast({html: "There is no item added to cart!!!"})
+    }
+    else{
+     this.props.Rapyd();  
+    }
+   
 }
 
     render() { 
@@ -171,6 +178,7 @@ RapydPay = (e) =>{
                                             shippingAddress
                                             amount={total * 100}
                                             name="SRDD-包含消费税测试"
+                                            label="Stripe"
                                             description= "Online Food Ordering made easy"
                                           />
                                              <p className="center">Stripe</p>
