@@ -3,11 +3,12 @@ import Navbar from '../layouts/Navbar';
 import StripeCheckout from 'react-stripe-checkout'
 import M from 'materialize-css';
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {removeCart} from '../../store/actions/itemAction'
 import {Menu} from '../../store/actions/itemAction'
 import {takeOrder} from '../../store/actions/itemAction'
 import {Rapyd} from '../../store/actions/itemAction'
+import {PayNow} from '../../store/actions/itemAction'
 import axios from 'axios';
 
 
@@ -22,6 +23,11 @@ class Summary extends Component {
             currentPage: "#/"
          }   
     }
+
+componentDidMount(){
+    const {Omise} = window;
+    Omise.setPublicKey("pkey_test_5k3tle9qlpcvs7qh0nb");
+}
    
 handleToken = (token) =>{
     console.log({token})
@@ -44,7 +50,7 @@ handleToken = (token) =>{
 }
 
 removeCart = (id) =>{
-    this.props.removeCart(id); 
+    this.props.removeCart(id);
 }
 
 RapydPay = (e) =>{
@@ -55,17 +61,40 @@ RapydPay = (e) =>{
     }
     else{
      this.props.Rapyd();  
+    }  
+}
+
+PayNowPay = () =>{
+    const {Omise} = window;
+    const {total, PayNow} = this.props
+    if(total === 0){
+      M.toast({html: "There is no item added to cart!!!"}) 
     }
-   
+    else{
+        Omise.createSource('paynow', {
+            "amount": total * 100,
+            "currency": "SGD"
+        }, function(statusCode, response){
+            console.log(response)
+            const id = response.id
+            PayNow(id);
+        });
+    }     
 }
 
     render() { 
         const {addedItems, total, packFee, redirect_url, status} = this.props
         console.log(this.props)
  
+        // route for Rapyd payment
         if(status === "SUCCESS"){
           window.open(redirect_url, '_self') 
         }
+
+        // Route for Paynow
+        if(status === "pending"){
+            return <Redirect to="/scanQr" />
+          }
         
         const summary = addedItems.length ? (
           addedItems.map(items=>{
@@ -158,6 +187,7 @@ RapydPay = (e) =>{
                                 </div>
                             </div>
                         </div>
+
                     </div> 
 
                     {/* second row */}
@@ -169,6 +199,7 @@ RapydPay = (e) =>{
                                     <span className="card-title">Payment Methods</span>
 
                                     <div className="row" style={{marginTop: 20}}>
+                                        {/* stripe */}
                                         <div className="col s4 l4 center-align">
                                         <StripeCheckout
                                             style={{marginTop: 5}}
@@ -183,19 +214,20 @@ RapydPay = (e) =>{
                                           />
                                              <p className="center">Stripe</p>
                                         </div>
+                                            {/* paynow */}
+                                        <div className="col s4 l4 center-align">
+                                            <a href="#/" onClick={this.PayNowPay}>
+                                            <img src="img/paynow.png" alt="payNow" className="pay-style" width="80" height="40" />
+                                             </a>
+                                             <p className="center">PayNow</p>
+                                        </div>
+                                            {/* rapyd */}
                                         <div className="col s4 l4 center-align">
                                             <a href="#/" onClick={this.RapydPay}>
-                                            <img src="img/paynow.png" alt="rapyd" className="pay-style" width="80" height="40"  />
+                                            <img src="img/rapyd.png" alt="rapyd" className="pay-style" width="80" height="40"  />
                                              </a>
                                              <p className="center">Rapyd</p>
-                                        </div>
-                                      
-                                        <div className="col s4 l4 center-align">
-                                            <a href="#/">
-                                            <img src="img/dbpaylah.png" alt="DBSpaylah" className="pay-style" width="80" height="40" />
-                                             </a>
-                                             <p className="center">DBSPaylah</p>
-                                        </div>
+                                        </div>                           
                                     </div>
 
                                     <div className="row">
@@ -210,6 +242,12 @@ RapydPay = (e) =>{
                                             <img src="img/NETSPay_icon.png" alt="grabpay" className="pay-style" width="80" height="40" />
                                              </a>
                                              <p className="center">NETSPay</p>
+                                        </div>
+                                        <div className="col s4 l4 center-align">
+                                            <a href="#/">
+                                            <img src="img/dbpaylah.png" alt="DBSpaylah" className="pay-style" width="80" height="40" />
+                                             </a>
+                                             <p className="center">DBSPaylah</p>
                                         </div>
                                     </div>
                                     
@@ -241,7 +279,8 @@ const mapDispatchToProps = (dispatch) =>{
         removeCart: (id) => dispatch(removeCart(id)),
         Menu: () => dispatch(Menu()),
         takeOrder: () => dispatch(takeOrder()),
-        Rapyd: () => dispatch(Rapyd())
+        Rapyd: () => dispatch(Rapyd()),
+        PayNow: (id) => dispatch(PayNow(id))
     }
 }
  

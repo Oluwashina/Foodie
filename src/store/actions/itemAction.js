@@ -28,7 +28,6 @@ export const Menus = () =>{
             let hash = crypto.createHash('sha256' , 'utf-8').update(signtxt).digest("hex");
             return hash;
             }
-
         // make call to server using fetch
         axios.post(`/api/cater/dish/categoryAll?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`,{
         transformResponse: data => JSONbig.parse(data),
@@ -213,6 +212,27 @@ export const Rapyd = () =>{
             console.log(res)
             var result = res.data
             dispatch({type: 'Rapyd', result})
+        }).catch((err)=>{
+            console.log(err)
+        })
+
+    }
+}
+
+export const PayNow = (id) =>{
+    return(dispatch, getState) =>{
+        const amount = getState().item.total
+
+        const body = {
+            "id" : id,
+            "amount": amount * 100
+        }
+
+        axios.post('https://vast-brook-06837.herokuapp.com/paynow', body)
+        .then((res)=>{
+            console.log(res)
+            var result = res.data
+            dispatch({type: 'PAYNOW', result})
         }).catch((err)=>{
             console.log(err)
         })

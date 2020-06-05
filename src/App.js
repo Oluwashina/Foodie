@@ -11,6 +11,7 @@ import About from './components/layouts/About'
 import NotFoundPage from './components/404/NotFoundPage';
 import Success from './components/payment/Success'; 
 import Failed from './components/payment/Failed';
+import QrCode from './components/payment/QrCode';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/success" component={Success} />
         <Route path="/error" component={Failed} />
+        <Route path="/scanQr" component={QrCode} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </div>

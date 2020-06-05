@@ -21,6 +21,7 @@ const initState = {
     Rapyd: {},
     redirect_url: '',
     status: '',
+    downloadUrl: ''
 }
 
 const itemReducer = (state = initState, action) =>{
@@ -157,6 +158,13 @@ const itemReducer = (state = initState, action) =>{
                 Rapyd: action.result,
                 status: action.result.status.status,
                 redirect_url: action.result.data.redirect_url
+            }
+        case 'PAYNOW':
+            const downloadUrl = action.result.source.scannable_code.image.download_uri
+            return{
+                ...state,
+                downloadUrl: downloadUrl,
+                status: action.result.status
             } 
         default:
             return state
