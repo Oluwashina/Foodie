@@ -67,8 +67,8 @@ RapydPay = (e) =>{
 PayNowPay = () =>{
     const {Omise} = window;
     const {total, PayNow} = this.props
-    if(total === 0){
-      M.toast({html: "There is no item added to cart!!!"}) 
+    if(total < 1){
+      M.toast({html: "amount must be greater than $1"}) 
     }
     else{
         Omise.createSource('paynow', {
