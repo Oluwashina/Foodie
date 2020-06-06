@@ -240,6 +240,12 @@ export const PayNow = (id) =>{
     }
 }
 
+export const payUpdate = (data) =>{
+    return(dispatch, getState)=>{
+        dispatch({type: 'PAYNOW_UPDATE', data})
+    }
+}
+
 export const Increment = () =>{
     return(dispatch, getState) =>{
         dispatch({type: 'INCREMENT'})

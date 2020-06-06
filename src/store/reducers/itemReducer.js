@@ -21,7 +21,8 @@ const initState = {
     Rapyd: {},
     redirect_url: '',
     status: '',
-    downloadUrl: ''
+    downloadUrl: '',
+    paynow_status: ''
 }
 
 const itemReducer = (state = initState, action) =>{
@@ -166,6 +167,11 @@ const itemReducer = (state = initState, action) =>{
                 downloadUrl: downloadUrl,
                 status: action.result.status
             } 
+        case 'PAYNOW_UPDATE':
+            return{
+                ...state,
+                paynow_status: action.data.status
+            }
         default:
             return state
     }
