@@ -21,7 +21,7 @@ class Navbar extends Component {
             <div className="navbar-fixed">
                     <nav className="nav-wrapper nav-color">
                 <div className="container">
-                <Link to="/home" onClick={this.props.Menu} className="brand-logo white-text" style={{fontSize: 18}}>SRDD-Demo</Link>
+                <Link to="/home" onClick={this.props.Menu} className="brand-logo white-text" style={{fontSize: 18}}>SRDD-Demology</Link>
                 <a href="/#" data-target="slide-out" className="sidenav-trigger">
                         <i className="material-icons">menu</i>
                  </a>
