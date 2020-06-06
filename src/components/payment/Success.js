@@ -21,7 +21,7 @@ class Success extends Component {
     render() { 
         const {order_msg,loading} = this.props
 
-        if(order_msg === '成功[OK]') return <Redirect to="/summary" />
+        if(order_msg === 'success[OK]') return <Redirect to="orders" />
          
 
         return ( 

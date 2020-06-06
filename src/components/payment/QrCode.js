@@ -18,7 +18,7 @@ function QRCode(props){
                 payUpdate(data)
             })
         })
-
+        
          // Route for successful payment using the paynow method
          if(status === "successful"){
             return <Redirect to="/success" />
