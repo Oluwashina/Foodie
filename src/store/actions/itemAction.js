@@ -203,8 +203,8 @@ export const Rapyd = () =>{
               "card",
               "ewallet"
             ],
-            "complete_payment_url": "https://whispering-island-94241.herokuapp.com/success",
-            "error_payment_url": "https://whispering-island-94241.herokuapp.com/error"
+            "complete_checkout_url": "https://whispering-island-94241.herokuapp.com/success",
+            "cancel_checkout_url": "https://whispering-island-94241.herokuapp.com/error"
           }
 
         axios.post('https://vast-brook-06837.herokuapp.com/rapyd', body)
