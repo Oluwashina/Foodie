@@ -348,3 +348,12 @@ export const orderList = () =>{
 
     }
 }
+
+// check order details by id
+export const orderDetails = (orderId, itemId) =>{
+    return(dispatch, getState)=>{
+        console.log(orderId)
+        console.log(itemId)
+        dispatch({type: 'OrderById', orderId, itemId})
+    }
+}

@@ -23,7 +23,8 @@ const initState = {
     status: '',
     downloadUrl: '',
     paynow_status: '',
-    orderHistory: []
+    orderHistory: [],
+    order: {}
 }
 
 const itemReducer = (state = initState, action) =>{
@@ -186,6 +187,13 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 orderHistory: action.result
+            }
+        case 'OrderById':
+            let order = state.orderHistory.find(order => order.baseInfo.id.toString() === action.orderId.toString())
+            // let orderbyId = order.dishInfos.find(item => item.itemId === action.itemId)
+            return{
+                ...state,
+                order: order
             }
         default:
             return state

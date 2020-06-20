@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {orderList} from '../../store/actions/itemAction'
+import {orderDetails} from '../../store/actions/itemAction'
 
 
 class OrderHistory extends Component {
@@ -12,6 +12,11 @@ class OrderHistory extends Component {
 
     componentDidMount(){
         this.props.Orders()
+      }
+
+      viewDetails = (orderId, itemId) =>{
+          this.props.orderDetails(orderId, itemId)
+          this.props.history.push(`/order/details/${itemId}`)
       }
 
     render() { 
@@ -45,7 +50,8 @@ class OrderHistory extends Component {
                             <p style={{fontWeight: 600, marginTop: 10}}>{`$${dis.price / 100}`}</p>
                             </div>
                             <div className="col s6 l4 right-align">
-                            <Link to={`orders/${dish.baseInfo.id}`}className="btn blue-text white text-darken-3 z-depth-0" style={{padding: 0}}>See Details</Link>
+                            {/* <Link to={`/order/details/${dish.baseInfo.id}`}className="btn blue-text white text-darken-3 z-depth-0" style={{padding: 0}}>See Details</Link> */}
+                            <button onClick={()=>{this.viewDetails(dish.baseInfo.id, dis.itemId)}} className="btn blue-text white text-darken-3 z-depth-0" style={{padding: 0}}>See Details</button>
                             </div>
                         </div>
                      </div>
@@ -142,6 +148,7 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         Orders: () => dispatch(orderList()),
+        orderDetails: (orderId, itemId) => dispatch(orderDetails(orderId, itemId))
     }
 }
  

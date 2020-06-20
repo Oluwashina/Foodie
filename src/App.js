@@ -12,6 +12,7 @@ import NotFoundPage from './components/404/NotFoundPage';
 import Success from './components/payment/Success'; 
 import Failed from './components/payment/Failed';
 import QrCode from './components/payment/QrCode';
+import orderDetails from './components/history/orderDetails'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/validate/otp" component={Otp} />
         <Route path="/home" component={Dashboard} />
         <Route path="/item/:id" component={ItemDetails} />
+        <Route path="/order/details/:id" component={orderDetails} />
         <Route path="/summary" component={Summary} />
         <Route path="/orders" component={Order} />
         <Route path="/about" component={About} />
