@@ -1,12 +1,62 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar'
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {orderList} from '../../store/actions/itemAction'
 
 
 class OrderHistory extends Component {
     state = {
 
       }
+
+    componentDidMount(){
+        this.props.Orders()
+      }
+
     render() { 
+
+        const {dishInfo} = this.props
+        
+        const dishHistory = dishInfo.length ? (
+
+            dishInfo.map(dish=> dish.dishInfos.map(dis =>{
+                var unixTimestamp = dish.baseInfo.createTime;
+                var dateObj = new Date(unixTimestamp * 1000); 
+                            var utcString = dateObj.toUTCString();
+
+                var time = utcString.slice(-24, -13);
+
+                return(
+                    <div className="card" key={dis.itemId}>
+                    <div className="card-content">
+                        <div className="row">
+                            <div className="col s8 l8">
+                            <span className="card-title" style={{fontWeight: 600}}>{dis.dishName}</span>
+                            <p>Placed on {time}</p>
+                            </div>
+                            <div className="col s4 l4 right-align">
+                                <p style={{fontWeight: 600}}>{`${dis.quantity}x`}</p>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col s6 l8">
+                            <p style={{fontWeight: 600, marginTop: 10}}>{`$${dis.price / 100}`}</p>
+                            </div>
+                            <div className="col s6 l4 right-align">
+                            <Link to={`orders/${dish.baseInfo.id}`}className="btn blue-text white text-darken-3 z-depth-0" style={{padding: 0}}>See Details</Link>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                )
+            }))
+        )
+        : (
+            <p>Looks like you have no items in your cart</p>
+        )
+
         return ( 
             <React.Fragment>
                 <Navbar />
@@ -36,20 +86,8 @@ class OrderHistory extends Component {
                    </div>
 
                    {/* order details */}
-                   <div className="card">
-                       <div className="card-content">
-                           <span className="card-title" style={{fontWeight: 600}}>Li Ji Coffee House</span>
 
-                           <div className="row">
-                               <div className="col s6 l6">
-                                   <p>PickUp #:</p>
-                               </div>
-                               <div className="col s6 l6">
-                                   <p>FO17</p>
-                               </div>
-                           </div>
-
-                           <div className="row">
+                           {/* <div className="row">
                                <div className="col s6 l6">
                                    <p>Order Type:</p>
                                </div>
@@ -83,29 +121,28 @@ class OrderHistory extends Component {
                                <div className="col s6 l6">
                                    <p>Stripe</p>
                                </div>
-                           </div>
-                       </div>
-                       <div className="card-action">
-                       <div className="row">
-                        <div className="col s3 l3">
-                            <img src="img/food1.jpg" width="200" height="30" alt="" className="responsive-img" />
-                        </div>
-                        <div className="col s6 l6">
-                            <span className="card-title" style={{fontWeight: 600}}>Coffee</span>
-                            <p>Less Sugar</p>
-                            <p style={{fontWeight: 600}}>$1.30</p>
-                        </div>
-                        <div className="col s3 l3">
-                            <p style={{fontWeight: 600}}>1x</p>
-                        </div>
-                        </div>
-                       </div>
-                   </div>
+                           </div> */}
+                         <h5 style={{marginTop: 30}}>My Orders</h5>  
+                    
+                   {dishHistory}
 
                 </div>
             </React.Fragment> 
         );
     }
 }
+
+
+const mapStateToProps = (state) =>{
+    return{
+        dishInfo: state.item.orderHistory
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        Orders: () => dispatch(orderList()),
+    }
+}
  
-export default OrderHistory;
+export default connect(mapStateToProps, mapDispatchToProps)(OrderHistory);

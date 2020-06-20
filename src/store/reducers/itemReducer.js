@@ -22,7 +22,8 @@ const initState = {
     redirect_url: '',
     status: '',
     downloadUrl: '',
-    paynow_status: ''
+    paynow_status: '',
+    orderHistory: []
 }
 
 const itemReducer = (state = initState, action) =>{
@@ -171,6 +172,20 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 paynow_status: action.data.status
+            }
+        case 'orderHistory':
+            // const orderDishes = action.result.map(dish=> dish.dishInfos.map(dis=> console.log(dis.price)))
+            // console.log(orderDishes)
+            // for(let i=0; i<action.result.length; i++){
+            //     var order= action.result[i].dishInfos
+            //     for(let k =0; k<order.length; k++){
+            //         console.log(order[k].dishName)
+            //     }
+            // }
+           
+            return{
+                ...state,
+                orderHistory: action.result
             }
         default:
             return state

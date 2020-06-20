@@ -204,7 +204,7 @@ export const Rapyd = () =>{
               "ewallet"
             ],
             "complete_checkout_url": "https://whispering-island-94241.herokuapp.com/success",
-            "cancel_checkout_url": "https://whispering-island-94241.herokuapp.com/error"
+            "cancel_checkout_url": "https://whispering-island-94241.herokuapp.com/summary"
           }
 
         axios.post('https://vast-brook-06837.herokuapp.com/rapyd', body)
@@ -294,5 +294,57 @@ export const addToCart = (id,selectedOption,selectedChecked, specs) =>{
 export const removeCart = (id) =>{
     return (dispatch, getState) =>{
         dispatch({type: 'REMOVE_FROM_CART', id})
+    }
+}
+
+// Check order details
+export const orderList = () =>{
+    return(dispatch, getState) =>{
+
+        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
+        const storeId = "810137705";
+        // const storeId = "810137674"
+        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        // const token = "8a702142d013e6c93d64c604a3fb332e"
+        const version = "1.0";
+        const timestamp = Math.floor(Date.now() / 1000);
+
+        function getSign(){
+            const signtxt = "appKey" + appKey + "shopIdenty" + storeId + "timestamp" + timestamp + "version" + version + token
+            let hash = crypto.createHash('sha256' , 'utf-8').update(signtxt).digest("hex");
+            return hash;
+        }
+
+         // make call to server using axios
+         let body  = {
+            "shopIdenty": 810137705,
+            "startTime" : Date.now() - 15 * 24 * 60 * 60 * 1000,
+            "endTime" : Date.now(),
+            "timeType" : 2
+         };
+        axios.post(`/api/data/order/export2?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        .then((res)=>{
+            console.log(res.data)
+            var orderId = res.data.result.items.map(item => (item.orderId))
+            console.log(orderId)
+
+            let body = {
+                "shopIdenty": 810137705,
+                "ids" : orderId 
+            }
+
+            axios.post(`/api/data/order/exportDetail?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+            .then((res)=>{
+                console.log(res.data)
+                var result = res.data.result
+                dispatch({type: 'orderHistory', result})
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }).catch((err)=>{
+            console.log(err)
+        })
+
     }
 }
