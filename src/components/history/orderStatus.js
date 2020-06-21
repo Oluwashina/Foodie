@@ -3,6 +3,7 @@ import Navbar from '../layouts/Navbar'
 import {connect} from 'react-redux'
 import {orderList} from '../../store/actions/itemAction'
 import {orderDetails} from '../../store/actions/itemAction'
+import {orderStatus} from '../../store/actions/itemAction'
 
 
 class OrderHistory extends Component {
@@ -19,9 +20,14 @@ class OrderHistory extends Component {
           this.props.history.push(`/order/details/${itemId}`)
       }
 
+      updateOrderStatus = (orderId) =>{
+         alert(orderId)
+         this.props.orderStatus(orderId) 
+      }
+
     render() { 
 
-        const {dishInfo} = this.props
+        const {dishInfo, loading, order_status} = this.props
         
         const dishHistory = dishInfo.length ? (
 
@@ -36,22 +42,19 @@ class OrderHistory extends Component {
                     <div className="card" key={dis.itemId}>
                     <div className="card-content">
                         <div className="row">
-                            <div className="col s8 l8">
+                            <div className="col s12 l12">
                             <span className="card-title" style={{fontWeight: 600}}>{dis.dishName}</span>
                             <p>Placed on {time}</p>
-                            </div>
-                            <div className="col s4 l4 right-align">
-                                <p style={{fontWeight: 600}}>{`${dis.quantity}x`}</p>
                             </div>
                         </div>
 
                         <div className="row">
                             <div className="col s6 l8">
+                            <p style={{fontWeight: 600}}>{`QTY: ${dis.quantity}`}</p>
                             <p style={{fontWeight: 600, marginTop: 10}}>{`$${dis.price / 100}`}</p>
                             </div>
                             <div className="col s6 l4 right-align">
-                            {/* <Link to={`/order/details/${dish.baseInfo.id}`}className="btn blue-text white text-darken-3 z-depth-0" style={{padding: 0}}>See Details</Link> */}
-                            <button onClick={()=>{this.viewDetails(dish.baseInfo.id, dis.itemId)}} className="btn blue-text white text-darken-3 z-depth-0" style={{padding: 0}}>See Details</button>
+                            <button onClick={()=>{this.viewDetails(dish.baseInfo.id, dis.itemId)}} className="btn blue-text white text-darken-3 z-depth-0" style={{padding: 0, marginTop: 15}}>See Details</button>
                             </div>
                         </div>
                      </div>
@@ -62,6 +65,34 @@ class OrderHistory extends Component {
         : (
             <p>Looks like you have no items in your cart</p>
         )
+
+        // This is to calculate the order time of the most recent order placed
+        if(dishInfo.length !== 0){
+            var Timestamp = dishInfo[0].baseInfo.createTime;
+            var date = new Date(Timestamp * 1000); 
+            var utcStringTime = date.toUTCString();
+    
+            var recentOrderTime = utcStringTime.slice(-11, -7);
+            // orderStatus(dishInfo[0].baseInfo.id) 
+        }
+        // end of calculation
+
+        // checking order status of the most recent order placed
+            let status;
+            if(order_status === 1){
+                status = "Not Processed"
+            }
+            else if(order_status === 2){
+                status = "CONFIRMED"
+            }
+            else if(order_status === 3){
+                status = "COMPLETED"
+            }
+            else if(order_status === 4){
+                status = "CANCELLED"
+            }
+
+            // END OF CHECKING status check
 
         return ( 
             <React.Fragment>
@@ -77,17 +108,24 @@ class OrderHistory extends Component {
                                 <li>
                                     <i className="fa fa-check white-text"></i>
                                     <p>SUBMITTED</p>
-                                    <p>10:20</p>
+                                    <p>{recentOrderTime}</p>
                                 </li>
                                 <li>
                                     <i className="fa fa-check white-text"></i>
-                                    <p>READY</p>
+                                        <p>{order_status === "" ? "PROCESSING" : status}</p>
                                     <p>10:46</p>
                                 </li>
                             </ul>
                         </div>
                         <div className="card-action center">
-                        <button style={{textTransform: 'initial'}} className="btn white grey-text text-darken-1 z-depth-0"><i className="material-icons left">refresh</i>Update Order Information</button>
+                        <button onClick={()=>{this.updateOrderStatus(dishInfo[0].baseInfo.id)}} style={{textTransform: 'initial'}} className="btn white grey-text text-darken-1 z-depth-0">
+                            {loading && (
+                                        <i
+                                        className="fa fa-circle-o-notch fa-spin left"
+                                        />
+                                        )}
+                            {!loading && (<i className="material-icons left">refresh</i>) }Update Order Information
+                            </button>
                         </div>
                    </div>
 
@@ -141,14 +179,17 @@ class OrderHistory extends Component {
 
 const mapStateToProps = (state) =>{
     return{
-        dishInfo: state.item.orderHistory
+        dishInfo: state.item.orderHistory,
+        loading: state.item.loading,
+        order_status: state.item.order_status
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
         Orders: () => dispatch(orderList()),
-        orderDetails: (orderId, itemId) => dispatch(orderDetails(orderId, itemId))
+        orderDetails: (orderId, itemId) => dispatch(orderDetails(orderId, itemId)),
+        orderStatus: (orderId) => dispatch(orderStatus(orderId))
     }
 }
  

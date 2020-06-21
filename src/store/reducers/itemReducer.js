@@ -24,7 +24,8 @@ const initState = {
     downloadUrl: '',
     paynow_status: '',
     orderHistory: [],
-    order: {}
+    order: {},
+    order_status: ''
 }
 
 const itemReducer = (state = initState, action) =>{
@@ -194,6 +195,12 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 order: order
+            }
+        case 'orderStatus':
+            return{
+                ...state,
+                order_status: action.result,
+                loading: false
             }
         default:
             return state

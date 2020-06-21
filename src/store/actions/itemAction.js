@@ -352,8 +352,44 @@ export const orderList = () =>{
 // check order details by id
 export const orderDetails = (orderId, itemId) =>{
     return(dispatch, getState)=>{
-        console.log(orderId)
-        console.log(itemId)
         dispatch({type: 'OrderById', orderId, itemId})
+    }
+}
+
+// check order status
+export const orderStatus = (orderId) =>{
+    return(dispatch, getState)=>{
+
+        dispatch({type: 'Loading'})
+
+        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
+        const storeId = "810137705";
+        // const storeId = "810137674"
+        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        // const token = "8a702142d013e6c93d64c604a3fb332e"
+        const version = "1.0";
+        const timestamp = Math.floor(Date.now() / 1000);
+
+        function getSign(){
+            const signtxt = "appKey" + appKey + "shopIdenty" + storeId + "timestamp" + timestamp + "version" + version + token
+            let hash = crypto.createHash('sha256' , 'utf-8').update(signtxt).digest("hex");
+            return hash;
+        }
+
+        // make request using axios to get status of order placed
+        let body = {
+            "orderId": "0fce2b970a6c4432b55c45619cac94c9"
+        }
+
+        axios.post(`/api/takeout/order/status/get?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        .then((res)=>{
+            console.log(res.data)
+            var result = res.data.result.status
+            dispatch({type: 'orderStatus', result})
+        }).catch((err)=>{
+            console.log(err)
+        })
+
     }
 }
