@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import Navbar from '../layouts/Navbar'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom';
 import {orderList} from '../../store/actions/itemAction'
 import {orderDetails} from '../../store/actions/itemAction'
 import {orderStatus} from '../../store/actions/itemAction'
+import Loader from 'react-loader-spinner'
 
 
 class OrderHistory extends Component {
@@ -13,6 +15,14 @@ class OrderHistory extends Component {
 
     componentDidMount(){
         this.props.Orders()
+      }
+
+      componentDidUpdate(prevProps){
+          const {orderStatus, dishInfo} = this.props
+        if (dishInfo !== prevProps.dishInfo) {
+            orderStatus(dishInfo[0].baseInfo.id)
+        }
+        
       }
 
       viewDetails = (orderId, itemId) =>{
@@ -27,7 +37,16 @@ class OrderHistory extends Component {
 
     render() { 
 
-        const {dishInfo, loading, order_status} = this.props
+        const {dishInfo, loading, order_status, status_loader, status_time} = this.props
+
+            if(loading) return <Loader
+            type="Oval"
+            color="#1565C0"
+            height={50}
+            width={50}
+            className="center load"
+            />
+
         
         const dishHistory = dishInfo.length ? (
 
@@ -39,7 +58,7 @@ class OrderHistory extends Component {
                 var time = utcString.slice(-24, -13);
 
                 return(
-                    <div className="card" key={dis.itemId}>
+                    <div className="card" key={dis.itemId} style={{marginTop: 20}}>
                     <div className="card-content">
                         <div className="row">
                             <div className="col s12 l12">
@@ -63,19 +82,29 @@ class OrderHistory extends Component {
             }))
         )
         : (
-            <p>Looks like you have no items in your cart</p>
+            <div className="card" style={{marginTop: 20}}>
+                <div className="card-content">
+                    <div className="center">
+                    <img src="img/empty.svg" width="100" height="100" alt="Empty Order" />
+                        <span className="card-title">No Orders Yet!!!</span>
+                        <p>Looks like you haven't made your choice yet</p>
+                        <Link to="/home" className="btn blue darken-3 z-depth-0" style={{marginTop: 20}} >Start Shopping</Link> 
+                    </div>
+                </div>
+             </div>
         )
 
-        // This is to calculate the order time of the most recent order placed
-        if(dishInfo.length !== 0){
+          // This is to calculate the order time of the most recent order placed
+          if(dishInfo.length !== 0){
             var Timestamp = dishInfo[0].baseInfo.createTime;
             var date = new Date(Timestamp * 1000); 
             var utcStringTime = date.toUTCString();
     
-            var recentOrderTime = utcStringTime.slice(-11, -7);
+            var recentOrderTime = utcStringTime.slice(-13, -7);
             // orderStatus(dishInfo[0].baseInfo.id) 
         }
         // end of calculation
+
 
         // checking order status of the most recent order placed
             let status;
@@ -94,42 +123,55 @@ class OrderHistory extends Component {
 
             // END OF CHECKING status check
 
+
+            // display of status of recent order been placec
+        const statusPage = dishInfo.length ? (
+            <div className="card" style={{marginTop: 20}}>
+            <div className="card-content">
+                 <span className="card-title center green-text text-darken-1">COMPLETED</span>
+                 <p className="center">Your order is now completed. We hope you enjoyed it!</p>                           
+             </div>  
+             <div className="progresy">
+                 <ul className="progresy-ul">
+                     <li>
+                         <i className="fa fa-check white-text"></i>
+                         <p>SUBMITTED</p>
+                         <p>{recentOrderTime}</p>
+                     </li>
+                     <li>
+                         <i className="fa fa-check white-text"></i>
+                             <p>{order_status === "" ? "PROCESSING" : status}</p>
+                         <p>{status_time === "" ? "..." : status_time }</p>
+                     </li>
+                 </ul>
+             </div>
+             <div className="card-action center">
+             <button onClick={()=>{this.updateOrderStatus(dishInfo[0].baseInfo.id)}} style={{textTransform: 'initial'}} className="btn white grey-text text-darken-1 z-depth-0">
+                 {status_loader && (
+                             <i
+                             className="fa fa-circle-o-notch fa-spin left"
+                             />
+                             )}
+                 {!status_loader && (<i className="material-icons left">refresh</i>) }Update Order Information
+                 </button>
+             </div>
+        </div>
+        ) : (
+            <p></p>
+        )
+
+      
+
         return ( 
             <React.Fragment>
                 <Navbar />
                 <div className="container">
-                   <div className="card" style={{marginTop: 20}}>
-                       <div className="card-content">
-                            <span className="card-title center green-text text-darken-1">COMPLETED</span>
-                            <p className="center">Your order is now completed. We hope you enjoyed it!</p>                           
-                        </div>  
-                        <div className="progresy">
-                            <ul className="progresy-ul">
-                                <li>
-                                    <i className="fa fa-check white-text"></i>
-                                    <p>SUBMITTED</p>
-                                    <p>{recentOrderTime}</p>
-                                </li>
-                                <li>
-                                    <i className="fa fa-check white-text"></i>
-                                        <p>{order_status === "" ? "PROCESSING" : status}</p>
-                                    <p>10:46</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="card-action center">
-                        <button onClick={()=>{this.updateOrderStatus(dishInfo[0].baseInfo.id)}} style={{textTransform: 'initial'}} className="btn white grey-text text-darken-1 z-depth-0">
-                            {loading && (
-                                        <i
-                                        className="fa fa-circle-o-notch fa-spin left"
-                                        />
-                                        )}
-                            {!loading && (<i className="material-icons left">refresh</i>) }Update Order Information
-                            </button>
-                        </div>
-                   </div>
+                    <div className="row">
+                        <div className="col s12 l10 m10">
 
-                   {/* order details */}
+                        {statusPage}
+
+                         {/* order details */}
 
                            {/* <div className="row">
                                <div className="col s6 l6">
@@ -166,9 +208,16 @@ class OrderHistory extends Component {
                                    <p>Stripe</p>
                                </div>
                            </div> */}
-                         <h5 style={{marginTop: 30}}>My Orders</h5>  
+                         <h5 style={{marginTop: 20}}>My Orders</h5>  
                     
-                   {dishHistory}
+                        {dishHistory}
+
+
+                        </div>
+                    </div>
+                    
+
+                  
 
                 </div>
             </React.Fragment> 
@@ -181,7 +230,9 @@ const mapStateToProps = (state) =>{
     return{
         dishInfo: state.item.orderHistory,
         loading: state.item.loading,
-        order_status: state.item.order_status
+        order_status: state.item.order_status,
+        status_loader: state.item.status_loader,
+        status_time: state.item.status_time
     }
 }
 

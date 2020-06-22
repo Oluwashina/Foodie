@@ -118,7 +118,7 @@ textarea.materialize-textarea:focus:not([readonly]){
   }
   .progresy-ul li{
     display: inline-block;
-    width: 95px;
+    width: 150px;
     position: relative;
   }
  .progresy-ul i .fa::after{
@@ -133,8 +133,8 @@ textarea.materialize-textarea:focus:not([readonly]){
     z-index: 1;
   }
  .progresy-ul li:first-child .fa::after{
-    width: 50px;
-    left: 50px;
+    width: 140px;
+    left: 80px;
   }
   .progresy-ul li:nth-child(2) .fa::after{
     width: 40px;

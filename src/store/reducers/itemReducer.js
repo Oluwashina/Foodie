@@ -17,7 +17,6 @@ const initState = {
     categoryId: '',
     OrderDetails: {},
     order_msg: '',
-    order_error: '',
     Rapyd: {},
     redirect_url: '',
     status: '',
@@ -25,7 +24,9 @@ const initState = {
     paynow_status: '',
     orderHistory: [],
     order: {},
-    order_status: ''
+    order_status: '',
+    status_loader: false,
+    status_time: ''
 }
 
 const itemReducer = (state = initState, action) =>{
@@ -154,7 +155,6 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 loading: false,
-                order_error: "No item added to cart"
             }
         case 'Rapyd':
             return{
@@ -187,7 +187,8 @@ const itemReducer = (state = initState, action) =>{
            
             return{
                 ...state,
-                orderHistory: action.result
+                orderHistory: action.result,
+                loading: false
             }
         case 'OrderById':
             let order = state.orderHistory.find(order => order.baseInfo.id.toString() === action.orderId.toString())
@@ -197,10 +198,17 @@ const itemReducer = (state = initState, action) =>{
                 order: order
             }
         case 'orderStatus':
+            const date = Date().slice(16,21);
             return{
                 ...state,
                 order_status: action.result,
-                loading: false
+                status_loader: false,
+                status_time: date
+            }
+        case 'StatusLoader' :
+            return{
+                ...state,
+                status_loader: true
             }
         default:
             return state

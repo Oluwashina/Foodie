@@ -17,7 +17,7 @@ class OrderDetails extends Component {
 
     render() { 
 
-        const {order, orderId, loading, order_status, orderStatus} = this.props
+        const {order, orderId, loading, order_status, orderStatus, status_time} = this.props
 
 
      
@@ -29,7 +29,7 @@ class OrderDetails extends Component {
     
         var time = utcString.slice(-24, -7);
     
-        var recentOrderTime = utcString.slice(-11, -7);
+        var recentOrderTime = utcString.slice(-13, -7);
     
        
     
@@ -74,7 +74,7 @@ class OrderDetails extends Component {
                                 <li>
                                     <i className="fa fa-check white-text"></i>
                                     <p>{order_status === "" ? "PROCESSING" : status}</p>
-                                    <p>10:46</p>
+                                    <p>{status_time}</p>
                                 </li>
                             </ul>
                         </div>
@@ -221,8 +221,9 @@ const mapStateToProps = (state, ownProps) =>{
     return{
         orderId: state.item.order,
         order: state.item.order.dishInfos.find(item => item.itemId === id),
-        loading: state.item.loading,
-        order_status: state.item.order_status
+        loading: state.item.status_loader,
+        order_status: state.item.order_status,
+        status_time: state.item.status_time
     }
 }
 

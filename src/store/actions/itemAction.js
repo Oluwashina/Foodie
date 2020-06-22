@@ -301,6 +301,8 @@ export const removeCart = (id) =>{
 export const orderList = () =>{
     return(dispatch, getState) =>{
 
+        dispatch({type: 'Loading'})
+
         const appKey = "02e6d1efd0421de9d49447106cbc90ec";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
         const storeId = "810137705";
@@ -344,6 +346,7 @@ export const orderList = () =>{
             })
         }).catch((err)=>{
             console.log(err)
+            dispatch({type: 'OrderError'})
         })
 
     }
@@ -360,7 +363,7 @@ export const orderDetails = (orderId, itemId) =>{
 export const orderStatus = (orderId) =>{
     return(dispatch, getState)=>{
 
-        dispatch({type: 'Loading'})
+        dispatch({type: 'StatusLoader'})
 
         const appKey = "02e6d1efd0421de9d49447106cbc90ec";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
