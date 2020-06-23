@@ -155,6 +155,7 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 loading: false,
+                status_loader: false
             }
         case 'Rapyd':
             return{

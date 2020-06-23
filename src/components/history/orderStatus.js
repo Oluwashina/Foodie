@@ -101,6 +101,7 @@ class OrderHistory extends Component {
             var utcStringTime = date.toUTCString();
     
             var recentOrderTime = utcStringTime.slice(-13, -7);
+            var time = utcStringTime.slice(-24, -13);
             // orderStatus(dishInfo[0].baseInfo.id) 
         }
         // end of calculation
@@ -160,6 +161,36 @@ class OrderHistory extends Component {
             <p></p>
         )
 
+        // recently ordered items design
+        const recentOrder = dishInfo.length ? (
+            dishInfo[0].dishInfos.map(dish=>{
+                return(
+                    <div className="card" key={dish.itemId} style={{marginTop: 20}}>
+                    <div className="card-content">
+                        <div className="row">
+                            <div className="col s12 l12">
+                            <span className="card-title" style={{fontWeight: 600}}>{dish.dishName}</span>
+                            <p>Placed on {time}</p>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col s6 l8">
+                            <p style={{fontWeight: 600}}>{`QTY: ${dish.quantity}`}</p>
+                            <p style={{fontWeight: 600, marginTop: 10}}>{`$${dish.price / 100}`}</p>
+                            </div>
+                            <div className="col s6 l4 right-align">
+                            <button onClick={()=>{this.viewDetails(dishInfo[0].baseInfo.id, dish.itemId)}} className="btn blue-text white text-darken-3 z-depth-0" style={{padding: 0, marginTop: 15}}>See Details</button>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                )
+            })
+        ) : (
+            <p></p>
+        )
+
       
 
         return ( 
@@ -170,6 +201,8 @@ class OrderHistory extends Component {
                         <div className="col s12 l10 m10">
 
                         {statusPage}
+
+                        {recentOrder}
 
                          {/* order details */}
 
@@ -208,7 +241,7 @@ class OrderHistory extends Component {
                                    <p>Stripe</p>
                                </div>
                            </div> */}
-                         <h5 style={{marginTop: 20}}>My Orders</h5>  
+                         <h5 style={{marginTop: 30}}>Past Orders</h5>  
                     
                         {dishHistory}
 

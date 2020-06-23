@@ -392,6 +392,7 @@ export const orderStatus = (orderId) =>{
             dispatch({type: 'orderStatus', result})
         }).catch((err)=>{
             console.log(err)
+            dispatch({type: 'OrderError'})
         })
 
     }
