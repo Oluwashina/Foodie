@@ -177,32 +177,34 @@ const itemReducer = (state = initState, action) =>{
                 paynow_status: action.data.status
             }
         case 'orderHistory':
-            // const orderDishes = action.result.map(dish=> dish.dishInfos.map(dis=> console.log(dis.price)))
-            // console.log(orderDishes)
-            // for(let i=0; i<action.result.length; i++){
-            //     var order= action.result[i].dishInfos
-            //     for(let k =0; k<order.length; k++){
-            //         console.log(order[k].dishName)
-            //     }
-            // }
-           
+            const orderStatus = action.result[0].baseInfo.tradeStatus
+            let statusTime = Date().slice(16,21);
+
             return{
                 ...state,
                 orderHistory: action.result,
-                loading: false
+                order_status: orderStatus,
+                loading: false,
+                status_time: statusTime,
+                status_loader: false,
             }
         case 'OrderById':
             let order = state.orderHistory.find(order => order.baseInfo.id.toString() === action.orderId.toString())
+            let individualStatus = order.baseInfo.tradeStatus
+            let individualDate = Date().slice(16,21);
             // let orderbyId = order.dishInfos.find(item => item.itemId === action.itemId)
             return{
                 ...state,
-                order: order
+                order: order,
+                order_status: individualStatus,
+                status_time: individualDate
             }
         case 'orderStatus':
-            const date = Date().slice(16,21);
+            let date = Date().slice(16,21);
+            const statusUpdate = action.result[0].baseInfo.tradeStatus
             return{
                 ...state,
-                order_status: action.result,
+                order_status: statusUpdate,
                 status_loader: false,
                 status_time: date
             }

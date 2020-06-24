@@ -17,14 +17,6 @@ class OrderHistory extends Component {
         this.props.Orders()
       }
 
-      componentDidUpdate(prevProps){
-          const {orderStatus, dishInfo} = this.props
-        if (dishInfo !== prevProps.dishInfo) {
-            orderStatus(dishInfo[0].baseInfo.id)
-        }
-        
-      }
-
       viewDetails = (orderId, itemId) =>{
           this.props.orderDetails(orderId, itemId)
           this.props.history.push(`/order/details/${itemId}`)
@@ -113,12 +105,18 @@ class OrderHistory extends Component {
                 status = "Not Processed"
             }
             else if(order_status === 2){
-                status = "CONFIRMED"
+                status = "PENDING"
             }
             else if(order_status === 3){
-                status = "COMPLETED"
+                status = "CONFIRMED"
             }
             else if(order_status === 4){
+                status = "COMPLETED"
+            }
+            else if(order_status === 5){
+                status = "RETURNED"
+            }
+            else if(order_status === 6){
                 status = "CANCELLED"
             }
 
@@ -141,8 +139,8 @@ class OrderHistory extends Component {
                      </li>
                      <li>
                          <i className="fa fa-check white-text"></i>
-                             <p>{order_status === "" ? "PROCESSING" : status}</p>
-                         <p>{status_time === "" ? "..." : status_time }</p>
+                             <p>{status}</p>
+                         <p>{status_time }</p>
                      </li>
                  </ul>
              </div>

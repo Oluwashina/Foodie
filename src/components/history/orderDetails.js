@@ -10,18 +10,14 @@ class OrderDetails extends Component {
 
      }
 
-     componentDidMount(){
-         const {orderStatus, orderId} = this.props
-        orderStatus(orderId.baseInfo.id)
-      }
+    //  componentDidMount(){
+    //      const {orderStatus, orderId} = this.props
+    //     orderStatus(orderId.baseInfo.id)
+    //   }
 
     render() { 
-
+        console.log(this.props)
         const {order, orderId, loading, order_status, orderStatus, status_time} = this.props
-
-
-     
-
 
         var unixTimestamp = orderId.baseInfo.createTime;
         var dateObj = new Date(unixTimestamp * 1000); 
@@ -30,6 +26,7 @@ class OrderDetails extends Component {
         var time = utcString.slice(-24, -7);
     
         var recentOrderTime = utcString.slice(-13, -7);
+
     
        
     
@@ -44,12 +41,18 @@ class OrderDetails extends Component {
             status = "Not Processed"
         }
         else if(order_status === 2){
-            status = "CONFIRMED"
+            status = "PENDING"
         }
         else if(order_status === 3){
-            status = "COMPLETED"
+            status = "CONFIRMED"
         }
         else if(order_status === 4){
+            status = "COMPLETED"
+        }
+        else if(order_status === 5){
+            status = "RETURNED"
+        }
+        else if(order_status === 6){
             status = "CANCELLED"
         }
     
@@ -73,7 +76,7 @@ class OrderDetails extends Component {
                                 </li>
                                 <li>
                                     <i className="fa fa-check white-text"></i>
-                                    <p>{order_status === "" ? "PROCESSING" : status}</p>
+                                    <p>{status}</p>
                                     <p>{status_time}</p>
                                 </li>
                             </ul>

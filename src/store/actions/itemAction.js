@@ -382,18 +382,17 @@ export const orderStatus = (orderId) =>{
 
         // make request using axios to get status of order placed
         let body = {
-            "orderId": "0fce2b970a6c4432b55c45619cac94c9"
+            "shopIdenty": 810137705,
+            "ids" : [orderId] 
         }
 
-        axios.post(`/api/takeout/order/status/get?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
+        axios.post(`/api/data/order/exportDetail?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
         .then((res)=>{
             console.log(res.data)
-            var result = res.data.result.status
+            var result = res.data.result
             dispatch({type: 'orderStatus', result})
         }).catch((err)=>{
             console.log(err)
-            dispatch({type: 'OrderError'})
         })
-
     }
 }
