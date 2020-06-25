@@ -149,7 +149,9 @@ const itemReducer = (state = initState, action) =>{
                 ...state,
                 loading: false,
                 OrderDetails: action.result.result,
-                order_msg: action.result.message
+                order_msg: action.result.message,
+                status: '',
+                paynow_status: ''
             }
         case 'OrderError':
             return{
@@ -169,7 +171,7 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 downloadUrl: downloadUrl,
-                status: action.result.status
+                paynow_status: action.result.status
             } 
         case 'PAYNOW_UPDATE':
             return{

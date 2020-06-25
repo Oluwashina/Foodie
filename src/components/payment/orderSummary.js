@@ -83,8 +83,7 @@ PayNowPay = () =>{
 }
 
     render() { 
-        const {addedItems, total, packFee, redirect_url, status} = this.props
-        console.log(this.props)
+        const {addedItems, total, packFee, redirect_url, status, paynow_status} = this.props
  
         // route for Rapyd payment
         if(status === "SUCCESS"){
@@ -92,7 +91,7 @@ PayNowPay = () =>{
         }
 
         // Route for Paynow
-        if(status === "pending"){
+        if(paynow_status === "pending"){
             return <Redirect to="/scanQr" />
           }
         
@@ -270,6 +269,7 @@ const mapStateToProps = (state) =>{
         total: state.item.total,
         packFee: state.item.packFee,
         status: state.item.status,
+        paynow_status: state.item.paynow_status,
         redirect_url: state.item.redirect_url,
     }
 }

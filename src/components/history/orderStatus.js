@@ -23,7 +23,6 @@ class OrderHistory extends Component {
       }
 
       updateOrderStatus = (orderId) =>{
-         alert(orderId)
          this.props.orderStatus(orderId) 
       }
 

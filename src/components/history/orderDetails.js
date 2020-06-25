@@ -31,7 +31,6 @@ class OrderDetails extends Component {
        
     
        const updateOrderStatus = (orderId) =>{
-            alert(orderId)
             orderStatus(orderId)
         }
     

@@ -132,7 +132,7 @@ export const takeOrder = () =>{
         }
 
         const products = getState().item.addedItems;
-        var newProducs = products.map(product => ({ name: product.name, id: product.id, 
+        var newProducts = products.map(product => ({ name: product.name, id: product.id, 
             tpId: product.tpId, quantity: product.quantity, price: product.price, packagePrice: product.packagePrice,
             packageQuantity: product.packageQuantity, totalFee: product.totalFee, remark: product.remark
          }));
@@ -148,7 +148,7 @@ export const takeOrder = () =>{
                 "tpShopId": 810137705,
                 "shopName": 810137705
             },
-            "products": newProducs,
+            "products": newProducts,
             "delivery": {
                 "expectTime":0,
                 "deliveryParty":1,
