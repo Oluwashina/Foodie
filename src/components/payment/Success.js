@@ -21,7 +21,7 @@ class Success extends Component {
     render() { 
         const {order_msg,loading} = this.props
 
-        if(order_msg === 'success[OK]') return <Redirect to="orders" />
+        if(order_msg === 'success[OK]') return <Redirect to="/orders" />
          
 
         return ( 
@@ -33,7 +33,7 @@ class Success extends Component {
                 <div className="col s12 l6 pull-l6" style={{marginTop: 30}}>
                      <h6 className="center">SRDD-包含消费税测试</h6>
                     <h5 style={{marginTop: 30}} className="center">Your payment succeeded</h5>
-                    <p className="center">Click the "Place Order" button to place your order.</p>
+                    <p className="center">Click the "Place Order" button to place your order now.</p>
                     <div className="center">
                     <button onClick={this.handleOrder} className="btn z-depth-0 blue darken-3" style={{marginTop: 20, textTransform: 'initial'}}>
                     {loading && (
