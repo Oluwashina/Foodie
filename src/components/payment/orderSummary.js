@@ -8,7 +8,7 @@ import {removeCart} from '../../store/actions/itemAction'
 import {Menu} from '../../store/actions/itemAction'
 import {takeOrder} from '../../store/actions/itemAction'
 import {Rapyd} from '../../store/actions/itemAction'
-// import {PayNow} from '../../store/actions/itemAction'
+import {PayNow} from '../../store/actions/itemAction'
 import axios from 'axios';
 
 
@@ -26,7 +26,7 @@ class Summary extends Component {
 
 componentDidMount(){
     const {Omise} = window;
-    Omise.setPublicKey("pkey_test_5k3tle9qlpcvs7qh0nb");
+    Omise.setPublicKey("pkey_5kbgd3j8chim61ebt8k");
 }
    
 handleToken = (token) =>{
@@ -65,21 +65,21 @@ RapydPay = (e) =>{
 }
 
 PayNowPay = () =>{
-    // const {Omise} = window;
-    // const {total, PayNow} = this.props
-    // if(total < 1){
-    //   M.toast({html: "amount must be greater than $1"}) 
-    // }
-    // else{
-    //     Omise.createSource('paynow', {
-    //         "amount": total * 100,
-    //         "currency": "SGD"
-    //     }, function(statusCode, response){
-    //         console.log(response)
-    //         const id = response.id
-    //         PayNow(id);
-    //     });
-    // }     
+    const {Omise} = window;
+    const {total, PayNow} = this.props
+    if(total < 1){
+      M.toast({html: "amount must be greater than $1"}) 
+    }
+    else{
+        Omise.createSource('paynow', {
+            "amount": total * 100,
+            "currency": "SGD"
+        }, function(statusCode, response){
+            console.log(response)
+            const id = response.id
+            PayNow(id);
+        });
+    }     
 }
 
     render() { 
@@ -216,7 +216,7 @@ PayNowPay = () =>{
                                         </div>
                                             {/* paynow */}
                                         <div className="col s4 l4 center-align">
-                                            <a href="#/">
+                                            <a href="#/" onClick={this.PayNowPay}>
                                             <img src="img/paynow.png" alt="payNow" className="pay-style" width="80" height="40" />
                                              </a>
                                              <p className="center">PayNow</p>
@@ -279,8 +279,8 @@ const mapDispatchToProps = (dispatch) =>{
         removeCart: (id) => dispatch(removeCart(id)),
         Menu: () => dispatch(Menu()),
         takeOrder: () => dispatch(takeOrder()),
-        Rapyd: () => dispatch(Rapyd())
-        // PayNow: (id) => dispatch(PayNow(id))
+        Rapyd: () => dispatch(Rapyd()),
+        PayNow: (id) => dispatch(PayNow(id))
     }
 }
  

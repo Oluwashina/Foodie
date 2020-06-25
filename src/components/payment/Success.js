@@ -38,7 +38,7 @@ class Success extends Component {
                     <button onClick={this.handleOrder} className="btn z-depth-0 blue darken-3" style={{marginTop: 20, textTransform: 'initial'}}>
                     {loading && (
                         <i
-                        className="fa fa-refresh fa-spin"
+                        className="fa fa-circle-o-notch fa-spin"
                         style={{ marginRight: "5px", fontSize: "15px" }}
                         />
                     )}

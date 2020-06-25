@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import SignIn from './components/auth/SignIn'
+// import Login from './components/auth/Login'
 import Otp from './components/auth/Otp'
 import Dashboard from './components/layouts/Dashboard'
 import ItemDetails from './components/Items/Itemdetails'
@@ -20,6 +21,7 @@ function App() {
     <div>
       <Switch>
         <Route exact path="/" component={SignIn} />
+        {/* <Route exact path="/" component={Login} /> */}
         <Route path="/validate/otp" component={Otp} />
         <Route path="/home" component={Dashboard} />
         <Route path="/item/:id" component={ItemDetails} />
