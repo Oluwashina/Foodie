@@ -157,7 +157,9 @@ const itemReducer = (state = initState, action) =>{
             return{
                 ...state,
                 loading: false,
-                status_loader: false
+                status_loader: false,
+                status: '',
+                paynow_status: ''
             }
         case 'Rapyd':
             return{

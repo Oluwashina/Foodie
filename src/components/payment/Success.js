@@ -19,7 +19,7 @@ class Success extends Component {
     }
 
     render() { 
-        const {order_msg,loading} = this.props
+        const {order_msg, loading} = this.props
 
         if(order_msg === 'success[OK]') return <Redirect to="/orders" />
          

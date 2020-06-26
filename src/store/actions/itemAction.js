@@ -34,8 +34,7 @@ export const Menus = () =>{
         }).then((res)=>{
             console.log(res)
             var result = res.data.result.filter(item=> item.level !== 1).sort((a, b) => (a.name > b.name) ? 1 : -1)
-            dispatch({type: 'MENUS', result})
-            
+            dispatch({type: 'MENUS', result})    
         }).catch((err)=>{
             console.log(err)
         })
