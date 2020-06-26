@@ -1,6 +1,7 @@
 import axios from 'axios'
 import crypto from 'crypto'
 import JSONbig from 'json-bigint'
+// import { v4 as uuidv4 } from 'uuid';
 axios.defaults.transformResponse =  [function (data) {
 	// Do whatever you want to transform the data
 	return JSONbig.parse(data);
@@ -132,15 +133,18 @@ export const takeOrder = () =>{
 
         const products = getState().item.addedItems;
         var newProducts = products.map(product => ({ name: product.name, id: product.id, 
-            tpId: product.tpId, quantity: product.quantity, price: product.price, packagePrice: product.packagePrice,
+            tpId: product.tpId, type: product.type, quantity: product.quantity, price: product.price, packagePrice: product.packagePrice,
             packageQuantity: product.packageQuantity, totalFee: product.totalFee, remark: product.remark
          }));
 
         const total = getState().item.total * 100
+        const createTime = Date.now()
+        const tpOrderID = Math.floor(Math.random() * 100000000000);
         // make call to server
         let body = {
-            "tpOrderId" : "797429342222",
-            "createTime": timestamp,
+            "tpOrderId" : tpOrderID,
+            "createTime": createTime,
+            "remark" : "No cutlery",
             "peopleCount" : 1,
             "shop": {
                 "shopIdenty": 810137705,
@@ -149,15 +153,13 @@ export const takeOrder = () =>{
             },
             "products": newProducts,
             "delivery": {
-                "expectTime":0,
-                "deliveryParty":1,
-                "receiverName":"12345678901",
-                "receiverPhone":"12345678444",
-                "receiverGender":1,
-                "coordinateType": 1,
-                "delivererAddress":"290A BISHAN STREET 24 MULTI STOREY CAR PARK, Singapore, 571290",
-                "longitude": 88,
-                "latitude": 90
+                "expectTime": 0,
+                "deliveryParty": 2,
+                "receiverName": "7974293473-2218",
+                "receiverPhone": "2218",
+                "coordinateType": 2,
+                "longitude": 103.840955,
+                "latitude": 1.370782
             },
             "payment": {
                 "deliveryFee":0,
