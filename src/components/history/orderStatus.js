@@ -238,7 +238,7 @@ class OrderHistory extends Component {
                                    <p>Stripe</p>
                                </div>
                            </div> */}
-                         <h5 style={{marginTop: 30}}>Past Orders</h5>  
+                         <h5 style={{marginTop: 30}}>{dishInfo.length ? "Past Orders" : "My Orders"}</h5>  
                     
                         {dishHistory}
 

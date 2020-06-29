@@ -1,7 +1,6 @@
 import axios from 'axios'
 import crypto from 'crypto'
-import JSONbig from 'json-bigint'
-// import { v4 as uuidv4 } from 'uuid';
+import JSONbig from 'json-bigint';
 axios.defaults.transformResponse =  [function (data) {
 	// Do whatever you want to transform the data
 	return JSONbig.parse(data);
@@ -344,6 +343,7 @@ export const orderList = () =>{
                 dispatch({type: 'orderHistory', result})
             }).catch((err)=>{
                 console.log(err)
+                dispatch({type: 'OrderError'})
             })
         }).catch((err)=>{
             console.log(err)
