@@ -14,11 +14,11 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 export const Menus = () =>{
     return (dispatch, getState) =>{
 
-        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        const appKey = "a1f951c65f8256e349573897517b71fa";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
-        const storeId = "810137705";
+        const storeId = "810179000";
         // const storeId = "810137674"
-        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        const token = "67ab14bb6558603becbef9887bb8364a";
         // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
@@ -45,11 +45,11 @@ export const Menus = () =>{
 export const DishList = (id) =>{
     return(dispatch, getState) =>{
 
-        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        const appKey = "a1f951c65f8256e349573897517b71fa";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
-        const storeId = "810137705";
+        const storeId = "810179000";
         // const storeId = "810137674"
-        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        const token = "67ab14bb6558603becbef9887bb8364a";
         // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
@@ -78,11 +78,11 @@ export const DishList = (id) =>{
 export const dishMenuById = (dishId, id) =>{
     return(dispatch) =>{
        
-        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        const appKey = "a1f951c65f8256e349573897517b71fa";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
-        const storeId = "810137705";
+        const storeId = "810179000";
         // const storeId = "810137674"
-        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        const token = "67ab14bb6558603becbef9887bb8364a";
         // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
@@ -96,7 +96,7 @@ export const dishMenuById = (dishId, id) =>{
             }
         // make call to server using fetch
          let body  = {
-            "shopIdenty": 810137705,
+            "shopIdenty": 810179000,
             "ids":[dishId, id]
             };
         axios.post(`/api/cater/dish/dishMenuByIds?appKey=${appKey}&shopIdenty=${storeId}&version=1.0&timestamp=${timestamp}&sign=${getSign()}`, body)
@@ -115,11 +115,11 @@ export const takeOrder = () =>{
 
         dispatch({type: 'Loading'})
 
-        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        const appKey = "a1f951c65f8256e349573897517b71fa";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
-        const storeId = "810137705";
+        const storeId = "810179000";
         // const storeId = "810137674"
-        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        const token = "67ab14bb6558603becbef9887bb8364a";
         // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
@@ -146,9 +146,9 @@ export const takeOrder = () =>{
             "remark" : "No cutlery",
             "peopleCount" : 1,
             "shop": {
-                "shopIdenty": 810137705,
-                "tpShopId": 810137705,
-                "shopName": 810137705
+                "shopIdenty": 810179000,
+                "tpShopId":  810179000,
+                "shopName": 810179000
             },
             "products": newProducts,
             "delivery": {
@@ -303,11 +303,11 @@ export const orderList = () =>{
 
         dispatch({type: 'Loading'})
 
-        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        const appKey = "a1f951c65f8256e349573897517b71fa";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
-        const storeId = "810137705";
+        const storeId = "810179000";
         // const storeId = "810137674"
-        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        const token = "67ab14bb6558603becbef9887bb8364a";
         // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
@@ -320,7 +320,7 @@ export const orderList = () =>{
 
          // make call to server using axios
          let body  = {
-            "shopIdenty": 810137705,
+            "shopIdenty": 810179000,
             "startTime" : Date.now() - 15 * 24 * 60 * 60 * 1000,
             "endTime" : Date.now(),
             "timeType" : 2
@@ -332,7 +332,7 @@ export const orderList = () =>{
             console.log(orderId)
 
             let body = {
-                "shopIdenty": 810137705,
+                "shopIdenty": 810179000,
                 "ids" : orderId 
             }
 
@@ -366,11 +366,11 @@ export const orderStatus = (orderId) =>{
 
         dispatch({type: 'StatusLoader'})
 
-        const appKey = "02e6d1efd0421de9d49447106cbc90ec";
+        const appKey = "a1f951c65f8256e349573897517b71fa";
         // const appKey= "b23302d4a08f53d1bd5bcf333664997d";
-        const storeId = "810137705";
+        const storeId = "810179000";
         // const storeId = "810137674"
-        const token = "80199e23e7cf5a346cf9d8ff67b61039";
+        const token = "67ab14bb6558603becbef9887bb8364a";
         // const token = "8a702142d013e6c93d64c604a3fb332e"
         const version = "1.0";
         const timestamp = Math.floor(Date.now() / 1000);
@@ -383,7 +383,7 @@ export const orderStatus = (orderId) =>{
 
         // make request using axios to get status of order placed
         let body = {
-            "shopIdenty": 810137705,
+            "shopIdenty": 810179000,
             "ids" : [orderId] 
         }
 
